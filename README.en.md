@@ -1,7 +1,7 @@
-# wj-mes
+# ktg-mes-ui
 
 #### Description
-一款开源、免费的MES生产执行管理系统
+开源、免费MES系统的前端
 
 #### Software Architecture
 Software architecture description
