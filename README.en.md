@@ -1,7 +1,7 @@
-# wj-mes
+# ktg-mes
 
 #### Description
-基于心笑峰大神的ktg-mes，整合了tony大神的ruoyi-flowable工作流
+一款开源、免费的MES生产执行管理系统
 
 #### Software Architecture
 Software architecture description
