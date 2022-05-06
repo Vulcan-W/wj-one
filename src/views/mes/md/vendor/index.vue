@@ -3,30 +3,30 @@
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="100px">
       <el-row>
         <el-col :span="8">
-          <el-form-item label="客户编码" prop="clientCode">
+          <el-form-item label="供应商编码" prop="vendorCode">
             <el-input
-              v-model="queryParams.clientCode"
-              placeholder="请输入客户编码"
+              v-model="queryParams.vendorCode"
+              placeholder="请输入供应商编码"
               clearable
               @keyup.enter.native="handleQuery"
             />
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item label="客户名称" prop="clientName">
+          <el-form-item label="供应商名称" prop="vendorName">
             <el-input
-              v-model="queryParams.clientName"
-              placeholder="请输入客户名称"
+              v-model="queryParams.vendorName"
+              placeholder="请输入供应商名称"
               clearable
               @keyup.enter.native="handleQuery"
             />
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item label="客户简称" prop="clientNick">
+          <el-form-item label="供应商简称" prop="vendorNick">
             <el-input
-              v-model="queryParams.clientNick"
-              placeholder="请输入客户简称"
+              v-model="queryParams.vendorNick"
+              placeholder="请输入供应商简称"
               clearable
               @keyup.enter.native="handleQuery"
             />
@@ -35,10 +35,10 @@
       </el-row>
       <el-row>
         <el-col :span="8">
-            <el-form-item label="客户英文名称" prop="clientEn">
+          <el-form-item label="英文名称" prop="vendorEn">
             <el-input
-              v-model="queryParams.clientEn"
-              placeholder="请输入客户英文名称"
+              v-model="queryParams.vendorEn"
+              placeholder="请输入供应商英文名称"
               clearable
               @keyup.enter.native="handleQuery"
             />
@@ -78,7 +78,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['md:client:add']"
+          v-hasPermi="['md:vendor:add']"
         >新增</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -89,7 +89,7 @@
           size="mini"
           :disabled="single"
           @click="handleUpdate"
-          v-hasPermi="['md:client:edit']"
+          v-hasPermi="['md:vendor:edit']"
         >修改</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -100,7 +100,7 @@
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['md:client:remove']"
+          v-hasPermi="['md:vendor:remove']"
         >删除</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -110,38 +110,38 @@
           icon="el-icon-download"
           size="mini"
           @click="handleExport"
-          v-hasPermi="['md:client:export']"
+          v-hasPermi="['md:vendor:export']"
         >导出</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="clientList" @selection-change="handleSelectionChange">
+    <el-table v-loading="loading" :data="vendorList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="客户编码" align="center" prop="clientCode" >
-         <template slot-scope="scope">
-                <el-button
+      <el-table-column label="供应商编码" align="center" prop="vendorCode" >
+          <template slot-scope="scope">
+                <el-button              
                   type="text"
                   @click="handleView(scope.row)"
-                  v-hasPermi="['mes:md:client:query']"
-                >{{scope.row.clientCode}}</el-button>
+                  v-hasPermi="['mes:md:vendor:query']"
+                >{{scope.row.vendorCode}}</el-button>
           </template>
       </el-table-column>
-      <el-table-column label="客户名称" width="150px" align="center" prop="clientName" :show-overflow-tooltip="true"/>
-      <el-table-column label="客户简称" align="center" prop="clientNick" />
-      <el-table-column label="客户类型" align="center" prop="clientType" >
+      <el-table-column label="供应商名称" align="center" prop="vendorName" width="150px" :show-overflow-tooltip="true"/>
+      <el-table-column label="供应商简称" align="center" prop="vendorNick" />
+      <el-table-column label="供应商等级" align="center" prop="vendorLevel" >
         <template slot-scope="scope">
-          <dict-tag :options="dict.type.mes_client_type" :value="scope.row.clientType"/>
+          <dict-tag :options="dict.type.mes_vendor_level" :value="scope.row.vendorLevel"/>
         </template>
       </el-table-column>
-      <el-table-column label="客户电话" align="center" prop="tel" />
-      <el-table-column label="联系人" align="center" prop="contact1" />
-      <el-table-column label="联系人-电话" align="center" prop="contact1Tel" />
+      <el-table-column label="供应商评分" align="center" prop="vendorScore" />
+      <el-table-column label="供应商电话" align="center" prop="tel" />
       <el-table-column label="是否启用" align="center" prop="enableFlag" >
         <template slot-scope="scope">
           <dict-tag :options="dict.type.sys_yes_no" :value="scope.row.enableFlag"/>
         </template>
       </el-table-column>
+      <el-table-column label="备注" align="center" prop="remark" :show-overflow-tooltip="true"/>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -149,14 +149,14 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['md:client:edit']"
+            v-hasPermi="['md:vendor:edit']"
           >修改</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['md:client:remove']"
+            v-hasPermi="['md:vendor:remove']"
           >删除</el-button>
         </template>
       </el-table-column>
@@ -170,16 +170,16 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改客户对话框 -->
+    <!-- 添加或修改供应商对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="960px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="120px">
         <el-row>
           <el-col :span="8">
-            <el-form-item label="客户编码" prop="clientCode">
-              <el-input v-model="form.clientCode" placeholder="请输入客户编码" />
+            <el-form-item label="供应商编码" prop="vendorCode">
+              <el-input v-model="form.vendorCode" placeholder="请输入供应商编码" />
             </el-form-item>
           </el-col>
-            <el-col :span="4">
+          <el-col :span="4">
             <el-form-item  label-width="80">
               <el-switch v-model="autoGenFlag"
                   active-color="#13ce66"
@@ -189,27 +189,43 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="客户名称" prop="clientName">
-              <el-input v-model="form.clientName" placeholder="请输入客户名称" />
+            <el-form-item label="供应商名称" prop="vendorName">
+              <el-input v-model="form.vendorName" placeholder="请输入供应商名称" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="8">
-            <el-form-item label="客户简称" prop="clientNick">
-              <el-input v-model="form.clientNick" placeholder="请输入客户简称" />
+          <el-col :span="12">
+            <el-form-item label="供应商简称" prop="vendorNick">
+              <el-input v-model="form.vendorNick" placeholder="请输入供应商简称" />
             </el-form-item>
           </el-col>
-          <el-col :span="8">
-            <el-form-item label="客户英文名称" prop="clientEn">
-              <el-input v-model="form.clientEn" placeholder="请输入客户英文名称" />
+          <el-col :span="12">
+            <el-form-item label="供应商英文名称" prop="vendorEn">
+              <el-input v-model="form.vendorEn" placeholder="请输入供应商英文名称" />
             </el-form-item>
           </el-col>
-          <el-col :span="8">
-            <el-form-item label="客户类型" prop="clientType">
-              <el-select v-model="form.clientType" placeholder="请选择客户类型">
+        </el-row>
+        <el-row>
+          <el-col :span="24">
+            <el-form-item label="供应商简介" prop="vendorDes">
+              <el-input v-model="form.vendorDes" type="textarea" placeholder="请输入内容" />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="24">
+            <el-form-item label="供应商地址" prop="address">
+              <el-input v-model="form.address" type="textarea" placeholder="请输入内容" />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="供应商等级" prop="vendorLevel">
+              <el-select v-model="form.vendorLevel" placeholder="请选择供应商等级">
               <el-option
-                  v-for="dict in dict.type.mes_client_type"
+                  v-for="dict in dict.type.mes_vendor_level"
                   :key="dict.value"
                   :label="dict.label"
                   :value="dict.value"
@@ -217,98 +233,72 @@
               </el-select>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="24">
-            <el-form-item label="客户简介" prop="clientDes">
-              <el-input v-model="form.clientDes" type="textarea" placeholder="请输入内容" />
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="24">
-            <el-form-item label="客户地址" prop="address">
-              <el-input v-model="form.address" type="textarea" placeholder="请输入内容" />
+          <el-col :span="12">
+            <el-form-item label="供应商评分" prop="vendorScore">
+              <el-input-number :min="0" :max="100" v-model="form.vendorScore" placeholder="请输入供应商评分" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="12">
-            <el-form-item label="客户官网地址" prop="website">
-              <el-input v-model="form.website" placeholder="请输入客户官网地址" />
+          <el-col :span="8">
+            <el-form-item label="供应商官网地址" prop="website">
+              <el-input v-model="form.website" placeholder="请输入供应商官网地址" />
             </el-form-item>
           </el-col>
-          <el-col :span="12">
-            <el-form-item label="客户邮箱地址" prop="email">
-              <el-input v-model="form.email" v-if="optType=='view'" />
-              <el-input v-model="form.email" placeholder="请输入客户邮箱地址" v-else/>
+          <el-col :span="8">
+            <el-form-item label="供应商邮箱地址" prop="email">
+              <el-input v-model="form.email" placeholder="请输入供应商邮箱地址" />
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="客户电话" prop="tel">
-              <el-input v-model="form.tel" v-if="optType=='view'"  />
-              <el-input v-model="form.tel" placeholder="请输入客户电话" v-else/>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="客户LOGO" prop="clientLogo">
-              <el-input v-model="form.clientLogo" v-if="optType=='view'" />
-              <el-input v-model="form.clientLogo" placeholder="请输入客户LOGO" v-else/>
+          <el-col :span="8">
+            <el-form-item label="供应商电话" prop="tel">
+              <el-input v-model="form.tel" placeholder="请输入供应商电话" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="8">
             <el-form-item label="联系人1" prop="contact1">
-              <el-input v-model="form.contact1" v-if="optType=='view'" />
-              <el-input v-model="form.contact1" placeholder="请输入联系人1" v-else/>
+              <el-input v-model="form.contact1" placeholder="请输入联系人1" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="联系人1-电话" prop="contact1Tel">
-              <el-input v-model="form.contact1Tel" v-if="optType=='view'" />
-              <el-input v-model="form.contact1Tel" placeholder="请输入联系人1-电话" v-else />
+              <el-input v-model="form.contact1Tel" placeholder="请输入联系人1-电话" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="联系人1-邮箱" prop="contact1Email">
-              <el-input v-model="form.contact1Email" v-if="optType=='view'" />
-              <el-input v-model="form.contact1Email" placeholder="请输入联系人1-邮箱" v-else/>
+              <el-input v-model="form.contact1Email" placeholder="请输入联系人1-邮箱" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="8">
             <el-form-item label="联系人2" prop="contact2">
-              <el-input v-model="form.contact2" v-if="optType=='view'" />
-              <el-input v-model="form.contact2" placeholder="请输入联系人2" v-else />
+              <el-input v-model="form.contact2" placeholder="请输入联系人2" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="联系人2-电话" prop="contact2Tel">
-              <el-input v-model="form.contact2Tel" v-if="optType=='view'" />
-              <el-input v-model="form.contact2Tel" placeholder="请输入联系人2-电话"  v-else/>
+              <el-input v-model="form.contact2Tel" placeholder="请输入联系人2-电话" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="联系人2-邮箱" prop="contact2Email">
-              <el-input v-model="form.contact2Email" v-if="optType=='view'" />
-              <el-input v-model="form.contact2Email" placeholder="请输入联系人2-邮箱" v-else/>
+              <el-input v-model="form.contact2Email" placeholder="请输入联系人2-邮箱" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="12">
-            <el-form-item label="社会信用代码" prop="creditCode">
-              <el-input v-model="form.creditCode" readonly v-if="optType=='view'" />
-              <el-input v-model="form.creditCode" placeholder="请输入统一社会信用代码" v-else />
+          <el-col :span="8">
+            <el-form-item label="统一社会信用代码" prop="creditCode">
+              <el-input v-model="form.creditCode" placeholder="请输入统一社会信用代码" />
             </el-form-item>
-          </el-col >
-          <el-col :span="12">
-            <el-form-item label="是否有效" prop="enableFlag">
-              <el-radio-group v-model="form.enableFlag" disabled v-if="optType=='view'">
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="是否启用" prop="enableFlag">
+               <el-radio-group v-model="form.enableFlag" disabled v-if="optType=='view'">
                 <el-radio
                   v-for="dict in dict.type.sys_yes_no"
                   :key="dict.value"
@@ -322,15 +312,18 @@
                   :label="dict.value"
                 >{{dict.label}}</el-radio>
               </el-radio-group>
-
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="供应商LOGO地址" prop="vendorLogo">
+              <el-input v-model="form.vendorLogo" placeholder="请输入供应商LOGO地址" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="24">
             <el-form-item label="备注" prop="remark">
-              <el-input v-model="form.remark" type="textarea" readonly v-if="optType=='view'" />
-              <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" v-else />
+              <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
             </el-form-item>
           </el-col>
         </el-row>
@@ -345,11 +338,11 @@
 </template>
 
 <script>
-import { listClient, getClient, delClient, addClient, updateClient } from "@/api/mes/md/client";
+import { listVendor, getVendor, delVendor, addVendor, updateVendor } from "@/api/mes/md/vendor";
 import {genCode} from "@/api/system/autocode/rule"
 export default {
-  name: "Client",
-  dicts: ['mes_client_type','sys_yes_no'],
+  name: "Vendor",
+  dicts: ['sys_yes_no','mes_vendor_level'],
   data() {
     return {
       //自动生成编码
@@ -367,8 +360,8 @@ export default {
       showSearch: true,
       // 总条数
       total: 0,
-      // 客户表格数据
-      clientList: [],
+      // 供应商表格数据
+      vendorList: [],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -377,13 +370,14 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        clientCode: null,
-        clientName: null,
-        clientNick: null,
-        clientEn: null,
-        clientDes: null,
-        clientLogo: null,
-        clientType: null,
+        vendorCode: null,
+        vendorName: null,
+        vendorNick: null,
+        vendorEn: null,
+        vendorDes: null,
+        vendorLogo: null,
+        vendorLevel: null,
+        vendorScore: null,
         address: null,
         website: null,
         email: null,
@@ -401,32 +395,11 @@ export default {
       form: {},
       // 表单校验
       rules: {
-        clientCode: [
-          { required: true, message: "客户编码不能为空", trigger: "blur" }
+        vendorCode: [
+          { required: true, message: "供应商编码不能为空", trigger: "blur" }
         ],
-        clientName: [
-          { required: true, message: "客户名称不能为空", trigger: "blur" }
-        ],
-        email:[
-          {
-            type: "email",
-            message: "请输入正确的邮箱地址",
-            trigger: ["blur", "change"]
-          }
-        ],
-        contact1Email:[
-          {
-            type: "email",
-            message: "请输入正确的邮箱地址",
-            trigger: ["blur", "change"]
-          }
-        ],
-        contact2Email:[
-          {
-            type: "email",
-            message: "请输入正确的邮箱地址",
-            trigger: ["blur", "change"]
-          }
+        vendorName: [
+          { required: true, message: "供应商名称不能为空", trigger: "blur" }
         ],
         enableFlag: [
           { required: true, message: "是否启用不能为空", trigger: "blur" }
@@ -438,11 +411,11 @@ export default {
     this.getList();
   },
   methods: {
-    /** 查询客户列表 */
+    /** 查询供应商列表 */
     getList() {
       this.loading = true;
-      listClient(this.queryParams).then(response => {
-        this.clientList = response.rows;
+      listVendor(this.queryParams).then(response => {
+        this.vendorList = response.rows;
         this.total = response.total;
         this.loading = false;
       });
@@ -454,15 +427,16 @@ export default {
     },
     // 表单重置
     reset() {
-      this.form = {
-        clientId: null,
-        clientCode: null,
-        clientName: null,
-        clientNick: null,
-        clientEn: null,
-        clientDes: null,
-        clientLogo: null,
-        clientType: null,
+      this.form = {      
+        vendorId: null,
+        vendorCode: null,
+        vendorName: null,
+        vendorNick: null,
+        vendorEn: null,
+        vendorDes: null,
+        vendorLogo: null,
+        vendorLevel: "B",
+        vendorScore: null,
         address: null,
         website: null,
         email: null,
@@ -500,7 +474,7 @@ export default {
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
-      this.ids = selection.map(item => item.clientId)
+      this.ids = selection.map(item => item.vendorId)
       this.single = selection.length!==1
       this.multiple = !selection.length
     },
@@ -508,28 +482,28 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加客户";
+      this.title = "添加供应商";
       this.optType = "add";
     },
     // 查询明细按钮操作
     handleView(row){
       this.reset();
-      const clientId = row.clientId || this.ids
-      getClient(clientId).then(response => {
+      const vendorId = row.vendorId || this.ids
+      getVendor(vendorId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "查看客户";
+        this.title = "查看供应商";
         this.optType = "view";
       });
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
-      const clientId = row.clientId || this.ids
-      getClient(clientId).then(response => {
+      const vendorId = row.vendorId || this.ids
+      getVendor(vendorId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改客户";
+        this.title = "修改供应商";
         this.optType = "edit";
       });
     },
@@ -537,14 +511,14 @@ export default {
     submitForm() {
       this.$refs["form"].validate(valid => {
         if (valid) {
-          if (this.form.clientId != null) {
-            updateClient(this.form).then(response => {
+          if (this.form.vendorId != null) {
+            updateVendor(this.form).then(response => {
               this.$modal.msgSuccess("修改成功");
               this.open = false;
               this.getList();
             });
           } else {
-            addClient(this.form).then(response => {
+            addVendor(this.form).then(response => {
               this.$modal.msgSuccess("新增成功");
               this.open = false;
               this.getList();
@@ -555,9 +529,9 @@ export default {
     },
     /** 删除按钮操作 */
     handleDelete(row) {
-      const clientIds = row.clientId || this.ids;
-      this.$modal.confirm('是否确认删除客户编号为"' + clientIds + '"的数据项？').then(function() {
-        return delClient(clientIds);
+      const vendorIds = row.vendorId || this.ids;
+      this.$modal.confirm('是否确认删除供应商编号为"' + vendorIds + '"的数据项？').then(function() {
+        return delVendor(vendorIds);
       }).then(() => {
         this.getList();
         this.$modal.msgSuccess("删除成功");
@@ -565,19 +539,19 @@ export default {
     },
     /** 导出按钮操作 */
     handleExport() {
-      this.download('md/client/export', {
+      this.download('md/vendor/export', {
         ...this.queryParams
-      }, `client_${new Date().getTime()}.xlsx`)
+      }, `vendor_${new Date().getTime()}.xlsx`)
     },
     //自动生成编码
     handleAutoGenChange(autoGenFlag){
       debugger;
       if(autoGenFlag){
-        genCode('CLIENT_CODE').then(response =>{
-          this.form.clientCode = response;
+        genCode('VENDOR_CODE').then(response =>{
+          this.form.vendorCode = response;
         });
       }else{
-        this.form.clientCode = null;
+        this.form.vendorCode = null;
       }      
     }
   }
