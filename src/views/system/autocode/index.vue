@@ -88,7 +88,7 @@
 
     <el-table v-loading="loading" :data="ruleList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="规则编号" align="center" prop="ruleCode" >
+      <el-table-column label="规则编号" align="center" width="150px" prop="ruleCode" >
           <template slot-scope="scope">
           <router-link :to="'/system/autocodePart/index/' + scope.row.ruleId" class="link-type">
             <span>{{ scope.row.ruleCode }}</span>
