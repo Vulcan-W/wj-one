@@ -3,7 +3,7 @@ import request from '@/utils/request'
 // 查询车间列表
 export function listWorkshop(query) {
   return request({
-    url: '/md/workshop/list',
+    url: '/mes/md/workshop/list',
     method: 'get',
     params: query
   })
@@ -12,7 +12,7 @@ export function listWorkshop(query) {
 // 查询车间详细
 export function getWorkshop(workshopId) {
   return request({
-    url: '/md/workshop/' + workshopId,
+    url: '/mes/md/workshop/' + workshopId,
     method: 'get'
   })
 }
@@ -20,7 +20,7 @@ export function getWorkshop(workshopId) {
 // 新增车间
 export function addWorkshop(data) {
   return request({
-    url: '/md/workshop',
+    url: '/mes/md/workshop',
     method: 'post',
     data: data
   })
@@ -29,7 +29,7 @@ export function addWorkshop(data) {
 // 修改车间
 export function updateWorkshop(data) {
   return request({
-    url: '/md/workshop',
+    url: '/mes/md/workshop',
     method: 'put',
     data: data
   })
@@ -38,7 +38,7 @@ export function updateWorkshop(data) {
 // 删除车间
 export function delWorkshop(workshopId) {
   return request({
-    url: '/md/workshop/' + workshopId,
+    url: '/mes/md/workshop/' + workshopId,
     method: 'delete'
   })
 }

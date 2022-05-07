@@ -3,7 +3,7 @@ import request from '@/utils/request'
 // 查询供应商列表
 export function listVendor(query) {
   return request({
-    url: '/md/vendor/list',
+    url: '/mes/md/vendor/list',
     method: 'get',
     params: query
   })
@@ -12,7 +12,7 @@ export function listVendor(query) {
 // 查询供应商详细
 export function getVendor(vendorId) {
   return request({
-    url: '/md/vendor/' + vendorId,
+    url: '/mes/md/vendor/' + vendorId,
     method: 'get'
   })
 }
@@ -20,7 +20,7 @@ export function getVendor(vendorId) {
 // 新增供应商
 export function addVendor(data) {
   return request({
-    url: '/md/vendor',
+    url: '/mes/md/vendor',
     method: 'post',
     data: data
   })
@@ -29,7 +29,7 @@ export function addVendor(data) {
 // 修改供应商
 export function updateVendor(data) {
   return request({
-    url: '/md/vendor',
+    url: '/mes/md/vendor',
     method: 'put',
     data: data
   })
@@ -38,7 +38,7 @@ export function updateVendor(data) {
 // 删除供应商
 export function delVendor(vendorId) {
   return request({
-    url: '/md/vendor/' + vendorId,
+    url: '/mes/md/vendor/' + vendorId,
     method: 'delete'
   })
 }
