@@ -650,7 +650,6 @@ export default {
       }else{
         this.form.itemCode = null;
       }
-      
     }
   }
 };
