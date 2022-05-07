@@ -143,7 +143,7 @@
               </el-select>
         </el-form-item>
         <el-form-item label="与主单位换算比例" prop="changeRate" v-if="form.primaryFlag =='N'">
-          <el-input v-model="form.changeRate" placeholder="请输入与主单位换算比例" />
+          <el-input-number :step="1" :percision="2" v-model="form.changeRate" placeholder="请输入与主单位换算比例" />
         </el-form-item>
         <el-form-item label="是否启用" prop="enableFlag">
             <el-radio-group v-model="form.enableFlag">
