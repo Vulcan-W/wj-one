@@ -163,6 +163,20 @@ export const dynamicRoutes = [
     ]
   },
   {
+    path: '/mes/wm/area',
+    component: Layout,
+    hidden: true,
+    permissions: ['mes:wm:area:list'],
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/mes/wm/area/index'),
+        name: 'areaList',
+        meta: { title: '库位设置', activeMenu: '/mes/wm/area' }
+      }
+    ]
+  },
+  {
     path: '/monitor/job-log',
     component: Layout,
     hidden: true,

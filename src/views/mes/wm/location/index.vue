@@ -58,7 +58,7 @@
           <el-button
             type="text"
             @click="handleView(scope.row)"
-            v-hasPermi="['mes:md:location:query']"
+            v-hasPermi="['mes:wm:location:query']"
           >{{scope.row.locationCode}}</el-button>
         </template>
       </el-table-column>
@@ -133,7 +133,7 @@
       <el-row>
         <el-col :span="12">
           <el-form-item label="面积" prop="area">
-            <el-input v-model="form.area" placeholder="请输入面积" />
+            <el-input-number :min="0" :step="1" :percision="2" v-model="form.area" placeholder="请输入面积" />
           </el-form-item>
         </el-col>
         <el-col :span="12">
@@ -346,9 +346,13 @@ export default {
     },
     /** 导出按钮操作 */
     handleExport() {
-      this.download('wm/location/export', {
+      this.download('mes/wm/location/export', {
         ...this.queryParams
       }, `location_${new Date().getTime()}.xlsx`)
+    },
+    handleArea(locationId){
+      debugger;
+      this.$router.push({ path: '/mes/wm/area/index', query: { locationId: locationId || 0 ,optType: this.optType} })
     },
     //自动生成编码
     handleAutoGenChange(autoGenFlag){
