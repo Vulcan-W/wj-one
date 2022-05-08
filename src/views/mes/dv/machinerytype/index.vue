@@ -209,9 +209,9 @@ export default {
 	/** 查询设备类型下拉树结构 */
     getTreeselect() {
       listMachinerytype().then(response => {
+        debugger;
         this.machinerytypeOptions = [];
-        const data = { machineryTypeId: 0, machineryTypeName: '顶级节点', children: [] };
-        data.children = this.handleTree(response.data, "machineryTypeId", "parentTypeId");
+        const data = this.handleTree(response.data, "machineryTypeId", "parentTypeId")[0];
         this.machinerytypeOptions.push(data);
       });
     },

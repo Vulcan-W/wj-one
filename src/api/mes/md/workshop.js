@@ -9,6 +9,13 @@ export function listWorkshop(query) {
   })
 }
 
+export function listAllWorkshop(){
+  return request({
+    url: '/mes/md/workshop/listAll',
+    method: 'get'
+  })
+}
+
 // 查询车间详细
 export function getWorkshop(workshopId) {
   return request({
