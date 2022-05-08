@@ -143,8 +143,22 @@ export const dynamicRoutes = [
       {
         path: 'index/:ruleId(\\d+)',
         component: () => import('@/views/system/autocode/part'),
-        name: 'Data',
+        name: 'AutoCode',
         meta: { title: '规则组成', activeMenu: '/system/autocode' }
+      }
+    ]
+  },
+  {
+    path: '/mes/wm/location',
+    component: Layout,
+    hidden: true,
+    permissions: ['mes:wm:location:list'],
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/mes/wm/location/index'),
+        name: 'locationList',
+        meta: { title: '库区设置', activeMenu: '/mes/wm/location' }
       }
     ]
   },
