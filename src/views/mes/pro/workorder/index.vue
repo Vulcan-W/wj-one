@@ -17,7 +17,6 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-
       <el-form-item label="来源单据" prop="sourceCode">
         <el-input
           v-model="queryParams.sourceCode"
@@ -74,7 +73,7 @@
       </el-form-item>
     </el-form>
 
-    <el-row :gutter="10" class="mb8">
+<el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
         <el-button
           type="primary"
@@ -82,7 +81,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['pro:workorder:add']"
+          v-hasPermi="['mes:pro:workorder:add']"
         >新增</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -93,7 +92,7 @@
           size="mini"
           :disabled="single"
           @click="handleUpdate"
-          v-hasPermi="['pro:workorder:edit']"
+          v-hasPermi="['mes:pro:workorder:edit']"
         >修改</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -104,7 +103,7 @@
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['pro:workorder:remove']"
+          v-hasPermi="['mes:pro:workorder:remove']"
         >删除</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -114,22 +113,27 @@
           icon="el-icon-download"
           size="mini"
           @click="handleExport"
-          v-hasPermi="['pro:workorder:export']"
+          v-hasPermi="['mes:pro:workorder:export']"
         >导出</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="workorderList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="工单编码" width="150" align="center" prop="workorderCode" />
+    <el-table
+      v-loading="loading"
+      :data="workorderList"
+      row-key="workorderId"
+      default-expand-all
+      :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
+    >
+      <el-table-column label="工单编码" width="180" prop="workorderCode" />
       <el-table-column label="工单名称" width="200" align="center" prop="workorderName" :show-overflow-tooltip="true"/>
-      <el-table-column label="来源类型" align="center" prop="orderSource" >
+      <el-table-column label="工单来源" align="center" prop="orderSource" >
         <template slot-scope="scope">
           <dict-tag :options="dict.type.mes_workorder_sourcetype" :value="scope.row.orderSource"/>
         </template>
       </el-table-column>
-      <el-table-column label="订单编号" align="center" prop="sourceCode" />
+      <el-table-column label="订单编号" width="120" align="center" prop="sourceCode" />
       <el-table-column label="产品编号" width="120" align="center" prop="productCode" />
       <el-table-column label="产品名称" width="200" align="center" prop="productName" :show-overflow-tooltip="true"/>
       <el-table-column label="规格型号" align="center" prop="productSpc" :show-overflow-tooltip="true"/>
@@ -147,35 +151,35 @@
           <dict-tag :options="dict.type.mes_order_status" :value="scope.row.status"/>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" width="100px" class-name="small-padding fixed-width">
+      <el-table-column label="操作" width="150px" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
             type="text"
             icon="el-icon-edit"
+            v-if="scope.row.status =='PREPARE'"
             @click="handleUpdate(scope.row)"
-            v-if="scope.row.status == 'PREPARE'"
             v-hasPermi="['mes:pro:workorder:edit']"
           >修改</el-button>
           <el-button
             size="mini"
             type="text"
+            icon="el-icon-plus"
+            v-if="scope.row.status =='CONFIRMED'"
+            @click="handleAdd(scope.row)"
+            v-hasPermi="['mes:pro:workorder:add']"
+          >新增</el-button>
+          <el-button
+            size="mini"
+            type="text"
             icon="el-icon-delete"
+            v-if="scope.row.status =='PREPARE'"
             @click="handleDelete(scope.row)"
-            v-if="scope.row.status == 'PREPARE'"
             v-hasPermi="['mes:pro:workorder:remove']"
           >删除</el-button>
         </template>
       </el-table-column>
     </el-table>
-    
-    <pagination
-      v-show="total>0"
-      :total="total"
-      :page.sync="queryParams.pageNum"
-      :limit.sync="queryParams.pageSize"
-      @pagination="getList"
-    />
 
     <!-- 添加或修改生产工单对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="960px" append-to-body>
@@ -191,7 +195,7 @@
               <el-switch v-model="autoGenFlag"
                   active-color="#13ce66"
                   active-text="自动生成"
-                  @change="handleAutoGenChange(autoGenFlag)" v-if="optType != 'view'">               
+                  @change="handleAutoGenChange(autoGenFlag)" v-if="optType != 'view' && form.status =='PREPARE'">               
               </el-switch>
             </el-form-item>
           </el-col>
@@ -311,9 +315,16 @@
           </el-col>
         </el-row>
       </el-form>
+      <el-tabs type="border-card" v-if="form.workorderId != null">        
+        <el-tab-pane label="BOM组成"> 
+          <Workorderbom ref="bomlist" :optType="optType" :workorderId="form.workorderId"></Workorderbom>        
+        </el-tab-pane>
+        <el-tab-pane label="物料需求"></el-tab-pane>
+      </el-tabs>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="cancel" v-if="optType =='view'">返回</el-button>
-        <el-button type="primary" @click="submitForm" v-else>确 定</el-button>
+        <el-button type="primary" @click="cancel" v-if="optType =='view' || form.status !='PREPARE' ">返回</el-button>
+        <el-button type="primary" @click="submitForm" v-if="form.status =='PREPARE' && optType !='view' ">确 定</el-button>
+        <el-button type="success" @click="handleFinish" v-if="form.status =='PREPARE' && optType !='view'  && form.workorderId !=null">完成</el-button>
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
@@ -322,13 +333,22 @@
 
 <script>
 import { listWorkorder, getWorkorder, delWorkorder, addWorkorder, updateWorkorder } from "@/api/mes/pro/workorder";
+import Workorderbom from "./bom/bom.vue";
 import ItemSelect  from "@/components/itemSelect/single.vue";
 import ClientSelect from "@/components/clientSelect/single.vue";
 import {genCode} from "@/api/system/autocode/rule"
+import Treeselect from "@riophae/vue-treeselect";
+import "@riophae/vue-treeselect/dist/vue-treeselect.css";
+
 export default {
   name: "Workorder",
   dicts: ['mes_order_status','mes_workorder_sourcetype'],
-  components: { ItemSelect ,ClientSelect},
+  components: {
+    Treeselect,
+    ItemSelect ,
+    ClientSelect,
+    Workorderbom
+  },
   data() {
     return {
       //自动生成编码
@@ -336,26 +356,22 @@ export default {
       optType: undefined,
       // 遮罩层
       loading: true,
-      // 选中数组
-      ids: [],
+      // 显示搜索条件
+      showSearch: true,
       // 非单个禁用
       single: true,
       // 非多个禁用
       multiple: true,
-      // 显示搜索条件
-      showSearch: true,
-      // 总条数
-      total: 0,
       // 生产工单表格数据
       workorderList: [],
+      // 生产工单树选项
+      workorderOptions: [],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
       open: false,
       // 查询参数
       queryParams: {
-        pageNum: 1,
-        pageSize: 10,
         workorderCode: null,
         workorderName: null,
         orderSource: null,
@@ -370,6 +386,8 @@ export default {
         clientCode: null,
         clientName: null,
         requestDate: null,
+        parentId: null,
+        ancestors: null,
         status: null,
       },
       // 表单参数
@@ -386,7 +404,7 @@ export default {
           { required: true, message: "来源类型不能为空", trigger: "blur" }
         ],
         productId: [
-          { required: true, message: "产品ID不能为空", trigger: "blur" }
+          { required: true, message: "产品不能为空", trigger: "blur" }
         ],
         productCode: [
           { required: true, message: "产品编号不能为空", trigger: "blur" }
@@ -414,9 +432,28 @@ export default {
     getList() {
       this.loading = true;
       listWorkorder(this.queryParams).then(response => {
-        this.workorderList = response.rows;
-        this.total = response.total;
+        this.workorderList = this.handleTree(response.data, "workorderId", "parentId");
         this.loading = false;
+      });
+    },
+    /** 转换生产工单数据结构 */
+    normalizer(node) {
+      if (node.children && !node.children.length) {
+        delete node.children;
+      }
+      return {
+        id: node.workorderId,
+        label: node.workorderName,
+        children: node.children
+      };
+    },
+	/** 查询生产工单下拉树结构 */
+    getTreeselect() {
+      listWorkorder().then(response => {
+        this.workorderOptions = [];
+        const data = { workorderId: 0, workorderName: '顶级节点', children: [] };
+        data.children = this.handleTree(response.data, "workorderId", "parentId");
+        this.workorderOptions.push(data);
       });
     },
     // 取消按钮
@@ -442,12 +479,9 @@ export default {
         clientCode: null,
         clientName: null,
         requestDate: null,
-        status: 'PREPARE',
+        parentId: null,
+        status: "PREPARE",
         remark: null,
-        attr1: null,
-        attr2: null,
-        attr3: null,
-        attr4: null,
         createBy: null,
         createTime: null,
         updateBy: null,
@@ -458,7 +492,6 @@ export default {
     },
     /** 搜索按钮操作 */
     handleQuery() {
-      this.queryParams.pageNum = 1;
       this.getList();
     },
     /** 重置按钮操作 */
@@ -466,26 +499,36 @@ export default {
       this.resetForm("queryForm");
       this.handleQuery();
     },
-    // 多选框选中数据
-    handleSelectionChange(selection) {
-      this.ids = selection.map(item => item.workorderId)
-      this.single = selection.length!==1
-      this.multiple = !selection.length
-    },
     /** 新增按钮操作 */
-    handleAdd() {
+    handleAdd(row) {
       this.reset();
+      this.getTreeselect();
+      if (row != null && row.workorderId) {
+        this.form.parentId = row.workorderId;
+        this.form.orderSource = row.orderSource;
+        this.form.sourceCode = row.sourceCode;
+        this.form.clientId = row.clientId;
+        this.form.clientCode = row.clientCode;
+        this.form.clientName = row.clientName;
+      } else {
+        this.form.parentId = 0;
+      }
       this.open = true;
       this.title = "添加生产工单";
+      this.optType="add";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
-      const workorderId = row.workorderId || this.ids
-      getWorkorder(workorderId).then(response => {
+      this.getTreeselect();
+      if (row != null) {
+        this.form.parentId = row.workorderId;
+      }
+      getWorkorder(row.workorderId).then(response => {
         this.form = response.data;
         this.open = true;
         this.title = "修改生产工单";
+        this.optType="edit";
       });
     },
     /** 提交按钮 */
@@ -495,13 +538,15 @@ export default {
           if (this.form.workorderId != null) {
             updateWorkorder(this.form).then(response => {
               this.$modal.msgSuccess("修改成功");
-              this.open = false;
+              //this.open = false;
+              this.$refs["bomlist"].getList();
               this.getList();
             });
           } else {
             addWorkorder(this.form).then(response => {
               this.$modal.msgSuccess("新增成功");
-              this.open = false;
+              //this.open = false;
+              this.form.workorderId = response.data;
               this.getList();
             });
           }
@@ -510,13 +555,18 @@ export default {
     },
     /** 删除按钮操作 */
     handleDelete(row) {
-      const workorderIds = row.workorderId || this.ids;
-      this.$modal.confirm('是否确认删除生产工单编号为"' + workorderIds + '"的数据项？').then(function() {
-        return delWorkorder(workorderIds);
+      this.$modal.confirm('是否确认删除生产工单编号为"' + row.workorderId + '"的数据项？').then(function() {
+        return delWorkorder(row.workorderId);
       }).then(() => {
         this.getList();
         this.$modal.msgSuccess("删除成功");
       }).catch(() => {});
+    },
+    handleSelectProduct(){
+      this.$refs.itemSelect.showFlag = true;
+    },
+    handleSelectClient(){
+      this.$refs.clientSelect.showFlag = true;
     },
     /** 导出按钮操作 */
     handleExport() {
@@ -524,11 +574,12 @@ export default {
         ...this.queryParams
       }, `workorder_${new Date().getTime()}.xlsx`)
     },
-    handleSelectProduct(){
-      this.$refs.itemSelect.showFlag = true;
-    },
-    handleSelectClient(){
-      this.$refs.clientSelect.showFlag = true;
+    handleFinish(){
+      let that = this;
+      this.$modal.confirm('是否完成工单编制？【完成后将不能更改】').then(function(){
+        that.form.status = 'CONFIRMED';
+        that.submitForm();
+      });
     },
     //物料选择弹出框
     onItemSelected(obj){
