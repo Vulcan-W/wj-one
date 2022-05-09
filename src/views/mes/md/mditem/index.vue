@@ -514,6 +514,7 @@ export default {
         unitOfMeasrue: undefined,
         enableFlag: undefined,
         itemOrProduct: undefined,
+        enableFlag: 'Y',
         safeStockFlag: undefined,
         minStock: 0,
         maxStock: 0,

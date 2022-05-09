@@ -154,8 +154,8 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="日期时间格式" prop="dateFormart" v-if="form.partType=='NOWDATE'">
-              <el-input v-model="form.dateFormart" placeholder="请输入日期时间格式" />
+            <el-form-item label="日期时间格式" prop="dateFormat" v-if="form.partType=='NOWDATE'">
+              <el-input v-model="form.dateFormat" placeholder="请输入日期时间格式" />
             </el-form-item>
 
             <el-form-item label="输入字符" prop="inpurtCharacter" v-if="form.partType=='INPUTCHAR'">

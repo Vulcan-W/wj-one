@@ -582,7 +582,7 @@ export default {
     submitFileForm() {
       this.$refs.upload.submit();
     },
-    //自动生成物料编码
+    //自动生成编码
     handleAutoGenChange(autoGenFlag){
       debugger;
       if(autoGenFlag){
