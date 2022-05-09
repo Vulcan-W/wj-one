@@ -515,7 +515,7 @@ export default {
         enableFlag: undefined,
         itemOrProduct: undefined,
         enableFlag: 'Y',
-        safeStockFlag: undefined,
+        safeStockFlag: 'N',
         minStock: 0,
         maxStock: 0,
         optType: undefined,

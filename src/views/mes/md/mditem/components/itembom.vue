@@ -179,6 +179,7 @@ components: { ItemSelect },
         bomItemName: null,
         bomItemSpec: null,
         unitOfMeasure: null,
+        itemOrProduct: null,
         quantity: null,
         enableFlag: 'Y',
         remark: null,
@@ -256,6 +257,7 @@ components: { ItemSelect },
                 this.form.bomItemName = element.itemName;
                 this.form.bomItemSpec = element.specification;
                 this.form.unitOfMeasure = element.unitOfMeasure;
+                this.form.itemOrProduct = element.itemOrProduct;
                 this.form.quantity = 1;
                 this.form.enableFlag = 'Y';
                 var retFlag = false;
