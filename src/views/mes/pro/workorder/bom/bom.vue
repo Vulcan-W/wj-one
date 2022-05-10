@@ -32,9 +32,19 @@
             size="mini"
             type="text"
             icon="el-icon-edit"
+            v-if="scope.row.status == 'PREPARE'"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['mes:pro:workorderbom:edit']"
           >修改</el-button>
+
+          <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-edit"
+            @click="handleAddSubWorkorder(scope.row)"
+            v-if="workorder.status == 'CONFIRMED' && scope.row.itemOrProduct=='PRODUCT'"
+            v-hasPermi="['mes:pro:workorder:edit']"
+          >生成工单</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -133,7 +143,7 @@ export default {
   },
   props: {
       optType: undefined,
-      workorderId: undefined
+      workorder: undefined
   },
   created() {
     this.getList();
@@ -142,7 +152,7 @@ export default {
     /** 查询生产工单BOM组成列表 */
     getList() {
       this.loading = true;
-      this.queryParams.workorderId = this.workorderId;
+      this.queryParams.workorderId = this.workorder.workorderId;
       listWorkorderbom(this.queryParams).then(response => {
         this.workorderbomList = response.rows;
         this.total = response.total;
@@ -223,6 +233,19 @@ export default {
           }
         }
       });
+    },
+    handleAddSubWorkorder(row){
+      debugger;
+      var temp = JSON.parse(JSON.stringify(this.workorder));
+      temp.workorderCode = null;
+      temp.workorderName = row.itemName + "【"+row.quantity+"】"+row.unitOfMeasure;
+      temp.productId = row.itemId;
+      temp.productCode = row.itemCode;
+      temp.productName = row.itemName;
+      temp.unitOfMeasure = row.unitOfMeasure;
+      temp.quantity = row.quantity;
+      temp.status = 'PREPARE';
+      this.$emit('handleAddSub',temp);
     },
     /** 导出按钮操作 */
     handleExport() {

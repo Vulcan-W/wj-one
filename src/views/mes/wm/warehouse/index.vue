@@ -31,7 +31,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['wm:warehouse:add']"
+          v-hasPermi="['mes:wm:warehouse:add']"
         >新增</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -42,7 +42,7 @@
           size="mini"
           :disabled="single"
           @click="handleUpdate"
-          v-hasPermi="['wm:warehouse:edit']"
+          v-hasPermi="['mes:wm:warehouse:edit']"
         >修改</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -66,7 +66,7 @@
           <el-button
             type="text"
             @click="handleView(scope.row)"
-            v-hasPermi="['mes:md:warehouse:query']"
+            v-hasPermi="['mes:wm:warehouse:query']"
           >{{scope.row.warehouseCode}}</el-button>
         </template>
       </el-table-column>
@@ -86,21 +86,21 @@
             type="text"
             icon="el-icon-s-shop"
             @click="handleLocation(scope.row.warehouseId)"
-            v-hasPermi="['wm:warehouse:edit']"
+            v-hasPermi="['mes:wm:warehouse:edit','mes:wm:warehouse:list']"
           >库区</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['wm:warehouse:edit']"
+            v-hasPermi="['mes:wm:warehouse:edit']"
           >修改</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['wm:warehouse:remove']"
+            v-hasPermi="['mes:wm:warehouse:remove']"
           >删除</el-button>
         </template>
       </el-table-column>

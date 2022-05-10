@@ -8,7 +8,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['md:bom:add']"
+          v-hasPermi="['mes:md:bom:add']"
         >新增</el-button>
         <ItemSelect ref="itemSelect" @onSelected="onItemSelected" > </ItemSelect>
       </el-col>
@@ -20,7 +20,7 @@
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['md:bom:remove']"
+          v-hasPermi="['mes:md:bom:remove']"
         >删除</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>

@@ -126,7 +126,16 @@
       default-expand-all
       :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
     >
-      <el-table-column label="工单编码" width="180" prop="workorderCode" />
+      <el-table-column label="工单编码" width="180" prop="workorderCode" >
+        <template slot-scope="scope">
+          <el-button
+            size="mini"
+            type="text"
+            @click="handleView(scope.row)"
+            v-hasPermi="['mes:pro:workorder:query']"
+          >{{scope.row.workorderCode}}</el-button>
+        </template>
+      </el-table-column>
       <el-table-column label="工单名称" width="200" align="center" prop="workorderName" :show-overflow-tooltip="true"/>
       <el-table-column label="工单来源" align="center" prop="orderSource" >
         <template slot-scope="scope">
@@ -317,7 +326,7 @@
       </el-form>
       <el-tabs type="border-card" v-if="form.workorderId != null">        
         <el-tab-pane label="BOM组成"> 
-          <Workorderbom ref="bomlist" :optType="optType" :workorderId="form.workorderId"></Workorderbom>        
+          <Workorderbom ref="bomlist" :optType="optType" :workorder="form" @handleAddSub="handleSubAdd" ></Workorderbom>        
         </el-tab-pane>
         <el-tab-pane label="物料需求"></el-tab-pane>
       </el-tabs>
@@ -499,6 +508,24 @@ export default {
       this.resetForm("queryForm");
       this.handleQuery();
     },
+    //从BOM行中直接新增
+    handleSubAdd(row){
+      debugger;
+      this.open = false;
+      this.reset();
+      this.getTreeselect();
+      if (row != null && row.workorderId) {
+        this.form = row;
+        this.form.parentId = row.workorderId;
+        this.form.workorderId = null;
+        this.form.workorderCode = null;
+      } else {
+        this.form.parentId = 0;
+      }
+      this.open = true;
+      this.title = "添加生产工单";
+      this.optType="add";
+    },
     /** 新增按钮操作 */
     handleAdd(row) {
       this.reset();
@@ -516,6 +543,18 @@ export default {
       this.open = true;
       this.title = "添加生产工单";
       this.optType="add";
+    },
+    // 查询明细按钮操作
+    handleView(row){
+      this.reset();
+      this.getTreeselect();
+      const workorderId = row.workorderId || this.ids;
+      getWorkorder(workorderId).then(response => {
+        this.form = response.data;
+        this.open = true;
+        this.title = "查看工单信息";
+        this.optType = "view";
+      });
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
