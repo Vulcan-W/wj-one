@@ -309,7 +309,7 @@ export default {
     },
     /** 返回按钮操作 */
     handleClose() {
-      const obj = { path: "/system/autocode/rule" };
+      const obj = { path: "/system/autocodeRule" };
       this.$tab.closeOpenPage(obj);
     },
     /** 重置按钮操作 */
