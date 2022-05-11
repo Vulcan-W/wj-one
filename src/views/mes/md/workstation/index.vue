@@ -196,7 +196,14 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="所属工序" prop="processId">
-              <el-input v-model="form.processId" placeholder="请选择工序" />
+              <el-select v-model="form.processId" placeholder="请选择工序">
+                <el-option
+                  v-for="item in processOptions"
+                  :key="item.processId"
+                  :label="item.processName"
+                  :value="item.processId"
+                ></el-option>
+              </el-select>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -237,7 +244,8 @@
 
 <script>
 import { listWorkstation, getWorkstation, delWorkstation, addWorkstation, updateWorkstation } from "@/api/mes/md/workstation";
-import {genCode} from "@/api/system/autocode/rule"
+import {listAllProcess} from "@/api/mes/pro/process";
+import {genCode} from "@/api/system/autocode/rule";
 import { listAllWorkshop } from "@/api/mes/md/workshop";
 export default {
   name: "Workstation",
@@ -263,6 +271,8 @@ export default {
       workstationList: [],
       //车间选项
       workshopOptions:[],
+      //工序选项
+      processOptions:[],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -301,6 +311,7 @@ export default {
   created() {
     this.getList();
     this.getWorkshops();
+    this.getProcess();
   },
   methods: {
     /** 查询工作站列表 */
@@ -314,9 +325,15 @@ export default {
     },
     //查询车间信息
     getWorkshops(){
-      listAllWorkshop().then( response => {
+      listAllWorkshop().then( response => {        
+        this.workshopOptions = response.data;
+      });
+    },
+    //查询工序信息
+    getProcess(){
+      listAllProcess().then( response =>{
         debugger;
-        this.workshopOptions =response.data;
+        this.processOptions = response.data;
       });
     },
     // 取消按钮
