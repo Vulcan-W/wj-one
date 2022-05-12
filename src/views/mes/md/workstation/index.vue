@@ -237,7 +237,7 @@
       <MachinerySelectSingle ref="machinerySelect" @onSelected="onMachineryAdd"></MachinerySelectSingle>
       <el-row v-if="form.workstationId !=null">
         <el-col :span=24>
-          <el-carousel trigger="click" type="card" :autoplay="false" height="300px">
+          <el-carousel trigger="click" type="card" :autoplay="false">
             <el-carousel-item>
               <el-card shadow="always" style="width:450px">
                 <div slot="header">
@@ -260,9 +260,9 @@
               <el-card shadow="always" style="width:400px">
                 <div slot="header">
                   <span>工装夹具</span>
-                  <el-button style="float:right; padding 5px 0" v-if="optType !='view'" type="text">新增</el-button>
+                  <el-button style="float:right; padding 5px 0" @click="handleToolTypeAdd" v-if="optType !='view'" type="text">新增</el-button>
                 </div>
-                工装夹具清单
+                <WorkStationTool ref="toolList" :optType="optType" :workstationId="form.workstationId"></WorkStationTool>
               </el-card>
             </el-carousel-item>
           </el-carousel>
@@ -285,9 +285,9 @@ import MachinerySelectSingle from "@/components/machinerySelect/single.vue";
 import {addWorkstationmachine} from "@/api/mes/md/workstationmachine";
 //人力资源选择与保存
 
-
 //工装夹具资源选择与保存
-
+import WorkStationTool from "./components/tool";
+import {addWorkstationtool} from "@/api/mes/md/workstationtool";
 
 import {listAllProcess} from "@/api/mes/pro/process";
 import {genCode} from "@/api/system/autocode/rule";
@@ -295,7 +295,7 @@ import { listAllWorkshop } from "@/api/mes/md/workshop";
 export default {
   name: "Workstation",
   dicts: ['sys_yes_no'],
-  components: {WorkStationMachine,MachinerySelectSingle},
+  components: {WorkStationMachine,MachinerySelectSingle,WorkStationTool},
   data() {
     return {
       //自动生成编码
@@ -516,6 +516,11 @@ export default {
         this.$refs.machineryList.getList();
         this.loading = false;
       });
+    },
+
+    //工装夹具资源选择 
+    handleToolTypeAdd(){
+      this.$refs.toolList.handleAdd();
     }
   }
 };
