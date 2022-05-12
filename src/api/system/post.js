@@ -9,6 +9,14 @@ export function listPost(query) {
   })
 }
 
+// 查询所有可用岗位,以列表方式返回
+export function listAllPost() {
+  return request({
+    url: '/system/post/listAll',
+    method: 'get'
+  })
+}
+
 // 查询岗位详细
 export function getPost(postId) {
   return request({

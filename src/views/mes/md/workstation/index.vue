@@ -251,9 +251,9 @@
               <el-card shadow="always" style="width:400px">
                 <div slot="header">
                   <span>人力资源</span>
-                  <el-button style="float:right; padding 3px 0" v-if="optType !='view'" type="text">新增</el-button>
+                  <el-button style="float:right; padding 3px 0" @click="handlePostAdd" v-if="optType !='view'" type="text">新增</el-button>
                 </div>
-                人员清单
+                <Workstationworker ref="postList" :optType="optType" :workstationId="form.workstationId"></Workstationworker>
               </el-card>
             </el-carousel-item>
             <el-carousel-item>
@@ -284,10 +284,10 @@ import WorkStationMachine from "./components/machine";
 import MachinerySelectSingle from "@/components/machinerySelect/single.vue";
 import {addWorkstationmachine} from "@/api/mes/md/workstationmachine";
 //人力资源选择与保存
+import Workstationworker from "./components/worker";
 
 //工装夹具资源选择与保存
 import WorkStationTool from "./components/tool";
-import {addWorkstationtool} from "@/api/mes/md/workstationtool";
 
 import {listAllProcess} from "@/api/mes/pro/process";
 import {genCode} from "@/api/system/autocode/rule";
@@ -295,7 +295,7 @@ import { listAllWorkshop } from "@/api/mes/md/workshop";
 export default {
   name: "Workstation",
   dicts: ['sys_yes_no'],
-  components: {WorkStationMachine,MachinerySelectSingle,WorkStationTool},
+  components: {WorkStationMachine,MachinerySelectSingle,Workstationworker,WorkStationTool},
   data() {
     return {
       //自动生成编码
@@ -517,8 +517,11 @@ export default {
         this.loading = false;
       });
     },
-
-    //工装夹具资源选择 
+    //人力资源-岗位新增
+    handlePostAdd(){
+      this.$refs.postList.handleAdd();
+    },
+    //工装夹具资源新增
     handleToolTypeAdd(){
       this.$refs.toolList.handleAdd();
     }
