@@ -103,7 +103,7 @@
 
     <el-table v-loading="loading" :data="workstationList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="工作站编码" align="center" prop="workstationCode" >
+      <el-table-column label="工作站编号" align="center" prop="workstationCode" >
         <template slot-scope="scope">
           <el-button
             type="text"
@@ -155,7 +155,7 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="120px">
         <el-row>
           <el-col :span="8">
-            <el-form-item label="工作站编码" prop="workstationCode">
+            <el-form-item label="工作站编号" prop="workstationCode">
               <el-input v-model="form.workstationCode" placeholder="请输入工作站编码" />
             </el-form-item>
           </el-col>
@@ -233,10 +233,45 @@
           </el-col>
         </el-row>
       </el-form>
+      <el-divider content-position="center" v-if="form.workstationId !=null">工作站资源</el-divider>
+      <MachinerySelectSingle ref="machinerySelect" @onSelected="onMachineryAdd"></MachinerySelectSingle>
+      <el-row v-if="form.workstationId !=null">
+        <el-col :span=24>
+          <el-carousel trigger="click" type="card" :autoplay="false" height="300px">
+            <el-carousel-item>
+              <el-card shadow="always" style="width:450px">
+                <div slot="header">
+                  <span>设备资源</span>
+                  <el-button style="float:right; padding 3px 0" @click="handleMachineryAdd" v-if="optType !='view'" type="text">新增</el-button>
+                </div>
+                <WorkStationMachine ref="machineryList" :optType="optType" :workstationId="form.workstationId" style="align:center"></WorkStationMachine>                
+              </el-card>
+            </el-carousel-item>
+            <el-carousel-item>
+              <el-card shadow="always" style="width:400px">
+                <div slot="header">
+                  <span>人力资源</span>
+                  <el-button style="float:right; padding 3px 0" v-if="optType !='view'" type="text">新增</el-button>
+                </div>
+                人员清单
+              </el-card>
+            </el-carousel-item>
+            <el-carousel-item>
+              <el-card shadow="always" style="width:400px">
+                <div slot="header">
+                  <span>工装夹具</span>
+                  <el-button style="float:right; padding 5px 0" v-if="optType !='view'" type="text">新增</el-button>
+                </div>
+                工装夹具清单
+              </el-card>
+            </el-carousel-item>
+          </el-carousel>
+        </el-col>
+      </el-row>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="cancel" v-if="optType =='view'">返回</el-button>
-        <el-button type="primary" @click="submitForm" v-else>确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm" v-else>保 存</el-button>
+        <el-button @click="cancel">关 闭</el-button>
       </div>
     </el-dialog>
   </div>
@@ -244,12 +279,23 @@
 
 <script>
 import { listWorkstation, getWorkstation, delWorkstation, addWorkstation, updateWorkstation } from "@/api/mes/md/workstation";
+//设备资源选择与保存
+import WorkStationMachine from "./components/machine";
+import MachinerySelectSingle from "@/components/machinerySelect/single.vue";
+import {addWorkstationmachine} from "@/api/mes/md/workstationmachine";
+//人力资源选择与保存
+
+
+//工装夹具资源选择与保存
+
+
 import {listAllProcess} from "@/api/mes/pro/process";
 import {genCode} from "@/api/system/autocode/rule";
 import { listAllWorkshop } from "@/api/mes/md/workshop";
 export default {
   name: "Workstation",
   dicts: ['sys_yes_no'],
+  components: {WorkStationMachine,MachinerySelectSingle},
   data() {
     return {
       //自动生成编码
@@ -297,7 +343,7 @@ export default {
       // 表单校验
       rules: {
         workstationCode: [
-          { required: true, message: "工作站编码不能为空", trigger: "blur" }
+          { required: true, message: "工作站编号不能为空", trigger: "blur" }
         ],
         workstationName: [
           { required: true, message: "工作站名称不能为空", trigger: "blur" }
@@ -332,7 +378,6 @@ export default {
     //查询工序信息
     getProcess(){
       listAllProcess().then( response =>{
-        debugger;
         this.processOptions = response.data;
       });
     },
@@ -457,6 +502,20 @@ export default {
       }else{
         this.form.workstationCode = null;
       }
+    },
+    //设备资源选择弹出
+    handleMachineryAdd(){
+      this.$refs.machinerySelect.showFlag = true;
+    },
+    //设备资源选择回调
+    onMachineryAdd(rows){
+      debugger
+      this.loading = true;
+      rows.workstationId = this.form.workstationId;
+      addWorkstationmachine(rows).then(response =>{
+        this.$refs.machineryList.getList();
+        this.loading = false;
+      });
     }
   }
 };
