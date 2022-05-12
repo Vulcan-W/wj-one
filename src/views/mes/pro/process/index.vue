@@ -132,7 +132,7 @@
               <el-input v-model="form.processCode" placeholder="请输入工序编码" />
             </el-form-item>
           </el-col>
-          <el-col :span="4">
+          <el-col :span="3">
             <el-form-item  label-width="80">
               <el-switch v-model="autoGenFlag"
                   active-color="#13ce66"
@@ -141,14 +141,12 @@
               </el-switch>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
+          <el-col :span="7">
             <el-form-item label="工序名称" prop="processName">
               <el-input v-model="form.processName" placeholder="请输入工序名称" />
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
+          <el-col :span="6">
             <el-form-item label="是否启用" prop="enableFlag">
                <el-radio-group v-model="form.enableFlag" disabled v-if="optType=='view'">
                 <el-radio
@@ -169,12 +167,21 @@
         </el-row>
         <el-row>
           <el-col :span="24">
+            <el-form-item label="工序说明" prop="attention">
+              <el-input v-model="form.attention" type="textarea" placeholder="请输入内容" />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="24">
             <el-form-item label="备注" prop="remark">
               <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
             </el-form-item>
           </el-col>
         </el-row>
       </el-form>
+      <el-divider content-position="center" v-if="form.processId !=null">操作步骤</el-divider>
+      <Processcontent v-if="form.processId !=null" :optType="optType" :processId="form.processId"></Processcontent>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="cancel" v-if="optType =='view'">返回</el-button>
         <el-button type="primary" @click="submitForm" v-else>确 定</el-button>
@@ -186,10 +193,12 @@
 
 <script>
 import { listProcess, getProcess, delProcess, addProcess, updateProcess } from "@/api/mes/pro/process";
+import Processcontent from "./content.vue";
 import {genCode} from "@/api/system/autocode/rule"
 export default {
   name: "Process",
   dicts: ['sys_yes_no'],
+  components: {Processcontent},
   data() {
     return {
       //自动生成编码
@@ -261,6 +270,7 @@ export default {
         processId: null,
         processCode: null,
         processName: null,
+        attention: null,        
         enableFlag: 'Y',
         remark: null,
         createBy: null,
