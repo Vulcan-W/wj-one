@@ -38,20 +38,24 @@
 
     <el-table v-loading="loading" :data="routeprocessList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="工序编码" align="center" prop="processCode" />
-      <el-table-column label="工序名称" align="center" prop="processName" />
-      <el-table-column label="序号" align="center" prop="orderNum" />
-      <el-table-column label="下一道工序" align="center" prop="nextProcessName" />
-      <el-table-column label="与下一道工序关系" align="center" prop="linkType">
+      <el-table-column label="序号" align="center" fixed prop="orderNum" />
+      <el-table-column label="工序编码" width="120px" fixed align="center" prop="processCode" />
+      <el-table-column label="工序名称" width="150px" fixed align="center" prop="processName" />
+
+      <el-table-column label="下一道工序" width="150px"  align="center" prop="nextProcessName" />
+      <el-table-column label="与下一道工序关系" width="150px" align="center" prop="linkType">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.mes_link_type" :value="scope.row.linkType"/>
         </template>
       </el-table-column>
       <el-table-column label="准备时间" align="center" prop="defaultPreTime" />
       <el-table-column label="等待时间" align="center" prop="defaultSufTime" />
-      <el-table-column label="甘特图显示颜色" align="center" prop="colorCode" />
-      <el-table-column label="备注" align="center" prop="remark" />
-      <el-table-column label="操作" align="center" v-if="optType !='view'" class-name="small-padding fixed-width">
+      <el-table-column label="甘特图显示颜色" align="center" prop="colorCode" >
+        <template slot-scope="scope">
+            <el-color-picker v-model="scope.row.colorCode" disabled="true"></el-color-picker>
+        </template>
+      </el-table-column>
+      <el-table-column label="操作" align="center" fixed="right" v-if="optType !='view'" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -122,10 +126,13 @@
                     </el-tooltip>
                 </el-form-item>
             </el-col>
-            <el-col :span="12">
+            <el-col :span="5">
                 <el-form-item label="甘特图显示颜色" prop="colorCode">
-                    <el-color-picker v-model="form.colorCode"></el-color-picker>                    
+                    <el-color-picker v-model="form.colorCode"></el-color-picker>                        
                 </el-form-item>
+            </el-col>
+            <el-col :span="7">
+                    <el-input v-model="form.colorCode" maxlength="7" placeholder="请输入颜色编码在左侧选择颜色" />                
             </el-col>
         </el-row>
         <el-row>
