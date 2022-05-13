@@ -149,7 +149,20 @@
           </el-col>
           <el-col :span="6">
             <el-form-item label="是否启用" prop="enableFlag">
-              <el-input v-model="form.enableFlag" placeholder="请输入是否启用" />
+              <el-radio-group v-model="form.enableFlag" disabled v-if="optType=='view'">
+                <el-radio
+                  v-for="dict in dict.type.sys_yes_no"
+                  :key="dict.value"
+                  :label="dict.value"
+                >{{dict.label}}</el-radio>
+              </el-radio-group>
+              <el-radio-group v-model="form.enableFlag" v-else>
+                <el-radio
+                  v-for="dict in dict.type.sys_yes_no"
+                  :key="dict.value"
+                  :label="dict.value"
+                >{{dict.label}}</el-radio>
+              </el-radio-group>
             </el-form-item>
           </el-col>
         </el-row>
@@ -168,6 +181,8 @@
           </el-col>
         </el-row>
       </el-form>
+      <el-divider content-position="center" v-if="form.routeId !=null">工艺组成</el-divider>
+      <Routeprocess v-if="form.routeId !=null" :optType="optType" :routeId="form.routeId"></Routeprocess>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="cancel" v-if="optType =='view'">返回</el-button>
         <el-button type="primary" @click="submitForm" v-else>确 定</el-button>
@@ -179,10 +194,12 @@
 
 <script>
 import { listProroute, getProroute, delProroute, addProroute, updateProroute } from "@/api/mes/pro/proroute";
+import Routeprocess from "./routeprocess";
 import {genCode} from "@/api/system/autocode/rule"
 export default {
   name: "Proroute",
   dicts: ['sys_yes_no'],
+  components: {Routeprocess},
   data() {
     return {
       //自动生成编码
