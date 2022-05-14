@@ -52,24 +52,24 @@
       <el-table-column label="等待时间" align="center" prop="defaultSufTime" />
       <el-table-column label="甘特图显示颜色" align="center" prop="colorCode" >
         <template slot-scope="scope">
-            <el-color-picker v-model="scope.row.colorCode" disabled="true"></el-color-picker>
+            <el-color-picker v-model="scope.row.colorCode" disabled></el-color-picker>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" fixed="right" v-if="optType !='view'" class-name="small-padding fixed-width">
+      <el-table-column label="操作" align="center" fixed="right" width="150px" v-if="optType !='view'" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['pro:routeprocess:edit']"
+            v-hasPermi="['mes:pro:routeprocess:edit']"
           >修改</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['pro:routeprocess:remove']"
+            v-hasPermi="['mes:pro:routeprocess:remove']"
           >删除</el-button>
         </template>
       </el-table-column>

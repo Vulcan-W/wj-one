@@ -96,7 +96,7 @@
         </template>
       </el-table-column>
       <el-table-column label="备注" align="center" prop="remark" />
-      <el-table-column label="操作" v-if="optType !='view'" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -181,8 +181,14 @@
           </el-col>
         </el-row>
       </el-form>
-      <el-divider content-position="center" v-if="form.routeId !=null">工艺组成</el-divider>
-      <Routeprocess v-if="form.routeId !=null" :optType="optType" :routeId="form.routeId"></Routeprocess>
+      <el-tabs type="border-card" v-if="form.routeId != null">        
+        <el-tab-pane label="组成工序">
+          <Routeprocess v-if="form.routeId !=null" :optType="optType" :routeId="form.routeId"></Routeprocess>         
+        </el-tab-pane>
+        <el-tab-pane label="关联产品">
+          <Routeproduct v-if="form.routeId !=null" :optType="optType" :routeId="form.routeId"></Routeproduct>
+        </el-tab-pane>
+      </el-tabs>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="cancel" v-if="optType =='view'">返回</el-button>
         <el-button type="primary" @click="submitForm" v-else>确 定</el-button>
@@ -195,11 +201,12 @@
 <script>
 import { listProroute, getProroute, delProroute, addProroute, updateProroute } from "@/api/mes/pro/proroute";
 import Routeprocess from "./routeprocess";
+import Routeproduct from "./product";
 import {genCode} from "@/api/system/autocode/rule"
 export default {
   name: "Proroute",
   dicts: ['sys_yes_no'],
-  components: {Routeprocess},
+  components: {Routeprocess,Routeproduct},
   data() {
     return {
       //自动生成编码
@@ -313,7 +320,7 @@ export default {
       getProroute(routeId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "查看工序信息";
+        this.title = "查看工艺线路信息";
         this.optType = "view";
       });
     },

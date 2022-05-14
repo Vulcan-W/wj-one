@@ -78,7 +78,7 @@
           <el-input v-model="form.unitOfMeasure" readonly placeholder="请输入BOM物料单位" />
         </el-form-item>
         <el-form-item label="物料使用比例" prop="quantity">
-          <el-input-number  :precision="2" :step="0.1" :min="0"  v-model="form.quantity" placeholder="请输入物料使用比例" />
+          <el-input-number  :precision="4" :step="0.1" :min="0"  v-model="form.quantity" placeholder="请输入物料使用比例" />
         </el-form-item>
         <el-form-item label="备注" prop="remark">
           <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
@@ -124,7 +124,7 @@ components: { ItemSelect },
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        itemId: null,
+        itemId: this.itemId,
         bomItemId: null,
         bomItemCode: null,
         bomItemName: null,

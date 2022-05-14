@@ -79,7 +79,7 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        workstationId: null,
+        workstationId: this.workstationId,
         toolTypeId: null,
         toolTypeCode: null,
         toolTypeName: null,
