@@ -72,53 +72,6 @@
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
       </el-form-item>
     </el-form>
-
-<el-row :gutter="10" class="mb8">
-      <el-col :span="1.5">
-        <el-button
-          type="primary"
-          plain
-          icon="el-icon-plus"
-          size="mini"
-          @click="handleAdd"
-          v-hasPermi="['mes:pro:workorder:add']"
-        >新增</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="success"
-          plain
-          icon="el-icon-edit"
-          size="mini"
-          :disabled="single"
-          @click="handleUpdate"
-          v-hasPermi="['mes:pro:workorder:edit']"
-        >修改</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="danger"
-          plain
-          icon="el-icon-delete"
-          size="mini"
-          :disabled="multiple"
-          @click="handleDelete"
-          v-hasPermi="['mes:pro:workorder:remove']"
-        >删除</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="warning"
-          plain
-          icon="el-icon-download"
-          size="mini"
-          @click="handleExport"
-          v-hasPermi="['mes:pro:workorder:export']"
-        >导出</el-button>
-      </el-col>
-      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
-    </el-row>
-
     <el-table
       v-loading="loading"
       :data="workorderList"
@@ -158,7 +111,7 @@
           <span>{{ parseTime(scope.row.requestDate, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="单据状态" align="center" prop="status">
+      <el-table-column label="排产状态" align="center" prop="status">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.mes_order_status" :value="scope.row.status"/>
         </template>
@@ -169,81 +122,49 @@
             size="mini"
             type="text"
             icon="el-icon-edit"
-            v-if="scope.row.status =='PREPARE'"
+            v-if="scope.row.status =='CONFIRMED'"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['mes:pro:workorder:edit']"
-          >修改</el-button>
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-plus"
-            v-if="scope.row.status =='CONFIRMED'"
-            @click="handleAdd(scope.row)"
-            v-hasPermi="['mes:pro:workorder:add']"
-          >新增</el-button>
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-delete"
-            v-if="scope.row.status =='PREPARE'"
-            @click="handleDelete(scope.row)"
-            v-hasPermi="['mes:pro:workorder:remove']"
-          >删除</el-button>
+          >排产</el-button>
         </template>
       </el-table-column>
     </el-table>
 
     <!-- 添加或修改生产工单对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="960px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+      <el-form ref="form" :model="form" label-width="80px">
         <el-row>
-          <el-col :span="8">
+          <el-col :span="12">
             <el-form-item label="工单编号" prop="workorderCode">
-              <el-input v-model="form.workorderCode" placeholder="请输入工单编号" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="4">
-            <el-form-item  label-width="80">
-              <el-switch v-model="autoGenFlag"
-                  active-color="#13ce66"
-                  active-text="自动生成"
-                  @change="handleAutoGenChange(autoGenFlag)" v-if="optType != 'view' && form.status =='PREPARE'">               
-              </el-switch>
+              <el-input v-model="form.workorderCode" readonly="readonly" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="工单名称" prop="workorderName">
-              <el-input v-model="form.workorderName" placeholder="请输入工单名称" />
+              <el-input v-model="form.workorderName" readonly="readonly" />
             </el-form-item>
           </el-col>          
         </el-row>
         <el-row>
           <el-col :span="8">
             <el-form-item label="来源类型" prop="orderSource">              
-              <el-radio-group v-model="form.orderSource" disabled v-if="optType=='view'">
+              <el-radio-group v-model="form.orderSource" disabled>
                 <el-radio
                   v-for="dict in dict.type.mes_workorder_sourcetype"
                   :key="dict.value"
                   :label="dict.value"
                 >{{dict.label}}</el-radio>
-              </el-radio-group>
-              <el-radio-group v-model="form.orderSource" v-else>
-                <el-radio
-                  v-for="dict in dict.type.mes_workorder_sourcetype"
-                  :key="dict.value"
-                  :label="dict.value"
-                >{{dict.label}}</el-radio>
-              </el-radio-group>
+              </el-radio-group>            
             </el-form-item>
           </el-col>                    
           <el-col :span="8" v-if="form.orderSource == 'ORDER'">
             <el-form-item label="订单编号" prop="sourceCode">
-              <el-input v-model="form.sourceCode" placeholder="请输入订单编号" />
+              <el-input v-model="form.sourceCode" readonly="readonly" />
             </el-form-item>
           </el-col>         
           <el-col :span="8">
-            <el-form-item label="单据状态" prop="status">
-              <el-select v-model="form.status" disabled placeholder="请选择单据状态">
+            <el-form-item label="排产状态" prop="status">
+              <el-select v-model="form.status" disabled>
                 <el-option
                   v-for="dict in dict.type.mes_order_status"
                   :key="dict.value"
@@ -257,39 +178,37 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="产品编号" prop="productCode">
-              <el-input v-model="form.productCode" placeholder="请输入产品编号" >
-                <el-button slot="append" @click="handleSelectProduct" icon="el-icon-search"></el-button>
+              <el-input v-model="form.productCode" readonly="readonly" >
               </el-input>
-              <ItemSelect ref="itemSelect" @onSelected="onItemSelected" > </ItemSelect>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="产品名称" prop="productName">
-              <el-input v-model="form.productName" placeholder="请输入产品名称" />
+              <el-input v-model="form.productName" readonly="readonly" />
             </el-form-item>
           </el-col>          
         </el-row>
         <el-row>
           <el-col :span="12">
             <el-form-item label="规格型号" prop="productSpc">
-              <el-input v-model="form.productSpc" placeholder="请输入规格型号" />
+              <el-input v-model="form.productSpc" readonly="readonly" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="单位" prop="unitOfMeasure">
-              <el-input v-model="form.unitOfMeasure" placeholder="请输入单位" />
+              <el-input v-model="form.unitOfMeasure" readonly="readonly" />
             </el-form-item>
           </el-col>          
         </el-row>
         <el-row>
           <el-col :span="12">
             <el-form-item label="工单数量" prop="quantity">
-              <el-input-number :min="1" v-model="form.quantity" placeholder="请输入生产数量" />
+              <el-input v-model="form.quantity" readonly="readonly" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="需求日期" prop="requestDate">
-              <el-date-picker clearable
+              <el-date-picker disabled
                 v-model="form.requestDate"
                 type="date"
                 value-format="yyyy-MM-dd"
@@ -300,39 +219,34 @@
         </el-row>
         <el-row v-if="form.orderSource == 'ORDER'">
           <el-col :span="12">
-            <el-form-item label="客户编码" prop="clientCode">
-              <el-input v-model="form.clientCode" placeholder="请输入客户编码" >
-                <el-button slot="append" @click="handleSelectClient" icon="el-icon-search"></el-button>
+            <el-form-item label="客户编号" prop="clientCode">
+              <el-input v-model="form.clientCode" readonly="readonly" >
               </el-input>
-              <ClientSelect ref="clientSelect" @onSelected="onClientSelected" > </ClientSelect>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="客户名称" prop="clientName">
-              <el-input v-model="form.clientName" placeholder="请输入客户名称" />
+              <el-input v-model="form.clientName" readonly="readonly" />
             </el-form-item>
           </el-col>
-          <el-col></el-col>
-        </el-row>
-        <el-row>
-          <el-col></el-col>
-          <el-col></el-col>
           <el-col></el-col>
         </el-row>
         <el-row>
           <el-col :span="24">
             <el-form-item label="备注" prop="remark">
-              <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
+              <el-input v-model="form.remark" type="textarea" readonly="readonly" />
             </el-form-item>
           </el-col>
         </el-row>
       </el-form>
-      <el-tabs type="border-card" v-if="form.workorderId != null">        
-        <el-tab-pane label="BOM组成"> 
-          <Workorderbom ref="bomlist" :optType="optType" :workorder="form" @handleAddSub="handleSubAdd" ></Workorderbom>        
-        </el-tab-pane>
-        <el-tab-pane label="物料需求"></el-tab-pane>
-      </el-tabs>
+      <el-steps :active="activeProcess" align-center simple>
+        <el-step  v-for="(item,index) in processOptions"
+                  :title="item.processName" @click.native="handleStepClick(index)">           
+        </el-step>
+      </el-steps>
+      <el-card v-for=" (item,index) in processOptions " :key="index" v-if="activeProcess == index">
+        <ProTask :workorderId="form.workorderId" :processId="item.processId" :colorCode="item.colorCode" :optType="optType"></ProTask>
+      </el-card>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="cancel" v-if="optType =='view' || form.status !='PREPARE' ">返回</el-button>
         <el-button type="primary" @click="submitForm" v-if="form.status =='PREPARE' && optType !='view' ">确 定</el-button>
@@ -345,10 +259,8 @@
 
 <script>
 import { listWorkorder, getWorkorder, delWorkorder, addWorkorder, updateWorkorder } from "@/api/mes/pro/workorder";
-import Workorderbom from "./bom/bom.vue";
-import ItemSelect  from "@/components/itemSelect/single.vue";
-import ClientSelect from "@/components/clientSelect/single.vue";
-import {genCode} from "@/api/system/autocode/rule"
+import { listProductprocess } from "@/api/mes/pro/routeprocess";
+import ProTask from "./proTask.vue";
 import Treeselect from "@riophae/vue-treeselect";
 import "@riophae/vue-treeselect/dist/vue-treeselect.css";
 
@@ -357,15 +269,14 @@ export default {
   dicts: ['mes_order_status','mes_workorder_sourcetype'],
   components: {
     Treeselect,
-    ItemSelect ,
-    ClientSelect,
-    Workorderbom
+    ProTask
   },
   data() {
     return {
       //自动生成编码
       autoGenFlag:false,
       optType: undefined,
+      activeProcess: 0,
       // 遮罩层
       loading: true,
       // 显示搜索条件
@@ -378,6 +289,8 @@ export default {
       workorderList: [],
       // 生产工单树选项
       workorderOptions: [],
+      //当前生产工单中产品对应的工序列表
+      processOptions: [],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -407,36 +320,6 @@ export default {
       },
       // 表单参数
       form: {},
-      // 表单校验
-      rules: {
-        workorderCode: [
-          { required: true, message: "工单编码不能为空", trigger: "blur" }
-        ],
-        workorderName: [
-          { required: true, message: "工单名称不能为空", trigger: "blur" }
-        ],
-        orderSource: [
-          { required: true, message: "来源类型不能为空", trigger: "blur" }
-        ],
-        productId: [
-          { required: true, message: "产品不能为空", trigger: "blur" }
-        ],
-        productCode: [
-          { required: true, message: "产品编号不能为空", trigger: "blur" }
-        ],
-        productName: [
-          { required: true, message: "产品名称不能为空", trigger: "blur" }
-        ],
-        unitOfMeasure: [
-          { required: true, message: "单位不能为空", trigger: "blur" }
-        ],
-        quantity: [
-          { required: true, message: "生产数量不能为空", trigger: "blur" }
-        ],
-        requestDate: [
-          { required: true, message: "需求日期不能为空", trigger: "blur" }
-        ],
-      }
     };
   },
   created() {
@@ -451,6 +334,12 @@ export default {
         this.loading = false;
       });
     },
+    getProcess(){
+        listProductprocess(this.form.productId).then(response =>{
+            this.processOptions = response.data;
+        });
+    },
+
     /** 转换生产工单数据结构 */
     normalizer(node) {
       if (node.children && !node.children.length) {
@@ -508,6 +397,10 @@ export default {
       this.autoGenFlag = false;
       this.resetForm("form");
     },
+    //Step点击
+    handleStepClick(index){
+        this.activeProcess =index;
+    },
     /** 搜索按钮操作 */
     handleQuery() {
       this.getList();
@@ -538,6 +431,7 @@ export default {
     /** 新增按钮操作 */
     handleAdd(row) {
       this.reset();
+      this.getProcess();
       this.getTreeselect();
       if (row != null && row.workorderId) {
         this.form.parentId = row.workorderId;
@@ -556,6 +450,7 @@ export default {
     // 查询明细按钮操作
     handleView(row){
       this.reset();
+      this.getProcess();
       this.getTreeselect();
       const workorderId = row.workorderId || this.ids;
       getWorkorder(workorderId).then(response => {
@@ -568,6 +463,7 @@ export default {
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
+      this.getProcess();
       this.getTreeselect();
       if (row != null) {
         this.form.parentId = row.workorderId;

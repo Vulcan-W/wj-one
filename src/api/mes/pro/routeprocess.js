@@ -9,6 +9,17 @@ export function listRouteprocess(query) {
   })
 }
 
+
+// 查询产品的工艺组成列表
+export function listProductprocess(query) {
+  return request({
+    url: '/mes/pro/routeprocess/listProductProcess',
+    method: 'get',
+    params: query
+  })
+}
+
+
 // 查询工艺组成详细
 export function getRouteprocess(recordId) {
   return request({
