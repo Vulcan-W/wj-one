@@ -56,13 +56,13 @@
       <el-table-column label="已生产数量" align="center" width="100px" prop="quantityProduced" />
       <el-table-column label="开始生产时间" align="center" prop="startTime" width="180">
         <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.startTime, '{y}-{m}-{d}') }}</span>
+          <span>{{ parseTime(scope.row.startTime,'{y}-{m}-{d} {h}') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="生产时长" align="center" prop="duration" />
-      <el-table-column label="完成生产时间" align="center" prop="endTime" width="180">
+      <el-table-column label="预计完成时间" align="center" prop="endTime" width="180">
         <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.endTime, '{y}-{m}-{d}') }}</span>
+          <span>{{ parseTime(scope.row.endTime,'{y}-{m}-{d} {h}') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="显示颜色" align="center" prop="colorCode" >
@@ -132,7 +132,7 @@
                 v-model="form.startTime"
                 @change="calculateEndTime"
                 type="datetime"
-                value-format="yyyy-MM-dd HH:00:00"
+                value-format="yyyy-MM-dd HH"
                 placeholder="请选择开始生产时间">
               </el-date-picker>
             </el-form-item>
@@ -147,7 +147,7 @@
               <el-date-picker clearable disabled
                 v-model="form.endTime"
                 type="datetime"
-                value-format="yyyy-MM-dd HH:00:00">
+                value-format="yyyy-MM-dd HH">
               </el-date-picker>
             </el-form-item>
           </el-col>
@@ -272,12 +272,12 @@ export default {
           startDate = Date.parse(new Date(startDate))/1000; 
           startDate += (3600) * this.form.duration; 
           let endDate = new Date(parseInt(startDate) * 1000); 
-          this.form.endTime =new Date(endDate.getFullYear() + '-' 
+          this.form.endTime =endDate.getFullYear() + '-' 
                         + (endDate.getMonth()+1) + '-' 
                         + endDate.getDate() + ' '
                           + endDate.getHours() + ':' 
                           + endDate.getMinutes() + ':' 
-                          + endDate.getSeconds());
+                          + endDate.getSeconds();
 
       }
     },
@@ -358,8 +358,8 @@ export default {
       const taskId = row.taskId || this.ids
       getProtask(taskId).then(response => {
         this.form = response.data;
-        this.form.startTime = new Date(response.data.startTime);
-        this.form.endTime = new Date(response.data.endTime);
+        // this.form.startTime = new Date(response.data.startTime);
+        // this.form.endTime = new Date(response.data.endTime);
         this.open = true;
         this.title = "修改生产任务";
       });
