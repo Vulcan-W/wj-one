@@ -130,24 +130,24 @@
             <el-form-item label="开始时间" prop="startTime">
               <el-date-picker clearable
                 v-model="form.startTime"
+                @change="calculateEndTime"
                 type="datetime"
-                value-format="yyyy-MM-dd HH"
+                value-format="yyyy-MM-dd HH:00:00"
                 placeholder="请选择开始生产时间">
               </el-date-picker>
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="生产时长" prop="duration">
-              <el-input v-model="form.duration" placeholder="请输入生产时长" />
+              <el-input v-model="form.duration" @change="calculateEndTime" placeholder="请输入生产时长" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="完成时间" prop="endTime">
-              <el-date-picker clearable
+              <el-date-picker clearable disabled
                 v-model="form.endTime"
                 type="datetime"
-                value-format="yyyy-MM-dd HH"
-                placeholder="请选择完成生产时间">
+                value-format="yyyy-MM-dd HH:00:00">
               </el-date-picker>
             </el-form-item>
           </el-col>
@@ -229,6 +229,12 @@ export default {
         ],
         quantity: [
           { required: true, message: "排产数量不能为空", trigger: "blur" }
+        ],
+        startTime: [
+          { required: true, message: "请选择开始生产日期",trigger: "blur"}
+        ],
+        duration: [
+          { required: true, message: "清输入估算的生产用时",trigger: "blur"}
         ]
       }
     };
@@ -251,6 +257,29 @@ export default {
         this.total = response.total;
         this.loading = false;
       });
+    },
+    //计算结束时间
+    calculateEndTime(){
+      debugger;
+      if(this.form.startTime !=null && this.form.duration !=null){
+          let startDate = new Date(this.form.startTime);
+          startDate = startDate.getFullYear() + '-' 
+              + (startDate.getMonth()+1) + '-'   
+              + startDate.getDate() + ' '
+                  + startDate.getHours() + ':' 
+                  + startDate.getMinutes() + ':' 
+                  + startDate.getSeconds();
+          startDate = Date.parse(new Date(startDate))/1000; 
+          startDate += (3600) * this.form.duration; 
+          let endDate = new Date(parseInt(startDate) * 1000); 
+          this.form.endTime =new Date(endDate.getFullYear() + '-' 
+                        + (endDate.getMonth()+1) + '-' 
+                        + endDate.getDate() + ' '
+                          + endDate.getHours() + ':' 
+                          + endDate.getMinutes() + ':' 
+                          + endDate.getSeconds());
+
+      }
     },
     // 取消按钮
     cancel() {
@@ -329,6 +358,8 @@ export default {
       const taskId = row.taskId || this.ids
       getProtask(taskId).then(response => {
         this.form = response.data;
+        this.form.startTime = new Date(response.data.startTime);
+        this.form.endTime = new Date(response.data.endTime);
         this.open = true;
         this.title = "修改生产任务";
       });

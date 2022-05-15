@@ -77,9 +77,6 @@
       <el-table-column label="产品物料名称" width="150px" align="center" prop="itemName" :show-overflow-tooltip="true"/>
       <el-table-column label="规格型号" align="center" prop="specification" :show-overflow-tooltip="true"/>
       <el-table-column label="单位" align="center" prop="unitOfMeasure" />
-      <el-table-column label="生产数量" align="center" prop="quantity" />
-      <el-table-column label="生产用时" align="center" prop="productionTime" />
-      <el-table-column label="时间单位" align="center" prop="timeUnitType">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.mes_time_type" :value="scope.row.timeUnitType"/>
         </template>
@@ -142,7 +139,7 @@
                 </el-form-item>
             </el-col>
         </el-row>
-        <el-row>
+        <!-- <el-row>
             <el-col :span="8">
                 <el-form-item label="生产数量" prop="quantity">
                     <el-input-number :min="1" v-model="form.quantity" placeholder="请输入生产数量" />
@@ -165,7 +162,7 @@
                     </el-select>
                 </el-form-item>
             </el-col>
-        </el-row>
+        </el-row> -->
         <el-row>
             <el-col :span="24">
                 <el-form-item label="备注" prop="remark">

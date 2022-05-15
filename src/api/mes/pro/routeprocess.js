@@ -11,11 +11,10 @@ export function listRouteprocess(query) {
 
 
 // 查询产品的工艺组成列表
-export function listProductprocess(query) {
+export function listProductprocess(productId) {
   return request({
-    url: '/mes/pro/routeprocess/listProductProcess',
-    method: 'get',
-    params: query
+    url: '/mes/pro/routeprocess/listProductProcess/'+productId,
+    method: 'get'
   })
 }
 

@@ -239,12 +239,12 @@
           </el-col>
         </el-row>
       </el-form>
-      <el-steps :active="activeProcess" align-center simple>
+      <el-steps :active="activeProcess" v-if="form.workorderId !=null" align-center simple>
         <el-step  v-for="(item,index) in processOptions"
                   :title="item.processName" @click.native="handleStepClick(index)">           
         </el-step>
       </el-steps>
-      <el-card v-for=" (item,index) in processOptions " :key="index" v-if="activeProcess == index">
+      <el-card v-for=" (item,index) in processOptions " :key="index" v-if="activeProcess == index && form.workorderId !=null">
         <ProTask :workorderId="form.workorderId" :processId="item.processId" :colorCode="item.colorCode" :optType="optType"></ProTask>
       </el-card>
       <div slot="footer" class="dialog-footer">
@@ -392,8 +392,9 @@ export default {
         createBy: null,
         createTime: null,
         updateBy: null,
-        updateTime: null
+        updateTime: null        
       };
+      this.activeProcess =0;
       this.autoGenFlag = false;
       this.resetForm("form");
     },
@@ -431,7 +432,6 @@ export default {
     /** 新增按钮操作 */
     handleAdd(row) {
       this.reset();
-      this.getProcess();
       this.getTreeselect();
       if (row != null && row.workorderId) {
         this.form.parentId = row.workorderId;
@@ -449,12 +449,12 @@ export default {
     },
     // 查询明细按钮操作
     handleView(row){
-      this.reset();
-      this.getProcess();
+      this.reset();      
       this.getTreeselect();
       const workorderId = row.workorderId || this.ids;
       getWorkorder(workorderId).then(response => {
         this.form = response.data;
+        this.getProcess();
         this.open = true;
         this.title = "查看工单信息";
         this.optType = "view";
@@ -463,13 +463,14 @@ export default {
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
-      this.getProcess();
       this.getTreeselect();
       if (row != null) {
         this.form.parentId = row.workorderId;
       }
       getWorkorder(row.workorderId).then(response => {
+        debugger;
         this.form = response.data;
+        this.getProcess();
         this.open = true;
         this.title = "修改生产工单";
         this.optType="edit";
