@@ -262,13 +262,15 @@ export default {
     calculateEndTime(){
       debugger;
       if(this.form.startTime !=null && this.form.duration !=null){
-          let startDate = new Date(this.form.startTime);
+          let parts = this.form.startTime.split(' ');
+          let startDate = new Date(parts[0]);
           startDate = startDate.getFullYear() + '-' 
               + (startDate.getMonth()+1) + '-'   
               + startDate.getDate() + ' '
-                  + startDate.getHours() + ':' 
-                  + startDate.getMinutes() + ':' 
-                  + startDate.getSeconds();
+                  + parts[1].split(':')[0] + ':' 
+                  + '00' + ':' 
+                  + '00';
+          this.form.startTime = startDate;
           startDate = Date.parse(new Date(startDate))/1000; 
           startDate += (3600) * this.form.duration; 
           let endDate = new Date(parseInt(startDate) * 1000); 
@@ -278,6 +280,7 @@ export default {
                           + endDate.getHours() + ':' 
                           + endDate.getMinutes() + ':' 
                           + endDate.getSeconds();
+          
 
       }
     },

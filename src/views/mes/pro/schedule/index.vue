@@ -69,9 +69,18 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>        
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" icon="el-icon-refresh" circle="" @click="getList"></el-button>
+        <el-button type="primary" icon="el-icon-edit" circle="" @click="getList"></el-button>
       </el-form-item>
     </el-form>
+    <div class="wrapper">
+      <div class="container">
+        <GanttChar class="left-container" ref="ganttChar" :tasks="tasks"></GanttChar>
+      </div>      
+    </div>    
     <el-table
       v-loading="loading"
       :data="workorderList"
@@ -261,6 +270,7 @@
 import { listWorkorder, getWorkorder, delWorkorder, addWorkorder, updateWorkorder } from "@/api/mes/pro/workorder";
 import { listProductprocess } from "@/api/mes/pro/routeprocess";
 import ProTask from "./proTask.vue";
+import GanttChar from "./ganttx.vue";
 import Treeselect from "@riophae/vue-treeselect";
 import "@riophae/vue-treeselect/dist/vue-treeselect.css";
 
@@ -269,7 +279,8 @@ export default {
   dicts: ['mes_order_status','mes_workorder_sourcetype'],
   components: {
     Treeselect,
-    ProTask
+    ProTask,
+    GanttChar
   },
   data() {
     return {
@@ -317,6 +328,16 @@ export default {
         parentId: null,
         ancestors: null,
         status: null,
+      },
+      tasks:{
+        data: [
+          {id: "MO202205150001", text: '移液盒【黑色】10000个', start_date: '2020-01-17', duration: 23, progress: 0.6,type: 1},
+          {id: 2, text: 'Task #1', start_date: '2020-01-20', duration: 30, progress: 0.4, parent:"MO202205150001", type: 2},          
+          {id: 3, text: 'Task #2', start_date: '2020-01-20', duration: 3, progress: 0.4, parent: "MO202205150001", type: 2},
+          {id: "MO202205150002", text: '96孔孔板 10000个', start_date: '2020-01-17', duration: 23, progress: 0.6, parent:"MO202205150001", type: 1},
+          {id: 4, text: 'Task #3', start_date: '2020-01-20', duration: 30, progress: 0.4, parent:"MO202205150002", type: 2},          
+          {id: 5, text: 'Task #4', start_date: '2020-01-20', duration: 3, progress: 0.4, parent: "MO202205150002", type: 2},
+        ],
       },
       // 表单参数
       form: {},
@@ -397,6 +418,10 @@ export default {
       this.activeProcess =0;
       this.autoGenFlag = false;
       this.resetForm("form");
+    },
+    //甘特图按钮点击
+    openGanttChart(){
+      this.$refs.ganttChar.showFlag =true;
     },
     //Step点击
     handleStepClick(index){
@@ -559,3 +584,17 @@ export default {
   }
 };
 </script>
+<style scoped>
+.wrapper{
+    height: 400px;
+}
+.container {
+  height: 100%;
+  width: 100%;
+}
+.left-container {
+  overflow: hidden;
+  position: relative;
+  height: 100%;
+}
+</style>

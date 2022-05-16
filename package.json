@@ -36,10 +36,12 @@
     "url": "https://gitee.com/kutangguo/ktg-mes-ui.git"
   },
   "dependencies": {
+    "@dhtmlx/trial-vue-gantt": "1.1.0",
     "@riophae/vue-treeselect": "0.4.0",
     "axios": "0.24.0",
     "clipboard": "2.0.8",
     "core-js": "^3.21.1",
+    "dhtmlx-gantt": "^7.1.11",
     "echarts": "4.9.0",
     "element-ui": "2.15.6",
     "file-saver": "2.0.5",
