@@ -268,6 +268,7 @@
 
 <script>
 import { listWorkorder, getWorkorder, delWorkorder, addWorkorder, updateWorkorder } from "@/api/mes/pro/workorder";
+import {listGanttTaskList} from "@/api/mes/pro/protask";
 import { listProductprocess } from "@/api/mes/pro/routeprocess";
 import ProTask from "./proTask.vue";
 import GanttChar from "./ganttx.vue";
@@ -330,14 +331,8 @@ export default {
         status: null,
       },
       tasks:{
-        data: [
-          {id: "MO202205150001", text: '移液盒【黑色】10000个', start_date: '2020-01-17', duration: 23, progress: 0.6,type: 1},
-          {id: 2, text: 'Task #1', start_date: '2020-01-20', duration: 30, progress: 0.4, parent:"MO202205150001", type: 2},          
-          {id: 3, text: 'Task #2', start_date: '2020-01-20', duration: 3, progress: 0.4, parent: "MO202205150001", type: 2},
-          {id: "MO202205150002", text: '96孔孔板 10000个', start_date: '2020-01-17', duration: 23, progress: 0.6, parent:"MO202205150001", type: 1},
-          {id: 4, text: 'Task #3', start_date: '2020-01-20', duration: 30, progress: 0.4, parent:"MO202205150002", type: 2},          
-          {id: 5, text: 'Task #4', start_date: '2020-01-20', duration: 3, progress: 0.4, parent: "MO202205150002", type: 2},
-        ],
+        data: [],
+        links: []
       },
       // 表单参数
       form: {},
@@ -345,6 +340,7 @@ export default {
   },
   created() {
     this.getList();
+    this.getGanttTasks();
   },
   methods: {
     /** 查询生产工单列表 */
@@ -355,6 +351,16 @@ export default {
         this.loading = false;
       });
     },
+
+    getGanttTasks(){
+      listGanttTaskList(this.queryParams).then(response =>{
+        debugger;
+        this.tasks.data = response.data.data;
+        this.tasks.links = response.data.links;
+        this.$refs.ganttChar.reload();
+      });
+    },
+
     getProcess(){
         listProductprocess(this.form.productId).then(response =>{
             this.processOptions = response.data;

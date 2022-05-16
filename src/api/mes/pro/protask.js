@@ -9,6 +9,16 @@ export function listProtask(query) {
   })
 }
 
+// 查询生产任务列表
+export function listGanttTaskList(query) {
+  return request({
+    url: '/mes/pro/protask/listGanttTaskList',
+    method: 'get',
+    params: query
+  })
+}
+
+
 // 查询生产任务详细
 export function getProtask(taskId) {
   return request({

@@ -272,7 +272,7 @@ export default {
                   + '00';
           this.form.startTime = startDate;
           startDate = Date.parse(new Date(startDate))/1000; 
-          startDate += (3600) * this.form.duration; 
+          startDate += (3600)* 8 * this.form.duration; //这里以8小时为一个单位
           let endDate = new Date(parseInt(startDate) * 1000); 
           this.form.endTime =endDate.getFullYear() + '-' 
                         + (endDate.getMonth()+1) + '-' 

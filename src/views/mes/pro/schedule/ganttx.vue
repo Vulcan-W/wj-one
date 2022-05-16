@@ -26,7 +26,9 @@ export default {
   mounted: function () {
     // 初始化甘特图配置
     this.initConfig();
-
+    gantt.plugins({
+      marker: true
+    });
     // 甘特图初始化和导入数据
     gantt.init(this.$refs.gantt);
     gantt.parse(this.tasks);
@@ -37,44 +39,107 @@ export default {
     initData() {
 
     },
+    reload() {
+      gantt.clearAll();
+      this.addTodayLine();
+      gantt.parse(this.$props.tasks);
+      gantt.render();
+    },
+    addTodayLine() {
+      // 时间线
+      var date_to_str = gantt.date.date_to_str(gantt.config.task_date);
+      var today = new Date();
+      gantt.addMarker({
+        start_date: today,
+        css: "today",
+        text: "今天",
+        title: "今天: " + date_to_str(today)
+      });
+    },
     // 初始化甘特图配置
     initConfig() {
       // 1 基础配置
       // 1.1 甘特图是否只读
       gantt.config.readonly = true;
       // 1.2 表格列设置
+      gantt.config.duration_unit="hour";
+      gantt.config.duration_step=8;
+      gantt.config.grid_width=520;
       gantt.config.columns = [
-        {name:"text", label:"任务名", tree:true, width:'100' },
+        {name:"text", label:"任务名", tree:true, width:'200' },
         {name:"workstation",label:"工作站",align:"center",width:'*'},
+        {name:"process",label:"工序",align:"center",width:'*'},        
         {name:"start_date", label:"开始时间", align:"center", width:'*' },
         {name:"end_date", label:"结束时间", align:"center" , width:'*'},
-        // {name:"duration",   label:"Duration",   align: "center" },
       ];
       // 1.3 设置中文
       gantt.i18n.setLocale("cn");
       // 1.4 鼠标悬浮框
       gantt.plugins({tooltip: true});// 启用tooltip悬浮框
       gantt.templates.tooltip_text = function(start, end, task) {
-        return "<b>任务名称:</b> "+task.text+"<br/><b>时长:</b> " + task.duration+"天<br/><b>说明:</b>" +task.toolTipsTxt;
-      }
+        if(task.type=='project'){
+          return "<b style='text-align:left;'>生产工单:</b> " + task.text +"    <span style='text-align:left;'>" +" 完成比例："+ Math.round(task.progress * 100) + "% </span>";
+        }else{
+          return "<b style='text-align:left;'>生产任务:</b> "+task.process+" "+ task.text +"    <span style='text-align:left;'>" +" 完成比例："+ Math.round(task.progress * 100) + "% </span>";
+        }
+      };
+
+
       // 1.5 初始化的时候就展开树结构
       gantt.config.open_tree_initially = true;
       // 1.6 显示到任务上的文本
       gantt.templates.task_text = function (start, end, task) {
-        return "<b style='text-align:left;'>计划名称:</b> " + task.text +"    <span style='text-align:left;'>" +" 完成计划："+ Math.round(task.progress * 100) + "% </span>";
+        if(task.type=='project'){
+          return "<b style='text-align:left;'>生产工单:</b> " + task.text +"    <span style='text-align:left;'>" +" 完成比例："+ Math.round(task.progress * 100) + "% </span>";
+        }else{
+          return "<b style='text-align:left;'>生产任务:</b> "+task.process+" "+ task.text +"    <span style='text-align:left;'>" +" 完成比例："+ Math.round(task.progress * 100) + "% </span>";
+        }
+        
       };
       // 1.7 显示单元格
       gantt.config.show_task_cells = true;
 
       // 2 时间配置
       // 2.1 时间坐标轴单位 minute/hour/day/week/quarter/month/year
-      gantt.config.scale_unit = "day";
+     // gantt.config.scale_unit = "hour";
       // 2.2 日期格式
-      gantt.config.date_scale = "%d";
+     // gantt.config.date_scale = "%H";
       // 2.3 时间坐标为月份的时候  先显示年份再月份
-      gantt.config.subscales = [{unit: "month", step: 1, date: "%Y,%F"}];
+     // gantt.config.subscales = [{unit: "month", step: 1, date: "%Y,%F"}];
+      
+      var weekScaleTemplate = function (date) {
+        var dateToStr = gantt.date.date_to_str("%M %d");
+        var endDate = gantt.date.add(gantt.date.add(date, 1, "week"), -1, "day");
+        return dateToStr(date) + " - " + dateToStr(endDate);
+      };
+
+      var dayTemplate = function(date){
+        var dateToStr = gantt.date.date_to_str("%M %d");
+        var weekDay = gantt.date.date_to_str("%D");
+        return dateToStr(date); + "(" + weekDay(date) + ")";
+      };
+
+      var daysStyle = function(date){
+          // you can use gantt.isWorkTime(date)
+          // when gantt.config.work_time config is enabled
+          // In this sample it's not so we just check week days
+
+          if(date.getDay() === 0 || date.getDay() === 6){
+            return "weekend";
+          }
+          return "";
+        };
+
+      gantt.config.scales =[
+        {unit:"week", step:1,format: weekScaleTemplate},
+        {unit:"day", step:1,format: dayTemplate,css: daysStyle},
+        {unit:"hour", step:8,format: "%H:%i"}, //这里的step要根据当前的班次设置来。如果是三班倒则是8，如果是两班倒则是12。
+      ]
+      
+      gantt.config.scale_height = 50;
+
       // 2.4 定义从后端获取或发送到后端的日期数据解析格式
-      gantt.config.xml_date = "%Y-%m-%d";
+      gantt.config.xml_date = "%Y-%m-%d %H:%i:%s";
 
       // 3 拖动配置
       // 3.1 自动调整类型,当存在子节点时自动升级为project
@@ -82,7 +147,7 @@ export default {
       // 3.2 设置不可以拖动进度
       gantt.config.drag_progress = true;
       // 3.3 设置Task不可以拖动
-      gantt.config.drag_move = false;
+      gantt.config.drag_move = true;
       // 3.4 设置不可以拖动关系
       gantt.config.drag_links = true;
       // 3.5 设置不可拖动Task 大小
@@ -189,4 +254,13 @@ export default {
     width: calc(100% - 199px) !important;
     left: 199px;
   }
+
+  .scaleStyle{
+    height: 20px;
+  }
+  /* 周末背景颜色 */
+  .weekend{
+    background: rgb(189, 185, 186) !important;
+    width: 30s
+  }  
 </style>
