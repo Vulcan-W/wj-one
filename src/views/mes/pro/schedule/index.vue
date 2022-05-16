@@ -73,7 +73,7 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-refresh" circle="" @click="getList"></el-button>
-        <el-button type="primary" icon="el-icon-edit" circle="" @click="getList"></el-button>
+        <el-button type="primary" icon="el-icon-edit" circle="" @click="handleOpenGantt"></el-button>
       </el-form-item>
     </el-form>
     <div class="wrapper">
@@ -351,7 +351,9 @@ export default {
         this.loading = false;
       });
     },
-
+    handleOpenGantt(){
+      this.$router.push({ path: '/mes/pro/schedule/ganttedit'})
+    },
     getGanttTasks(){
       listGanttTaskList(this.queryParams).then(response =>{
         debugger;

@@ -17,6 +17,12 @@ export default {
       default () {
         return {data: [], links: []}
       }
+    },
+    optType: {
+      type: String,
+      default (){
+        return 'view'
+      }
     }
   },
 
@@ -60,7 +66,12 @@ export default {
     initConfig() {
       // 1 基础配置
       // 1.1 甘特图是否只读
-      gantt.config.readonly = true;
+      if(this.optType =='view'){
+        gantt.config.readonly = true;
+      }else{
+        gantt.config.readonly = false;
+      }
+      
       // 1.2 表格列设置
       gantt.config.duration_unit="hour";
       gantt.config.duration_step=8;

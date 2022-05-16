@@ -347,12 +347,10 @@ export default {
       }, `warehouse_${new Date().getTime()}.xlsx`)
     },
     handleLocation(warehouseId){
-      debugger;
       this.$router.push({ path: '/mes/wm/location/index', query: { warehouseId: warehouseId || 0 ,optType: this.optType} })
     },
     //自动生成编码
     handleAutoGenChange(autoGenFlag){
-      debugger;
       if(autoGenFlag){
         genCode('WAREHOUSE_CODE').then(response =>{
           this.form.warehouseCode = response;

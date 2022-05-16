@@ -177,6 +177,20 @@ export const dynamicRoutes = [
     ]
   },
   {
+    path: '/mes/pro/schedule',
+    component: Layout,
+    hidden: true,
+    permissions: ['mes:pro:schedule:edit'],
+    children: [
+      {
+        path: 'ganttedit',
+        component: () => import("@/views/mes/pro/schedule/ganttedit"),
+        name: 'ganttEdit',
+        meta: {title: '使用甘特图排产',activeMenu: '/mes/pro/schedule'}
+      }
+    ]
+  },
+  {
     path: '/monitor/job-log',
     component: Layout,
     hidden: true,
