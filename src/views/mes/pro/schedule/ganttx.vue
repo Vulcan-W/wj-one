@@ -23,6 +23,12 @@ export default {
       default (){
         return 'view'
       }
+    },
+    ids: {
+      type: Array,
+      default (){
+        return []
+      }
     }
   },
 
@@ -167,6 +173,16 @@ export default {
       gantt.config.details_on_create = true;
       // 3.7 双击显示明细
       gantt.config.details_on_dblclick = true;
+
+      let t = this.$props.tasks;
+      let c = this.$props.ids;
+      gantt.attachEvent("onAfterTaskUpdate",function(id,obj){
+        debugger;
+        let tt = t.data.filter( item=> item.id == id);
+        tt=obj;  
+        c.push(id);              
+      });
+
 
     }
   }
