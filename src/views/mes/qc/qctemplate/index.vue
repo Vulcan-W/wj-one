@@ -17,14 +17,28 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
+      <el-form-item label="产品编码" prop="itemCode">
+        <el-input
+          v-model="queryParams.itemCode"
+          placeholder="请输入产品名称"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="产品名称" prop="itemName">
+        <el-input
+          v-model="queryParams.itemName"
+          placeholder="请输入产品名称"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
       <el-form-item label="检测种类" prop="qcTypesParam">
           <el-checkbox-group v-model="queryParams.qcTypesParam">
-            <el-checkbox label="IQC" value="IQC"></el-checkbox>
-            <el-checkbox label="首检" value="FIRST_CHECK"></el-checkbox>
-            <el-checkbox label="末检" value="FINAL_CHECK"></el-checkbox>
-            <el-checkbox label="巡检" value="REGULAR_CHECK"></el-checkbox>
-            <el-checkbox label="FQC" value="FQC"></el-checkbox>
-            <el-checkbox label="OQC" value="OQC"></el-checkbox>
+            <el-checkbox v-for="dict in dict.type.mes_qc_type"
+                  :key="dict.value"
+                  :label="dict.value"
+                  :value="dict.value">{{dict.label}}</el-checkbox>
           </el-checkbox-group>
       </el-form-item>
       <el-form-item>
@@ -73,7 +87,11 @@
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="检测模板编号" align="center" prop="templateCode" />
       <el-table-column label="检测模板名称" align="center" prop="templateName" />
-      <el-table-column label="检测种类" align="center" prop="qcTypesParam" />
+      <el-table-column label="检测种类" align="center" prop="qcTypesParam" >
+        <template slot-scope="scope">
+          <dict-tag :options="dict.type.mes_qc_type" :value="scope.row.qcTypesParam"/>                   
+        </template>
+      </el-table-column>
       <el-table-column label="是否启用" align="center" prop="enableFlag">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.sys_yes_no" :value="scope.row.enableFlag"/>
@@ -135,12 +153,10 @@
           <el-col :span="18">
             <el-form-item label="检测种类" prop="qcTypesParam">          
               <el-checkbox-group v-model="form.qcTypesParam">
-                <el-checkbox label="IQC" value="IQC"></el-checkbox>
-                <el-checkbox label="首检" value="FIRST_CHECK"></el-checkbox>
-                <el-checkbox label="末检" value="FINAL_CHECK"></el-checkbox>
-                <el-checkbox label="巡检" value="REGULAR_CHECK"></el-checkbox>
-                <el-checkbox label="FQC" value="FQC"></el-checkbox>
-                <el-checkbox label="OQC" value="OQC"></el-checkbox>
+                <el-checkbox v-for="dict in dict.type.mes_qc_type"
+                      :key="dict.value"
+                      :label="dict.value"
+                      :value="dict.value">{{dict.label}}</el-checkbox>
               </el-checkbox-group>
             </el-form-item>
           </el-col>
@@ -185,7 +201,7 @@ import { listQctemplate, getQctemplate, delQctemplate, addQctemplate, updateQcte
 import {genCode} from "@/api/system/autocode/rule"
 export default {
   name: "Qctemplate",
-  dicts: ['sys_yes_no'],
+  dicts: ['sys_yes_no','mes_qc_type'],
   data() {
     return {
       //自动生成编码
@@ -215,11 +231,14 @@ export default {
         pageSize: 10,
         templateCode: null,
         templateName: null,
+        itemCode:null,
+        itemName:null,
         qcTypesParam: [],
         enableFlag: null,
       },
       // 表单参数
-      form: {},
+      form: {
+      },
       // 表单校验
       rules: {
         templateCode: [
@@ -308,6 +327,7 @@ export default {
       this.reset();
       const templateId = row.templateId || this.ids
       getQctemplate(templateId).then(response => {
+        debugger;
         this.form = response.data;
         this.open = true;
         this.title = "修改检测模板";
