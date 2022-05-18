@@ -199,6 +199,9 @@
         <el-tab-pane label="检测项">
           <TemplateIndex ref="indexTab" :templateId="form.templateId" :optType="optType"></TemplateIndex>
         </el-tab-pane>
+        <el-tab-pane label="物料产品">
+          <TemplateProduct ref="productTab" :templateId="form.templateId" :optType="optType"></TemplateProduct>
+        </el-tab-pane>
       </el-tabs>
 
       <div slot="footer" class="dialog-footer">
@@ -214,10 +217,11 @@
 import { listQctemplate, getQctemplate, delQctemplate, addQctemplate, updateQctemplate } from "@/api/mes/qc/qctemplate";
 import {genCode} from "@/api/system/autocode/rule"
 import TemplateIndex from "./templateindex.vue"
+import TemplateProduct from "./templateproduct";
 export default {
   name: "Qctemplate",
   dicts: ['sys_yes_no','mes_qc_type'],
-  components: {TemplateIndex},
+  components: {TemplateIndex,TemplateProduct},
   data() {
     return {
       //自动生成编码
