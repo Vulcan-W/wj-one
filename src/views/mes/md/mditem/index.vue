@@ -122,7 +122,8 @@
           </el-table-column>
           <el-table-column label="物料名称" min-width="120" align="left" key="itemName" prop="itemName" v-if="columns[1].visible" :show-overflow-tooltip="true" />
           <el-table-column label="规格型号" align="left" key="specification" prop="specification" v-if="columns[2].visible" :show-overflow-tooltip="true" />
-          <el-table-column label="单位" align="center" key="unitOfMeasure" prop="unitOfMeasure" v-if="columns[3].visible" :show-overflow-tooltip="true" />
+          <el-table-column label="单位" align="center" key="unitOfMeasure" prop="unitOfMeasure" v-if="columns[3].visible" :show-overflow-tooltip="true" >
+          </el-table-column>
           <el-table-column label="物料/产品" align="center" key="itemOrProduct" prop="itemOrProduct" v-if="columns[4].visible" :show-overflow-tooltip="true" >
             <template slot-scope="scope">
               <dict-tag :options="dict.type.mes_item_product" :value="scope.row.itemOrProduct"/>
@@ -470,6 +471,7 @@ export default {
   created() {
     this.getList();
     this.getTreeselect();
+    this.getUnits();
   },
   methods: {
     /** 查询物料编码列表 */
@@ -481,6 +483,11 @@ export default {
           this.loading = false;
         }
       );
+    },
+    getUnits(){
+      listAllUnitmeasure().then(response =>{
+        this.measureOptions = response.data;
+      });
     },
     /** 查询分类下拉树结构 */
     getTreeselect() {
@@ -555,9 +562,6 @@ export default {
     /** 新增按钮操作 */
     handleAdd() {
       this.reset();
-      listAllUnitmeasure().then(response =>{
-        this.measureOptions = response.data;
-      });
       this.getTreeselect();
       if(this.queryParams.itemTypeId != 0){
         this.form.itemTypeId = this.queryParams.itemTypeId;

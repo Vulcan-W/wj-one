@@ -85,7 +85,15 @@
 
     <el-table v-loading="loading" :data="qctemplateList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="检测模板编号" align="center" prop="templateCode" />
+      <el-table-column label="检测模板编号" align="center" prop="templateCode" >
+        <template slot-scope="scope">
+          <el-button
+            type="text"
+            @click="handleView(scope.row)"
+            v-hasPermi="['mes:qc:template:query']"
+          >{{scope.row.templateCode}}</el-button>
+        </template>
+      </el-table-column>
       <el-table-column label="检测模板名称" align="center" prop="templateName" />
       <el-table-column label="检测种类" align="center" prop="qcTypesParam" >
         <template slot-scope="scope">
@@ -187,6 +195,12 @@
           </el-col>
         </el-row>
       </el-form>
+      <el-tabs type="border-card" v-if="form.templateId != null">
+        <el-tab-pane label="检测项">
+          <TemplateIndex ref="indexTab" :templateId="form.templateId" :optType="optType"></TemplateIndex>
+        </el-tab-pane>
+      </el-tabs>
+
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="cancel" v-if="optType =='view'">返回</el-button>
         <el-button type="primary" @click="submitForm" v-else>确 定</el-button>
@@ -199,9 +213,11 @@
 <script>
 import { listQctemplate, getQctemplate, delQctemplate, addQctemplate, updateQctemplate } from "@/api/mes/qc/qctemplate";
 import {genCode} from "@/api/system/autocode/rule"
+import TemplateIndex from "./templateindex.vue"
 export default {
   name: "Qctemplate",
   dicts: ['sys_yes_no','mes_qc_type'],
+  components: {TemplateIndex},
   data() {
     return {
       //自动生成编码
