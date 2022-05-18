@@ -98,7 +98,7 @@
         </el-row>
         <el-row>
             <el-col :span="24">
-                <el-form-item label="检测方法" prop="checkMethod">
+                <el-form-item label="检测要求" prop="checkMethod">
                     <el-input v-model="form.checkMethod" type="textarea" placeholder="请输入内容" />
                 </el-form-item>
             </el-col>
