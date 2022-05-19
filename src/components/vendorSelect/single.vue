@@ -77,7 +77,11 @@
     </el-form>
 
     <el-table v-loading="loading" :data="vendorList" @current-change="handleCurrent" @row-dblclick="handleRowDbClick">
-      <el-table-column type="selection" width="55" align="center" />
+      <el-table-column  width="55" align="center" >
+        <template v-slot="scope">
+          <el-radio v-model="selectedVendorId" :label="scope.row.vendorId" @change="handleRowChange(scope.row)">{{""}}</el-radio>
+        </template>
+      </el-table-column>
       <el-table-column label="供应商编码" align="center" prop="vendorCode" >
       </el-table-column>
       <el-table-column label="供应商名称" align="center" prop="vendorName" width="150px" :show-overflow-tooltip="true"/>
@@ -104,6 +108,10 @@
       :limit.sync="queryParams.pageSize"
       @pagination="getList"
     />
+    <div slot="footer" class="dialog-footer">
+      <el-button type="primary" @click="confirmSelect">确 定</el-button>
+      <el-button @click="showFlag=false">取 消</el-button>
+    </div>
   </el-dialog>
 </template>
 

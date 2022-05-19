@@ -137,7 +137,15 @@
 
     <el-table v-loading="loading" :data="iqcList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="来料检验单编号" width="140px" align="center" prop="iqcCode" />
+      <el-table-column label="来料检验单编号" width="140px" align="center" prop="iqcCode" >
+        <template slot-scope="scope">
+          <el-button
+            type="text"
+            @click="handleView(scope.row)"
+            v-hasPermi="['mes:qc:iqc:query']"
+          >{{scope.row.iqcCode}}</el-button>
+        </template>
+      </el-table-column>
       <el-table-column label="来料检验单名称" width="120px" align="center" prop="iqcName" :show-overflow-tooltip="true"/>
       <el-table-column label="供应商简称" width="100px" align="center" prop="vendorNick" :show-overflow-tooltip="true"/>
       <el-table-column label="供应商批次号" width="120px" align="center" prop="vendorBatch" />
@@ -157,14 +165,19 @@
           <span>{{ parseTime(scope.row.inspectDate, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="检测人员" align="center" prop="inspector" />
-      <el-table-column label="单据状态" align="center" prop="status" />
+      <el-table-column label="检测人员" align="center" prop="inspectorName" />
+      <el-table-column label="单据状态" align="center" prop="status" >
+        <template slot-scope="scope">
+          <dict-tag :options="dict.type.mes_order_status" :value="scope.row.status"/>
+        </template>
+      </el-table-column>
       <el-table-column label="操作" align="center" width="100px" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
             type="text"
             icon="el-icon-edit"
+            v-if="scope.row.status =='PREPARE'"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['mes:qc:iqc:edit']"
           >修改</el-button>
@@ -172,6 +185,7 @@
             size="mini"
             type="text"
             icon="el-icon-delete"
+            v-if="scope.row.status =='PREPARE'"
             @click="handleDelete(scope.row)"
             v-hasPermi="['mes:qc:iqc:remove']"
           >删除</el-button>
@@ -201,7 +215,7 @@
               <el-switch v-model="autoGenFlag"
                   active-color="#13ce66"
                   active-text="自动生成"
-                  @change="handleAutoGenChange(autoGenFlag)" v-if="optType != 'view'">               
+                  @change="handleAutoGenChange(autoGenFlag)" v-if="optType != 'view' && form.status =='PREPARE'" >               
               </el-switch>
             </el-form-item>
           </el-col>
@@ -309,9 +323,15 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <el-divider content-position="center">结果统计</el-divider>
+        <el-row>
+          <el-col :span="24">
+            <el-form-item label="备注" prop="remark">
+              <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
+            </el-form-item>
+          </el-col>
+        </el-row>
         <el-collapse accordion>
-          <el-collapse-item>
+          <el-collapse-item title="结果统计">
             <el-row>
               <el-col :span="8">
                 <el-form-item label="致命缺陷率" prop="crRate">
@@ -347,19 +367,16 @@
               </el-col>
             </el-row>
           </el-collapse-item>
-        </el-collapse>        
-        <el-row>
-          <el-col :span="24">
-            <el-form-item label="备注" prop="remark">
-              <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
-            </el-form-item>
-          </el-col>
-        </el-row>
-
+        </el-collapse>       
+        <el-divider v-if="form.iqcId !=null" content-position="center">检测项</el-divider> 
+        <el-card shadow="always" v-if="form.iqcId !=null" class="box-card">
+          <IqcLine ref=line :iqcId="form.iqcId" :optType="optType"></IqcLine>
+        </el-card>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="cancel" v-if="optType =='view'">返回</el-button>
-        <el-button type="primary" @click="submitForm" v-else>确 定</el-button>
+        <el-button type="primary" @click="cancel" v-if="optType =='view' || form.status !='PREPARE' ">返回</el-button>
+        <el-button type="primary" @click="submitForm" v-if="form.status =='PREPARE' && optType !='view' ">确 定</el-button>
+        <el-button type="success" @click="handleFinish" v-if="form.status =='PREPARE' && optType !='view'  && form.iqcId !=null">完成</el-button>
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
@@ -370,11 +387,12 @@
 import { listIqc, getIqc, delIqc, addIqc, updateIqc } from "@/api/mes/qc/iqc";
 import ItemSelect  from "@/components/itemSelect/single.vue";
 import VendorSelect from "@/components/vendorSelect/single.vue";
+import IqcLine from "./iqcline.vue";
 import {genCode} from "@/api/system/autocode/rule"
 export default {
   name: "Iqc",
-  dicts: ['mes_qc_result'],
-  components: {ItemSelect,VendorSelect},
+  dicts: ['mes_qc_result','mes_order_status'],
+  components: {ItemSelect,VendorSelect,IqcLine},
   data() {
     return {
       //自动生成编码
@@ -458,6 +476,12 @@ export default {
         quantityCheck: [
           { required: true, message: "本次检测数量不能为空", trigger: "blur" }
         ],
+        reciveDate:[
+          { required: true, message: "清选择来料日期", trigger: "blur" }
+        ],
+        inspectDate:[
+          { required: true, message: "清选择检验日期", trigger: "blur" }
+        ]
       }
     };
   },
@@ -511,7 +535,7 @@ export default {
         reciveDate: null,
         inspectDate: null,
         inspector: null,
-        status: "0",
+        status: "PREPARE",
         remark: null,
         attr1: null,
         attr2: null,
@@ -548,6 +572,17 @@ export default {
       this.title = "添加来料检验单";
       this.optType = 'add';
     },
+    //查看明细
+    handleView(row){
+      this.reset();
+      const iqcId = row.iqcId || this.ids;
+      getIqc(iqcId).then(response => {
+        this.form = response.data;
+        this.open = true;
+        this.title = "查看来料检验单信息";
+        this.optType = "view";
+      });
+    },
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
@@ -566,18 +601,37 @@ export default {
           if (this.form.iqcId != null) {
             updateIqc(this.form).then(response => {
               this.$modal.msgSuccess("修改成功");
-              this.open = false;
+              //this.open = false;
               this.getList();
             });
           } else {
             addIqc(this.form).then(response => {
               this.$modal.msgSuccess("新增成功");
-              this.open = false;
+              //this.open = false;
+              this.form.iqcId=response.data;
               this.getList();
             });
           }
         }
       });
+    },
+    //点击完成
+    handleFinish(){
+      let that = this;
+      if(this.form.checkResult == null){
+        this.$modal.msgError("请选择检测结果！");
+        return;
+      }
+
+      this.$refs["form"].validate(valid => {
+        if (valid) {
+          this.$modal.confirm('是否完成来料检验单编制？【完成后将不能更改】').then(function(){
+            that.form.status = 'CONFIRMED';
+            that.submitForm();
+            that.open = false;
+          });
+        }
+        });
     },
     /** 删除按钮操作 */
     handleDelete(row) {
