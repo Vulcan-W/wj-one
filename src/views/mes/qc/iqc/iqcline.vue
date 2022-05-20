@@ -17,13 +17,13 @@
       <el-table-column label="严重缺陷数量" align="center" prop="majQuantity" />
       <el-table-column label="轻微缺陷数量" align="center" prop="minQuantity" />
       <el-table-column label="备注" align="center" prop="remark" />
-      <el-table-column label="操作" align="center" v-if="optType !='view'" class-name="small-padding fixed-width">
+      <el-table-column label="操作" align="center"  class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
             type="text"
             icon="el-icon-edit"
-            @click="handleUpdate(scope.row)"
+            @click="handleDefect(scope.row)"
             v-hasPermi="['mes:qc:iqcline:edit']"
           >缺陷记录</el-button>
         </template>
@@ -37,12 +37,13 @@
       :limit.sync="queryParams.pageSize"
       @pagination="getList"
     />
+    <Iqcdefect ref="defectDialog" :iqcId="defect_iqcid" :lineId="defect_lineid" :optType="optType"></Iqcdefect>
   </div>
 </template>
 
 <script>
 import { listIqcline, getIqcline, delIqcline, addIqcline, updateIqcline } from "@/api/mes/qc/iqcline";
-
+import Iqcdefect from "./iqcdefect.vue"
 export default {
   name: "IqcLine",
   dicts: ['mes_index_type'],
@@ -50,8 +51,11 @@ export default {
       iqcId: null,
       optType: null,
   },
+  components:{Iqcdefect},
   data() {
     return {
+      defect_iqcid:null,
+      defect_lineid:null,
       // 遮罩层
       loading: true,
       // 选中数组
@@ -157,6 +161,12 @@ export default {
       this.single = selection.length!==1
       this.multiple = !selection.length
     },
+    handleDefect(row){
+      this.defect_iqcid = row.iqcId;
+      this.defect_lineid = row.lineId;
+      this.$refs.defectDialog.showFlag = true;
+      this.$refs.defectDialog.getList();
+    }
   }
 };
 </script>
