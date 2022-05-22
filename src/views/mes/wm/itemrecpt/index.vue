@@ -237,6 +237,10 @@
           </el-col>
         </el-row>
       </el-form>
+      <el-divider v-if="form.recptId !=null" content-position="center">物料信息</el-divider> 
+        <el-card shadow="always" v-if="form.recptId !=null" class="box-card">
+          <Itemrecptline ref=line :recptId="form.recptId" :warehouseId="form.warehouseId" :locationId="form.locationId" :areaId="form.areaId" :optType="optType"></Itemrecptline>
+        </el-card>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="cancel" v-if="optType =='view' || form.status !='PREPARE' ">返回</el-button>
         <el-button type="primary" @click="submitForm" v-else>确 定</el-button>
@@ -252,10 +256,11 @@ import {getTreeList} from "@/api/mes/wm/warehouse"
 import {genCode} from "@/api/system/autocode/rule"
 import VendorSelect from "@/components/vendorSelect/single.vue";
 import IqcSelect from "@/components/iqcSelect/single.vue";
+import Itemrecptline from "./line.vue";
 export default {
   name: "Itemrecpt",
   dicts:['mes_order_status'],
-  components :{VendorSelect,IqcSelect},
+  components :{VendorSelect,IqcSelect,Itemrecptline},
   data() {
     return {
       //自动生成编码
@@ -440,7 +445,6 @@ export default {
         this.warehouseInfo[0] = response.data.warehouseId;    
         this.warehouseInfo[1] = response.data.locationId;    
         this.warehouseInfo[2] = response.data.areaId;    
-        console.log(this.warehouseInfo);
         this.open = true;
         this.title = "修改物料入库单";
         this.optType = "edit";
