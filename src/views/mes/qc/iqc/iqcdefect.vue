@@ -91,9 +91,17 @@ export default {
   name: "Iqcdefect",
   dicts: ['mes_defect_level'],
   props:{
-      iqcId: null,
-      lineId: null,
-      optType: null
+      iqcId:null,
+      lineId:null,
+      optType:null
+  },
+  watch :{
+      iqcId(){
+        this.queryParams.iqcId = this.iqcId;        
+      },
+      lineId(){
+        this.queryParams.lineId = this.lineId;
+      }      
   },
   data() {
     return {
@@ -151,6 +159,7 @@ export default {
   methods: {
     /** 查询来料检验单缺陷记录列表 */
     getList() {
+      debugger;
       this.loading = true;
       listIqcdefect(this.queryParams).then(response => {
         this.iqcdefectList = response.rows;
@@ -232,6 +241,7 @@ export default {
             if (res.code === 200) {
               this.open = false;
               this.getList();
+              this.$parent.getList();
             }
           });
         }
@@ -257,6 +267,7 @@ export default {
                 }
             })
         });
+        this.$parent.getList();
     }
   }
 };

@@ -103,6 +103,7 @@ export default {
   methods: {
     /** 查询来料检验单行列表 */
     getList() {
+      debugger;
       this.loading = true;
       listIqcline(this.queryParams).then(response => {
         this.iqclineList = response.rows;
@@ -162,10 +163,14 @@ export default {
       this.multiple = !selection.length
     },
     handleDefect(row){
+      debugger;
       this.defect_iqcid = row.iqcId;
       this.defect_lineid = row.lineId;
-      this.$refs.defectDialog.showFlag = true;
-      this.$refs.defectDialog.getList();
+      this.$nextTick(() => {
+        this.$refs.defectDialog.showFlag = true;
+        this.$refs.defectDialog.getList();
+      })
+
     }
   }
 };
