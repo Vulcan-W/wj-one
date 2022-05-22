@@ -154,7 +154,11 @@
       <el-table-column label="接收数量" width="90px" align="center" prop="quantityRecived" />
       <el-table-column label="检测数量" width="90px" align="center" prop="quantityCheck" />
       <el-table-column label="不合格数" align="center" prop="quantityUnqualified" />
-      <el-table-column label="检测结果" align="center" prop="checkResult" />
+      <el-table-column label="检测结果" align="center" prop="checkResult" >
+        <template slot-scope="scope">
+          <dict-tag :options="dict.type.mes_qc_result" :value="scope.row.checkResult"/>
+        </template>
+      </el-table-column>
       <el-table-column label="来料日期" align="center" prop="reciveDate" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.reciveDate, '{y}-{m}-{d}') }}</span>
@@ -666,7 +670,7 @@ export default {
     handleSelectVendor(){
       this.$refs.vendorSelect.showFlag = true;
     },
-    //物料选择弹出框
+    //供应商选择弹出框
     onVendorSelected(obj){
         debugger;
         if(obj != undefined && obj != null){

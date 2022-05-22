@@ -9,6 +9,13 @@ export function listWarehouse(query) {
   })
 }
 
+export function getTreeList(){
+  return request({
+    url: '/mes/wm/warehouse/getTreeList',
+    method: 'get'
+  })
+}
+
 // 查询仓库设置详细
 export function getWarehouse(warehouseId) {
   return request({
