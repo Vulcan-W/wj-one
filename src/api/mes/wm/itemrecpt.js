@@ -35,6 +35,15 @@ export function updateItemrecpt(data) {
   })
 }
 
+//执行入库
+export function execute(recptId) {
+  return request({
+    url: '/mes/wm/itemrecpt/' + recptId,
+    method: 'put'
+  })
+}
+
+
 // 删除物料入库单
 export function delItemrecpt(recptId) {
   return request({

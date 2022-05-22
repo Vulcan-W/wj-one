@@ -123,6 +123,14 @@
           <el-button
             size="mini"
             type="text"
+            icon="el-icon-delete"
+            v-if="scope.row.status =='PREPARE'"
+            @click="handleExecute(scope.row)"
+            v-hasPermi="['mes:wm:itemrecpt:edit']"
+          >执行入库</el-button>
+          <el-button
+            size="mini"
+            type="text"
             icon="el-icon-edit"
             v-if="scope.row.status =='PREPARE'"
             @click="handleUpdate(scope.row)"
@@ -149,7 +157,7 @@
     />
 
     <!-- 添加或修改物料入库单对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="960px" append-to-body>
+    <el-dialog :title="title" :visible.sync="open" width="1000px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-row>
           <el-col :span="8">
@@ -251,7 +259,7 @@
 </template>
 
 <script>
-import { listItemrecpt, getItemrecpt, delItemrecpt, addItemrecpt, updateItemrecpt } from "@/api/mes/wm/itemrecpt";
+import { listItemrecpt, getItemrecpt, delItemrecpt, addItemrecpt, updateItemrecpt,execute } from "@/api/mes/wm/itemrecpt";
 import {getTreeList} from "@/api/mes/wm/warehouse"
 import {genCode} from "@/api/system/autocode/rule"
 import VendorSelect from "@/components/vendorSelect/single.vue";
@@ -453,6 +461,16 @@ export default {
         this.title = "修改物料入库单";
         this.optType = "edit";
       });
+    },
+    //执行入库
+    handleExecute(row){
+      const recptIds = row.recptId || this.ids;
+      this.$modal.confirm('确认执行入库？').then(function() {
+        return execute(recptIds)//执行入库
+      }).then(() => {
+        this.getList();
+        this.$modal.msgSuccess("入库成功");
+      }).catch(() => {});
     },
     /** 提交按钮 */
     submitForm() {
