@@ -162,8 +162,8 @@ export default {
       warehouseOptions:[],
       warehouseProps:{
         multiple: false,
-        value: 'warehouseId',
-        label: 'warehouseName',
+        value: 'pId',
+        label: 'pName',
       },
       // 遮罩层
       loading: true,
@@ -241,18 +241,18 @@ export default {
         this.warehouseOptions = response.data;
         this.warehouseOptions.map(w =>{
           debugger;
-          let wstr = JSON.stringify(w.children).replace(/warehouseId/g,'wId').replace(/locationId/g, 'warehouseId').replace(/locationName/g,'warehouseName');  
-          w.children =  JSON.parse(wstr); 
-
           w.children.map(l =>{
-                  let lstr =JSON.stringify(l.children).replace(/areaId/g, 'warehouseId').replace(/areaName/g,'warehouseName').replace(/locationId/g,'lId');                  
+                  let lstr =JSON.stringify(l.children).replace(/locationId/g,'lId').replace(/areaId/g, 'pId').replace(/areaName/g,'pName');                  
                   l.children = JSON.parse(lstr);
           });
             
-          let ww = w;
+          let wstr = JSON.stringify(w.children).replace(/warehouseId/g,'wId').replace(/locationId/g, 'pId').replace(/locationName/g,'pName');  
+          w.children =  JSON.parse(wstr); 
+
         });
         debugger;
-        let data = this.warehouseOptions;
+        let ostr=JSON.stringify(this.warehouseOptions).replace(/warehouseId/g,'pId').replace(/warehouseName/g, 'pName');
+        this.warehouseOptions = JSON.parse(ostr);
       });
     },
     //选择仓库、库区、库位
