@@ -124,7 +124,7 @@
             size="mini"
             type="text"
             icon="el-icon-delete"
-            v-if="scope.row.status =='PREPARE'"
+            v-if="scope.row.status =='CONFIRMED'"
             @click="handleExecute(scope.row)"
             v-hasPermi="['mes:wm:itemrecpt:edit']"
           >执行入库</el-button>
@@ -251,7 +251,8 @@
         </el-card>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="cancel" v-if="optType =='view' || form.status !='PREPARE' ">返回</el-button>
-        <el-button type="primary" @click="submitForm" v-else>确 定</el-button>
+        <el-button type="primary" @click="submitForm" v-if="form.status =='PREPARE' && optType !='view' ">确 定</el-button>
+        <el-button type="success" @click="doconfirm" v-if="form.status =='PREPARE' && optType !='view' && form.recptId !=null">完成</el-button>
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
@@ -259,7 +260,7 @@
 </template>
 
 <script>
-import { listItemrecpt, getItemrecpt, delItemrecpt, addItemrecpt, updateItemrecpt,execute } from "@/api/mes/wm/itemrecpt";
+import { listItemrecpt, getItemrecpt, delItemrecpt, addItemrecpt, updateItemrecpt, confirmItemrecpt,execute } from "@/api/mes/wm/itemrecpt";
 import {getTreeList} from "@/api/mes/wm/warehouse"
 import {genCode} from "@/api/system/autocode/rule"
 import VendorSelect from "@/components/vendorSelect/single.vue";
@@ -462,6 +463,7 @@ export default {
         this.optType = "edit";
       });
     },
+    
     //执行入库
     handleExecute(row){
       const recptIds = row.recptId || this.ids;
@@ -492,6 +494,14 @@ export default {
         }
       });
     },
+    doconfirm(){
+      let that = this;
+      this.$modal.confirm('是否完成入库单编制？【完成后将不能更改】').then(function(){
+        that.form.status = 'CONFIRMED';
+        that.submitForm();
+      });
+    },
+
     /** 删除按钮操作 */
     handleDelete(row) {
       const recptIds = row.recptId || this.ids;

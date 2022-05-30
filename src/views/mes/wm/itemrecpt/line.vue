@@ -250,13 +250,14 @@ export default {
           w.children =  JSON.parse(wstr); 
 
         });
-        debugger;
         let ostr=JSON.stringify(this.warehouseOptions).replace(/warehouseId/g,'pId').replace(/warehouseName/g, 'pName');
         this.warehouseOptions = JSON.parse(ostr);
+        debugger;
       });
     },
     //选择仓库、库区、库位
     handleWarehouseChanged(obj){
+      debugger;
       if(obj !=null){
         this.form.warehouseId = obj[0];
         this.form.locationId = obj[1];

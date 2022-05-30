@@ -35,6 +35,15 @@ export function updateItemrecpt(data) {
   })
 }
 
+// 确认物料入库单
+export function confirmItemrecpt(data) {
+  return request({
+    url: '/mes/wm/itemrecpt/confirm',
+    method: 'put',
+    data: data
+  })
+}
+
 //执行入库
 export function execute(recptId) {
   return request({
