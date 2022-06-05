@@ -71,7 +71,6 @@
 
     <el-table v-loading="loading" :data="teamList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="班组ID" align="center" prop="teamId" />
       <el-table-column label="班组编号" align="center" prop="teamCode" />
       <el-table-column label="班组名称" align="center" prop="teamName" />
       <el-table-column label="备注" align="center" prop="remark" />
@@ -104,20 +103,41 @@
     />
 
     <!-- 添加或修改班组对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="班组编号" prop="teamCode">
-          <el-input v-model="form.teamCode" placeholder="请输入班组编号" />
-        </el-form-item>
-        <el-form-item label="班组名称" prop="teamName">
-          <el-input v-model="form.teamName" placeholder="请输入班组名称" />
-        </el-form-item>
-        <el-form-item label="备注" prop="remark">
-          <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
+    <el-dialog :title="title" :visible.sync="open" width="960px" append-to-body>
+      <el-form ref="form" :model="form" :rules="rules" label-width="100px">
+        <el-row>
+          <el-col :span="8">
+            <el-form-item label="班组编号" prop="teamCode">
+              <el-input v-model="form.teamCode" placeholder="请输入班组编号" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="4">
+            <el-form-item  label-width="80">
+              <el-switch v-model="autoGenFlag"
+                  active-color="#13ce66"
+                  active-text="自动生成"
+                  @change="handleAutoGenChange(autoGenFlag)" v-if="optType != 'view'" >               
+              </el-switch>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="班组名称" prop="teamName">
+              <el-input v-model="form.teamName" placeholder="请输入班组名称" />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="24">
+            <el-form-item label="备注" prop="remark">
+              <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
+            </el-form-item>
+          </el-col>          
+        </el-row>
       </el-form>
+      <el-divider v-if="form.teamId !=null" content-position="center">项目组成员</el-divider>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
+        <el-button type="primary" @click="cancel" v-if="optType =='view'">返回</el-button>
+        <el-button type="primary" @click="submitForm" v-else>确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
@@ -126,11 +146,14 @@
 
 <script>
 import { listTeam, getTeam, delTeam, addTeam, updateTeam } from "@/api/mes/cal/team";
-
+import {genCode} from "@/api/system/autocode/rule"
 export default {
   name: "Team",
   data() {
     return {
+      //自动生成编码
+      autoGenFlag:false,
+      optType: undefined,
       // 遮罩层
       loading: true,
       // 选中数组
@@ -272,7 +295,17 @@ export default {
       this.download('cal/team/export', {
         ...this.queryParams
       }, `team_${new Date().getTime()}.xlsx`)
-    }
+    },
+    //自动生成编码
+    handleAutoGenChange(autoGenFlag){
+      if(autoGenFlag){
+        genCode('CAL_TEAM_CODE').then(response =>{
+          this.form.teamCode = response;
+        });
+      }else{
+        this.form.teamCode = null;
+      }
+    },
   }
 };
 </script>
