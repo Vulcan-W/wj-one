@@ -193,6 +193,15 @@
             @click="handleDelete(scope.row)"
             v-hasPermi="['mes:qc:iqc:remove']"
           >删除</el-button>
+          <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-delete"
+            
+            @click="viewReport"
+          >
+          查看报表
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -393,6 +402,7 @@ import ItemSelect  from "@/components/itemSelect/single.vue";
 import VendorSelect from "@/components/vendorSelect/single.vue";
 import IqcLine from "./iqcline.vue";
 import {genCode} from "@/api/system/autocode/rule"
+import {getReport,getReport2} from "@/api/mes/report/report"
 export default {
   name: "Iqc",
   dicts: ['mes_qc_result','mes_order_status'],
@@ -689,6 +699,16 @@ export default {
       }else{
         this.form.iqcCode = null;
       }
+    },
+    viewReport(){
+      var reportName = "Test";
+      getReport2(reportName).then(res=>{
+        debugger;
+        let blob = new Blob([res],{type:'application/pdf'});        
+        let href = URL.createObjectURL(blob);
+        console.log(href);
+        window.open(`/pdf/web/viewer.html?file=${encodeURIComponent(href)}`);
+      });
     }
   }
 };
