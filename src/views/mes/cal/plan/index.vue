@@ -231,6 +231,14 @@
           </el-col>
         </el-row>
       </el-form>
+      <el-tabs type="border-card" v-if="form.planId != null">
+        <el-tab-pane label="班次">
+          <Shift ref="shiftTab" :planId="form.planId" :optType="optType"></Shift>
+        </el-tab-pane>
+        <el-tab-pane label="班组">
+          
+        </el-tab-pane>
+      </el-tabs>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="cancel" v-if="optType =='view'">返回</el-button>
         <el-button type="primary" @click="submitForm" v-else>确 定</el-button>
@@ -242,10 +250,12 @@
 
 <script>
 import { listCalplan, getCalplan, delCalplan, addCalplan, updateCalplan } from "@/api/mes/cal/calplan";
+import Shift from "./shift";
 import {genCode} from "@/api/system/autocode/rule"
 export default {
   name: "Calplan",
   dicts: ['mes_shift_method','mes_shift_type'],
+  components: {Shift},
   data() {
     return {
       //自动生成编码
