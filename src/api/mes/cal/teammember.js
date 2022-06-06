@@ -26,15 +26,6 @@ export function addTeammember(data) {
   })
 }
 
-// 修改班组成员
-export function updateTeammember(data) {
-  return request({
-    url: '/mes/cal/teammember',
-    method: 'put',
-    data: data
-  })
-}
-
 // 删除班组成员
 export function delTeammember(memberId) {
   return request({

@@ -71,7 +71,15 @@
 
     <el-table v-loading="loading" :data="teamList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="班组编号" align="center" prop="teamCode" />
+      <el-table-column label="班组编号" align="center" prop="teamCode" >
+          <template slot-scope="scope">
+                <el-button              
+                  type="text"
+                  @click="handleView(scope.row)"
+                  v-hasPermi="['mes:cal:team:query']"
+                >{{scope.row.teamCode}}</el-button>
+          </template>
+      </el-table-column>
       <el-table-column label="班组名称" align="center" prop="teamName" />
       <el-table-column label="备注" align="center" prop="remark" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
@@ -135,6 +143,7 @@
         </el-row>
       </el-form>
       <el-divider v-if="form.teamId !=null" content-position="center">项目组成员</el-divider>
+      <Teammember v-if="form.teamId !=null" :optType="optType" :teamId="form.teamId"></Teammember>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="cancel" v-if="optType =='view'">返回</el-button>
         <el-button type="primary" @click="submitForm" v-else>确 定</el-button>
@@ -146,9 +155,11 @@
 
 <script>
 import { listTeam, getTeam, delTeam, addTeam, updateTeam } from "@/api/mes/cal/team";
+import Teammember from "./member";
 import {genCode} from "@/api/system/autocode/rule"
 export default {
   name: "Team",
+  components: {Teammember},
   data() {
     return {
       //自动生成编码
@@ -249,6 +260,18 @@ export default {
       this.reset();
       this.open = true;
       this.title = "添加班组";
+      this.optType = "add";
+    },
+        // 查询明细按钮操作
+    handleView(row){
+      this.reset();
+      const teamId = row.teamId || this.ids
+      getTeam(teamId).then(response => {
+        this.form = response.data;
+        this.open = true;
+        this.title = "查看班组";
+        this.optType = "view";
+      });
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -258,6 +281,7 @@ export default {
         this.form = response.data;
         this.open = true;
         this.title = "修改班组";
+        this.optType = "edit";
       });
     },
     /** 提交按钮 */

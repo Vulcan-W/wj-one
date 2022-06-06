@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-row :gutter="10" class="mb8">
+    <el-row v-if="optType !='view'" :gutter="10" class="mb8">
       <el-col :span="1.5">
         <el-button
           type="primary"
@@ -10,17 +10,7 @@
           @click="handleAdd"
           v-hasPermi="['mes:cal:team:add']"
         >新增</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="success"
-          plain
-          icon="el-icon-edit"
-          size="mini"
-          :disabled="single"
-          @click="handleUpdate"
-          v-hasPermi="['mes:cal:team:edit']"
-        >修改</el-button>
+        <UserMultiSelect ref="userSelect" @onSelected="userSelected"></UserMultiSelect>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -51,15 +41,8 @@
       <el-table-column label="用户名" align="center" prop="userName" />
       <el-table-column label="用户昵称" align="center" prop="nickName" />
       <el-table-column label="电话" align="center" prop="tel" />
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="操作" align="center" v-if="optType !='view'" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-edit"
-            @click="handleUpdate(scope.row)"
-            v-hasPermi="['cal:teammember:edit']"
-          >修改</el-button>
           <el-button
             size="mini"
             type="text"
@@ -78,36 +61,19 @@
       :limit.sync="queryParams.pageSize"
       @pagination="getList"
     />
-
-    <!-- 添加或修改班组成员对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="用户名" prop="userName">
-          <el-input v-model="form.userName" placeholder="请输入用户名" />
-        </el-form-item>
-        <el-form-item label="用户昵称" prop="nickName">
-          <el-input v-model="form.nickName" placeholder="请输入用户昵称" />
-        </el-form-item>
-        <el-form-item label="电话" prop="tel">
-          <el-input v-model="form.tel" placeholder="请输入电话" />
-        </el-form-item>
-        <el-form-item label="备注" prop="remark">
-          <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
-      </div>
-    </el-dialog>
   </div>
 </template>
 
 <script>
-import { listTeammember, getTeammember, delTeammember, addTeammember, updateTeammember } from "@/api/mes/cal/teammember";
-
+import { listTeammember, getTeammember, delTeammember, addTeammember } from "@/api/mes/cal/teammember";
+import UserMultiSelect from "@/components/userSelect/multi.vue"
 export default {
   name: "Teammember",
+  components: {UserMultiSelect},
+  props:{
+    teamId:null,
+    optType:null
+  },
   data() {
     return {
       // 遮罩层
@@ -132,7 +98,7 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        teamId: null,
+        teamId: this.teamId,
         userId: null,
         userName: null,
         nickName: null,
@@ -140,18 +106,6 @@ export default {
       },
       // 表单参数
       form: {},
-      // 表单校验
-      rules: {
-        teamId: [
-          { required: true, message: "班组ID不能为空", trigger: "blur" }
-        ],
-        userId: [
-          { required: true, message: "用户ID不能为空", trigger: "blur" }
-        ],
-        userName: [
-          { required: true, message: "用户名不能为空", trigger: "blur" }
-        ],
-      }
     };
   },
   created() {
@@ -211,44 +165,29 @@ export default {
     },
     /** 新增按钮操作 */
     handleAdd() {
-      this.reset();
+      this.$refs.userSelect.showFlag = true;
       this.open = true;
       this.title = "添加班组成员";
     },
-    /** 修改按钮操作 */
-    handleUpdate(row) {
-      this.reset();
-      const memberId = row.memberId || this.ids
-      getTeammember(memberId).then(response => {
-        this.form = response.data;
-        this.open = true;
-        this.title = "修改班组成员";
-      });
+    userSelected(rows){
+      if(rows !=null){
+        rows.forEach(user => {
+          this.form.teamId = this.teamId;
+          this.form.userId = user.userId;
+          this.form.userName = user.userName;
+          this.form.nickName = user.nickName;
+          this.form.tel = user.phonenumber;  
+          addTeammember(this.form).then(response => {              
+            this.getList();  
+          });
+        });
+      }
     },
-    /** 提交按钮 */
-    submitForm() {
-      this.$refs["form"].validate(valid => {
-        if (valid) {
-          if (this.form.memberId != null) {
-            updateTeammember(this.form).then(response => {
-              this.$modal.msgSuccess("修改成功");
-              this.open = false;
-              this.getList();
-            });
-          } else {
-            addTeammember(this.form).then(response => {
-              this.$modal.msgSuccess("新增成功");
-              this.open = false;
-              this.getList();
-            });
-          }
-        }
-      });
-    },
+
     /** 删除按钮操作 */
     handleDelete(row) {
       const memberIds = row.memberId || this.ids;
-      this.$modal.confirm('是否确认删除班组成员编号为"' + memberIds + '"的数据项？').then(function() {
+      this.$modal.confirm('是否确认删除班组成员？').then(function() {
         return delTeammember(memberIds);
       }).then(() => {
         this.getList();
@@ -257,7 +196,7 @@ export default {
     },
     /** 导出按钮操作 */
     handleExport() {
-      this.download('cal/teammember/export', {
+      this.download('mes/cal/teammember/export', {
         ...this.queryParams
       }, `teammember_${new Date().getTime()}.xlsx`)
     }
