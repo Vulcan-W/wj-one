@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-row :gutter="10" class="mb8">
+    <el-row v-if="optType !='view'" :gutter="10" class="mb8">
       <el-col :span="1.5">
         <el-button
           type="primary"
@@ -41,17 +41,11 @@
       <el-table-column label="序号" align="center" prop="orderNum" />
       <el-table-column label="班次名称" align="center" prop="shiftName" />
       <el-table-column label="开始时间" align="center" prop="startTime" width="180">
-        <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.startTime, '{y}-{m}-{d}') }}</span>
-        </template>
       </el-table-column>
       <el-table-column label="结束时间" align="center" prop="endTime" width="180">
-        <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.endTime, '{y}-{m}-{d}') }}</span>
-        </template>
       </el-table-column>
       <el-table-column label="备注" align="center" prop="remark" />
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="操作" align="center" v-if="optType !='view'" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -97,20 +91,24 @@
         <el-row>
             <el-col :span="12">
                 <el-form-item label="开始时间" prop="startTime">
-                <el-time-select
+                <el-time-picker
                 v-model="form.startTime"
                 placeholder="请选择开始时间"
+                format ="HH:mm"
+                value-format="HH:mm"
                 >
-                </el-time-select>
+                </el-time-picker>
                 </el-form-item>
             </el-col>
             <el-col :span="12">
                 <el-form-item label="结束时间" prop="endTime">
-                <el-time-select
+                <el-time-picker
                 v-model="form.endTime"
                 placeholder="请选择结束时间"
+                format ="HH:mm"
+                value-format="HH:mm"
                 >                    
-                </el-time-select>
+                </el-time-picker>
                 </el-form-item>
             </el-col>
         </el-row>
@@ -200,7 +198,7 @@ export default {
     reset() {
       this.form = {
         shiftId: null,
-        planId: null,
+        planId: this.planId,
         orderNum: null,
         shiftName: null,
         startTime: null,
