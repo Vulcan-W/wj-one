@@ -236,7 +236,7 @@
           <Shift ref="shiftTab" :planId="form.planId" :optType="optType"></Shift>
         </el-tab-pane>
         <el-tab-pane label="班组">
-          
+          <Team  ref="teamTab" :planId="form.planId" :optType="optType"></Team>
         </el-tab-pane>
       </el-tabs>
       <div slot="footer" class="dialog-footer">
@@ -251,11 +251,12 @@
 <script>
 import { listCalplan, getCalplan, delCalplan, addCalplan, updateCalplan } from "@/api/mes/cal/calplan";
 import Shift from "./shift";
+import Team  from "./team";
 import {genCode} from "@/api/system/autocode/rule"
 export default {
   name: "Calplan",
   dicts: ['mes_shift_method','mes_shift_type'],
-  components: {Shift},
+  components: {Shift,Team},
   data() {
     return {
       //自动生成编码
