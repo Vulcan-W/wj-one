@@ -58,9 +58,11 @@ export default {
   /**本月农历设置为灰色*/
   .el-calendar-table .current .lunar {
     color: #606266;
+    font-size: small;
   }
   /**本月农历节日设置为红色*/
   .el-calendar-table .current .lunar.festival {
     color: green;
+    font-size: small;
   }
 </style>

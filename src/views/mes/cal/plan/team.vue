@@ -51,7 +51,8 @@ export default {
     components:{TeamSelect},
     props:{
         planId:null,
-        optType:null
+        optType:null,
+        calendarType:null
     },
     data(){
         return {
@@ -69,12 +70,12 @@ export default {
                 teamId: null,
                 teamCode: null,
                 teamName: null,
+                calendarType:this.calendarType
             },
         }
     },
     created() {
         this.getTeamList();     
-        this.getMemberList(null);   
     },
     methods:{
         getTeamList(){
@@ -107,9 +108,9 @@ export default {
                 this.form.teamCode = team.teamCode;
                 this.form.teamName = team.teamName;
                 this.form.planId = this.planId;
+                this.form.calendarType = this.calendarType;
                 addPlanteam(this.form).then(response => {
-                    this.getTeamList();
-                    this.getMemberList(null);
+                    this.getTeamList();                    
                 });
             });
         },

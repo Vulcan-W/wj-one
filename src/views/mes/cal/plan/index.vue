@@ -1,6 +1,16 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
+      <el-form-item label="班组类型" prop="calendarType">
+        <el-select v-model="queryParams.calendarType" placeholder="请选择班组类型">
+          <el-option
+            v-for="dict in dict.type.mes_calendar_type"
+            :key="dict.value"
+            :label="dict.label"
+            :value="dict.value"
+          />
+        </el-select>
+      </el-form-item>
       <el-form-item label="计划编号" prop="planCode">
         <el-input
           v-model="queryParams.planCode"
@@ -97,6 +107,11 @@
           </template>
       </el-table-column>
       <el-table-column label="计划名称" width="200px" align="center" prop="planName" :show-overflow-tooltip="true"/>
+      <el-table-column label="班组类型" align="center" prop="calendarType">
+        <template slot-scope="scope">
+          <dict-tag :options="dict.type.mes_calendar_type" :value="scope.row.calendarType"/>
+        </template>
+      </el-table-column>
       <el-table-column label="开始日期" align="center" prop="startDate" width="120">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.startDate, '{y}-{m}-{d}') }}</span>
@@ -117,22 +132,22 @@
           <dict-tag :options="dict.type.mes_shift_method" :value="scope.row.shiftMethod"/>
         </template>
       </el-table-column>
-      <el-table-column label="备注" align="center" prop="remark" />
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width" :show-overflow-tooltip="true">
+      <el-table-column label="备注" align="center" prop="remark" :show-overflow-tooltip="true"/>
+      <el-table-column label="操作" align="center" class-name="small-padding fixed-width" >
         <template slot-scope="scope">
           <el-button
             size="mini"
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['cal:calplan:edit']"
+            v-hasPermi="['mes:cal:calplan:edit']"
           >修改</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['cal:calplan:remove']"
+            v-hasPermi="['mes:cal:calplan:remove']"
           >删除</el-button>
         </template>
       </el-table-column>
@@ -171,7 +186,7 @@
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="12">
+          <el-col :span="8">
             <el-form-item label="开始日期" prop="startDate">
               <el-date-picker clearable
                 v-model="form.startDate"
@@ -181,7 +196,7 @@
               </el-date-picker>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
+          <el-col :span="8">
             <el-form-item label="结束日期" prop="endDate">
               <el-date-picker clearable
                 v-model="form.endDate"
@@ -189,6 +204,18 @@
                 value-format="yyyy-MM-dd"
                 placeholder="请选择结束日期">
               </el-date-picker>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="班组类型" prop="calendarType">
+              <el-select v-model="form.calendarType" placeholder="请选择班组类型">
+                <el-option
+                  v-for="dict in dict.type.mes_calendar_type"
+                  :key="dict.value"
+                  :label="dict.label"
+                  :value="dict.value"
+                />
+              </el-select>
             </el-form-item>
           </el-col>
         </el-row>
@@ -236,7 +263,7 @@
           <Shift ref="shiftTab" :planId="form.planId" :optType="optType"></Shift>
         </el-tab-pane>
         <el-tab-pane label="班组">
-          <Team  ref="teamTab" :planId="form.planId" :optType="optType"></Team>
+          <Team  ref="teamTab" :planId="form.planId" :calendarType="form.calendarType" :optType="optType"></Team>
         </el-tab-pane>
       </el-tabs>
       <div slot="footer" class="dialog-footer">
@@ -255,7 +282,7 @@ import Team  from "./team";
 import {genCode} from "@/api/system/autocode/rule"
 export default {
   name: "Calplan",
-  dicts: ['mes_shift_method','mes_shift_type'],
+  dicts: ['mes_shift_method','mes_shift_type','mes_calendar_type'],
   components: {Shift,Team},
   data() {
     return {
@@ -286,6 +313,7 @@ export default {
         pageSize: 10,
         planCode: null,
         planName: null,
+        calendarType:null,
         startDate: null,
         endDate: null,
         shiftType: null,
@@ -300,6 +328,9 @@ export default {
         ],
         planName: [
           { required: true, message: "计划名称不能为空", trigger: "blur" }
+        ],
+        calendarType:[
+          { required: true, message: "请选择班组类型", trigger: "blur" }
         ],
         startDate: [
           { required: true, message: "开始日期不能为空", trigger: "blur" }
@@ -334,6 +365,7 @@ export default {
         planId: null,
         planCode: null,
         planName: null,
+        calendarType:null,
         startDate: null,
         endDate: null,
         shiftType: 'SHIFT_TWO',

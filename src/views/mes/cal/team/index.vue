@@ -1,6 +1,16 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
+      <el-form-item label="班组类型" prop="calendarType">
+        <el-select v-model="queryParams.calendarType" placeholder="请选择班组类型">
+          <el-option
+            v-for="dict in dict.type.mes_calendar_type"
+            :key="dict.value"
+            :label="dict.label"
+            :value="dict.value"
+          />
+        </el-select>
+      </el-form-item>
       <el-form-item label="班组编号" prop="teamCode">
         <el-input
           v-model="queryParams.teamCode"
@@ -81,6 +91,11 @@
           </template>
       </el-table-column>
       <el-table-column label="班组名称" align="center" prop="teamName" />
+      <el-table-column label="班组类型" align="center" prop="calendarType">
+        <template slot-scope="scope">
+          <dict-tag :options="dict.type.mes_calendar_type" :value="scope.row.calendarType"/>
+        </template>
+      </el-table-column>
       <el-table-column label="备注" align="center" prop="remark" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
@@ -119,7 +134,7 @@
               <el-input v-model="form.teamCode" placeholder="请输入班组编号" />
             </el-form-item>
           </el-col>
-          <el-col :span="4">
+          <el-col :span="3">
             <el-form-item  label-width="80">
               <el-switch v-model="autoGenFlag"
                   active-color="#13ce66"
@@ -128,9 +143,21 @@
               </el-switch>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
+          <el-col :span="8">
             <el-form-item label="班组名称" prop="teamName">
               <el-input v-model="form.teamName" placeholder="请输入班组名称" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="5">
+            <el-form-item label="班组类型" prop="calendarType">
+              <el-select v-model="form.calendarType" placeholder="请选择班组类型">
+                <el-option
+                  v-for="dict in dict.type.mes_calendar_type"
+                  :key="dict.value"
+                  :label="dict.label"
+                  :value="dict.value"
+                />
+              </el-select>
             </el-form-item>
           </el-col>
         </el-row>
@@ -160,6 +187,7 @@ import {genCode} from "@/api/system/autocode/rule"
 export default {
   name: "Team",
   components: {Teammember},
+  dicts:['mes_calendar_type'],
   data() {
     return {
       //自动生成编码
@@ -189,6 +217,7 @@ export default {
         pageSize: 10,
         teamCode: null,
         teamName: null,
+        calendarType:null
       },
       // 表单参数
       form: {},
@@ -200,6 +229,9 @@ export default {
         teamName: [
           { required: true, message: "班组名称不能为空", trigger: "blur" }
         ],
+        calendarType:[
+          { required: true, message: "清选择班组类型", trigger: "blur" }
+        ]
       }
     };
   },
@@ -227,6 +259,7 @@ export default {
         teamId: null,
         teamCode: null,
         teamName: null,
+        calendarType:null,
         remark: null,
         attr1: null,
         attr2: null,
