@@ -28,7 +28,17 @@
                                                 <el-tag v-else effect="dark" type="success">休</el-tag>
                                           </el-col>
                                     </el-row>
-                                    <el-row>
+                                    <el-row v-for="calendarDay in calendarDayList " :key="calendarDay.theDay">
+                                          <el-col :span="24" v-if="calendarDay.theDay == data.day && holidayList.indexOf(data.day) ==-1">
+                                                <div v-for="teamShift in calendarDay.teamShifts" :key="teamShift.orderNum" class="grid-content">
+                                                      <el-button v-if="teamShift.orderNum == 1" type="success" icon="el-icon-sunrise">{{ teamShift.teamName }}</el-button>
+                                                      <el-button v-if="teamShift.orderNum ==2 && calendarDay.shiftType=='SHIFT_THREE'" type="warning" icon="el-icon-sunny">{{ teamShift.teamName }}</el-button>
+                                                      <el-button v-if="teamShift.orderNum ==2 && calendarDay.shiftType=='SHIFT_TWO'"   type="info"    icon="el-icon-moon">{{ teamShift.teamName }}</el-button>
+                                                      <el-button v-if="teamShift.orderNum ==3 && calendarDay.shiftType=='SHIFT_THREE'" type="info"    icon="el-icon-moon">{{ teamShift.teamName }}</el-button>
+                                                </div>                                               
+                                          </el-col>
+                                    </el-row>
+                                    <!-- <el-row>
                                           <el-col :span="24">
                                                 <div class="grid-content">
                                                       <el-button type="success" icon="el-icon-sunrise">注塑1组</el-button>
@@ -48,7 +58,8 @@
                                                       <el-button type="info"  icon="el-icon-moon">注塑3组</el-button>
                                                 </div>                                                
                                           </el-col>                        
-                                    </el-row>                                        
+                                    </el-row>                                         
+                                    -->
                               </div>                
                               </template>
                         </el-calendar>
@@ -70,7 +81,31 @@ export default {
                   date: new Date(),
                   holidayList:[],//假日
                   workdayList:[],//工作日
-                  selectedType:null
+                  selectedType:null,
+                  calendarDayList:[
+                        {
+                              theDay:'2022-06-04',
+                              shiftType: 'SHIFT_TWO',
+                              teamShifts:[{teamName: '注塑1组',shiftName:'白班',orderNum: 1},{teamName: '注塑2组',shiftName:'中班',orderNum: 2},{teamName: '注塑3组',shiftName:'晚班',orderNum: 3}]                        
+                        },
+                        {
+                              theDay:'2022-06-13',
+                              shiftType: 'SHIFT_TWO',
+                              teamShifts:[{teamName: '注塑1组',shiftName:'白班',orderNum: 1},{teamName: '注塑2组',shiftName:'中班',orderNum: 2},{teamName: '注塑3组',shiftName:'晚班',orderNum: 3}]                        
+                        },
+                        {
+                              theDay:'2022-06-14',
+                              shiftType: 'SHIFT_THREE',
+                              teamShifts:[{teamName: '注塑1组',shiftName:'白班',orderNum: 1},{teamName: '注塑2组',shiftName:'中班',orderNum: 2},{teamName: '注塑3组',shiftName:'晚班',orderNum: 3}]                        
+                        }
+                  ]                        
+            }
+      },
+      watch:{
+            date:{
+                  handler(newVal,oldVal){
+                        console.log(newVal.getFullYear()+'-'+(newVal.getMonth()+1)+'-'+newVal.getDate());
+                  }
             }
       },
       created() {
