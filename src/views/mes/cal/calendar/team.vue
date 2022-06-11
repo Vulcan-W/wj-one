@@ -11,7 +11,7 @@
                         </el-radio-group>
                   </el-aside>
                   <el-main>
-                        <el-calendar v-model="date">
+                        <el-calendar v-loading="loading" v-model="date">
                               <template slot="dateCell" slot-scope="{date, data }">
                               <div>
                                     <el-row>
@@ -133,6 +133,7 @@ export default {
                   }
                   listCalendars(param).then(response =>{
                         this.calendarDayList = response.data;
+                        this.loading = false;
                   });
             },
             isFestival(slotDate, slotData) {

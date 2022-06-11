@@ -1,7 +1,7 @@
 <template>
     <div class="app-container">
         <el-tabs type="border-card">
-            <el-tab-pane label="类型">
+            <el-tab-pane label="分类">
                 <CalendarTypeView></CalendarTypeView>
             </el-tab-pane>
             <el-tab-pane label="班组">
