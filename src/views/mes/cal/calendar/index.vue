@@ -4,7 +4,9 @@
             <el-tab-pane label="类型">
                 <CalendarTypeView></CalendarTypeView>
             </el-tab-pane>
-            <el-tab-pane label="班组"></el-tab-pane>
+            <el-tab-pane label="班组">
+                <TeamView></TeamView>
+            </el-tab-pane>
             <el-tab-pane label="个人"></el-tab-pane>
         </el-tabs>
     </div>
@@ -12,9 +14,9 @@
 
 <script>
 import CalendarTypeView from "./calendarType.vue"
-
+import TeamView from "./team.vue"
 export default {
-    components:{CalendarTypeView},
+    components:{CalendarTypeView,TeamView},
     data(){
         return {
 

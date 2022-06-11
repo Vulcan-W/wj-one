@@ -9,6 +9,14 @@ export function listTeam(query) {
   })
 }
 
+// 查询班组列表
+export function listAllTeam() {
+  return request({
+    url: '/mes/cal/team/listAll',
+    method: 'get'
+  })
+}
+
 // 查询班组详细
 export function getTeam(teamId) {
   return request({

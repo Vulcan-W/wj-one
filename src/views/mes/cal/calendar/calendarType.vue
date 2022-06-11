@@ -37,29 +37,7 @@
                                                       <el-button v-if="teamShift.orderNum ==3 && calendarDay.shiftType=='SHIFT_THREE'" type="info"    icon="el-icon-moon">{{ teamShift.teamName }}</el-button>
                                                 </div>                                               
                                           </el-col>
-                                    </el-row>
-                                    <!-- <el-row>
-                                          <el-col :span="24">
-                                                <div class="grid-content">
-                                                      <el-button type="success" icon="el-icon-sunrise">注塑1组</el-button>
-                                                </div>
-                                          </el-col>                        
-                                    </el-row>                                        
-                                    <el-row>
-                                          <el-col :span="24">
-                                                <div class="grid-content">
-                                                      <el-button type="warning"  icon="el-icon-sunny">注塑2组</el-button>
-                                                </div>                                                
-                                          </el-col>                        
-                                    </el-row>                                        
-                                    <el-row>
-                                          <el-col :span="24">
-                                                <div class="grid-content">
-                                                      <el-button type="info"  icon="el-icon-moon">注塑3组</el-button>
-                                                </div>                                                
-                                          </el-col>                        
-                                    </el-row>                                         
-                                    -->
+                                    </el-row>                                  
                               </div>                
                               </template>
                         </el-calendar>
@@ -126,7 +104,6 @@ export default {
                   this.workdayList =[];
                   let that = this;         
                   listCalholiday(this.queryParams).then(response => {
-                  debugger;
                   if(response.data !=null){
                         response.data.forEach(theDay => {
                               if(theDay.holidayType =='HOLIDAY'){
