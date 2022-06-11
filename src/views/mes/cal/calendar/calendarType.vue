@@ -70,6 +70,7 @@
 
 <script>
 import { listCalholiday } from "@/api/mes/cal/calholiday";
+import { listCalendars } from "@/api/mes/cal/calendar";
 import calendar from '@/utils/calendar';
 export default {
       name: 'CalendarTypeView',     
@@ -98,7 +99,13 @@ export default {
                               shiftType: 'SHIFT_THREE',
                               teamShifts:[{teamName: '注塑1组',shiftName:'白班',orderNum: 1},{teamName: '注塑2组',shiftName:'中班',orderNum: 2},{teamName: '注塑3组',shiftName:'晚班',orderNum: 3}]                        
                         }
-                  ]                        
+                  ],
+                  queryParams: {
+                        theDay: null,
+                        holidayType: null,
+                        startTime: null,
+                        endTime: null,
+                  },                        
             }
       },
       watch:{
@@ -132,8 +139,16 @@ export default {
                   }
                   });
             },
-            onSelected(para){
-
+            //点击班组类型
+            onSelected(calType){
+                  this.loading = true;   
+                  var param = {
+                        queryType: 'TYPE',
+                        calendarType: calType
+                  }
+                  listCalendars(param).then(response =>{
+                        this.calendarDayList = response.data;
+                  });
             },
             isFestival(slotDate, slotData) {
                   let solarDayArr = slotData.day.split('-');
