@@ -57,19 +57,8 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['cal:calplan:add']"
+          v-hasPermi="['mes:cal:calplan:add']"
         >新增</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="success"
-          plain
-          icon="el-icon-edit"
-          size="mini"
-          :disabled="single"
-          @click="handleUpdate"
-          v-hasPermi="['cal:calplan:edit']"
-        >修改</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -79,7 +68,7 @@
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['cal:calplan:remove']"
+          v-hasPermi="['mes:cal:calplan:remove']"
         >删除</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -89,7 +78,7 @@
           icon="el-icon-download"
           size="mini"
           @click="handleExport"
-          v-hasPermi="['cal:calplan:export']"
+          v-hasPermi="['mes:cal:calplan:export']"
         >导出</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -132,13 +121,18 @@
           <dict-tag :options="dict.type.mes_shift_method" :value="scope.row.shiftMethod"/>
         </template>
       </el-table-column>
-      <el-table-column label="备注" align="center" prop="remark" :show-overflow-tooltip="true"/>
+      <el-table-column label="单据状态" align="center" prop="status">
+        <template slot-scope="scope">
+          <dict-tag :options="dict.type.mes_order_status" :value="scope.row.status"/>
+        </template>
+      </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width" >
         <template slot-scope="scope">
           <el-button
             size="mini"
             type="text"
             icon="el-icon-edit"
+            v-if="scope.row.status =='PREPARE'"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['mes:cal:calplan:edit']"
           >修改</el-button>
@@ -146,6 +140,7 @@
             size="mini"
             type="text"
             icon="el-icon-delete"
+            v-if="scope.row.status =='PREPARE'"
             @click="handleDelete(scope.row)"
             v-hasPermi="['mes:cal:calplan:remove']"
           >删除</el-button>
@@ -162,7 +157,7 @@
     />
 
     <!-- 添加或修改排班计划对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="960px" append-to-body>
+    <el-dialog :title="title" v-loading="formLoading" :visible.sync="open" width="960px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-row>
           <el-col :span="8">
@@ -243,8 +238,8 @@
               </el-select>
             </el-form-item>
           </el-col>
-          <el-col v-if="form.shiftType !='SINGLE'" :span="6">
-            <el-form-item label-width="80" prop="shiftCount">
+          <el-col v-if="form.shiftMethod =='DAY' && form.shiftType !='SINGLE'" :span="6">
+            <el-form-item label-width="20" prop="shiftCount">
               <el-input-number :min="1"  controls-position="right" v-model="form.shiftCount" >
               </el-input-number>
             </el-form-item>
@@ -267,8 +262,9 @@
         </el-tab-pane>
       </el-tabs>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="cancel" v-if="optType =='view'">返回</el-button>
-        <el-button type="primary" @click="submitForm" v-else>确 定</el-button>
+        <el-button type="primary" @click="cancel" v-if="optType =='view' || form.status !='PREPARE'">返回</el-button>
+        <el-button type="primary" @click="submitForm" v-if="form.status =='PREPARE' && optType !='view' ">确 定</el-button>
+        <el-button type="success" @click="handleFinish" v-if="form.status =='PREPARE' && optType !='view'  && form.planId !=null">完成</el-button>
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
@@ -282,7 +278,7 @@ import Team  from "./team";
 import {genCode} from "@/api/system/autocode/rule"
 export default {
   name: "Calplan",
-  dicts: ['mes_shift_method','mes_shift_type','mes_calendar_type'],
+  dicts: ['mes_shift_method','mes_shift_type','mes_calendar_type','mes_order_status'],
   components: {Shift,Team},
   data() {
     return {
@@ -291,6 +287,7 @@ export default {
       optType: undefined,
       // 遮罩层
       loading: true,
+      formLoading: false,
       // 选中数组
       ids: [],
       // 非单个禁用
@@ -371,6 +368,7 @@ export default {
         shiftType: 'SHIFT_TWO',
         shiftMethod: 'MONTH',
         shiftCount: 1,
+        status: "PREPARE",
         remark: null,
         attr1: null,
         attr2: null,
@@ -429,7 +427,8 @@ export default {
       });
     },
     /** 提交按钮 */
-    submitForm() {
+    submitForm() {      
+      this.formLoading = true;
       this.$refs["form"].validate(valid => {
         if (valid) {
           if (this.form.planId != null) {
@@ -437,6 +436,7 @@ export default {
               this.$modal.msgSuccess("修改成功");
               this.open = false;
               this.getList();
+              this.formLoading = false;
             });
           } else {
             addCalplan(this.form).then(response => {
@@ -457,6 +457,13 @@ export default {
         this.getList();
         this.$modal.msgSuccess("删除成功");
       }).catch(() => {});
+    },
+    handleFinish(){
+      let that = this;
+      this.$modal.confirm('是否完成计划编制？【完成后将不能更改】').then(function(){
+        that.form.status = 'CONFIRMED';
+        that.submitForm();
+      });
     },
     /** 导出按钮操作 */
     handleExport() {

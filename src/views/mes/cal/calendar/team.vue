@@ -64,22 +64,10 @@ export default {
                   workdayList:[],//工作日
                   selectedType:null,
                   calendarDayList:[
-                        {
-                              theDay:'2022-06-04',
-                              shiftType: 'SHIFT_TWO',
-                              teamShifts:[{teamName: '注塑1组',shiftName:'白班',orderNum: 1},{teamName: '注塑2组',shiftName:'中班',orderNum: 2},{teamName: '注塑3组',shiftName:'晚班',orderNum: 3}]                        
-                        },
-                        {
-                              theDay:'2022-06-13',
-                              shiftType: 'SHIFT_TWO',
-                              teamShifts:[{teamName: '注塑1组',shiftName:'白班',orderNum: 1},{teamName: '注塑2组',shiftName:'中班',orderNum: 2},{teamName: '注塑3组',shiftName:'晚班',orderNum: 3}]                        
-                        },
-                        {
-                              theDay:'2022-06-14',
-                              shiftType: 'SHIFT_THREE',
-                              teamShifts:[{teamName: '注塑1组',shiftName:'白班',orderNum: 1},{teamName: '注塑2组',shiftName:'中班',orderNum: 2},{teamName: '注塑3组',shiftName:'晚班',orderNum: 3}]                        
-                        }
                   ],
+                  teamShiftQueryParams: {
+                        queryType:'TEAM'
+                  },
                   queryParams: {
                         theDay: null,
                         holidayType: null,
@@ -92,6 +80,12 @@ export default {
             date:{
                   handler(newVal,oldVal){
                         console.log(newVal.getFullYear()+'-'+(newVal.getMonth()+1)+'-'+newVal.getDate());
+                        this.teamShiftQueryParams.date = newVal.getFullYear()+'-'+(newVal.getMonth()+1)+'-'+newVal.getDate();         
+                        this.loading = true;         
+                        listCalendars(this.teamShiftQueryParams).then(response =>{
+                              this.calendarDayList = response.data;
+                              this.loading = false;
+                        });
                   }
             }
       },
@@ -127,11 +121,9 @@ export default {
             //点击班组类型
             onSelected(teamId){
                   this.loading = true;   
-                  var param = {
-                        queryType: 'TEAM',
-                        teamId: teamId
-                  }
-                  listCalendars(param).then(response =>{
+                  this.teamShiftQueryParams.teamId = teamId;
+                  this.teamShiftQueryParams.date = this.date;
+                  listCalendars(this.teamShiftQueryParams).then(response =>{
                         this.calendarDayList = response.data;
                         this.loading = false;
                   });
