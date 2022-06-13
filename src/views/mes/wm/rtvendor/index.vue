@@ -209,6 +209,10 @@
           </el-col>
         </el-row>
       </el-form>
+      <el-divider v-if="form.rtId !=null" content-position="center">物料信息</el-divider> 
+      <el-card shadow="always" v-if="form.rtId !=null" class="box-card">
+        <Rtvendorline ref=line :rtId="form.rtId"  :optType="optType"></Rtvendorline>
+      </el-card>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="cancel" v-if="optType =='view' || form.status !='PREPARE' ">返回</el-button>
         <el-button type="primary" @click="submitForm" v-if="form.status =='PREPARE' && optType !='view' ">确 定</el-button>
@@ -223,9 +227,10 @@
 import { listRtvendor, getRtvendor, delRtvendor, addRtvendor, updateRtvendor } from "@/api/mes/wm/rtvendor";
 import {genCode} from "@/api/system/autocode/rule"
 import VendorSelect from "@/components/vendorSelect/single.vue";
+import Rtvendorline from "./line.vue"
 export default {
   name: "Rtvendor",
-  components:{VendorSelect},
+  components:{VendorSelect,Rtvendorline},
   dicts: ['mes_order_status'],
   data() {
     return {
