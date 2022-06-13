@@ -115,6 +115,14 @@
           <el-button
             size="mini"
             type="text"
+            icon="el-icon-delete"
+            v-if="scope.row.status =='CONFIRMED'"
+            @click="handleExecute(scope.row)"
+            v-hasPermi="['mes:wm:rtvendor:edit']"
+          >执行退货</el-button>
+          <el-button
+            size="mini"
+            type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['wm:rtvendor:edit']"
@@ -224,7 +232,7 @@
 </template>
 
 <script>
-import { listRtvendor, getRtvendor, delRtvendor, addRtvendor, updateRtvendor } from "@/api/mes/wm/rtvendor";
+import { listRtvendor, getRtvendor, delRtvendor, addRtvendor, updateRtvendor,execute } from "@/api/mes/wm/rtvendor";
 import {genCode} from "@/api/system/autocode/rule"
 import VendorSelect from "@/components/vendorSelect/single.vue";
 import Rtvendorline from "./line.vue"
@@ -385,6 +393,24 @@ export default {
           }
         }
       });
+    },
+    //确认单据
+    doconfirm(){
+      let that = this;
+      this.$modal.confirm('是否完成供应商退货编制？【完成后将不能更改】').then(function(){
+        that.form.status = 'CONFIRMED';
+        that.submitForm();
+      });
+    },
+    //执行退货
+    handleExecute(row){
+      const rtIds = row.rtId || this.ids;
+      this.$modal.confirm('确认执行退货？').then(function() {
+        return execute(rtIds)//执行入库
+      }).then(() => {
+        this.getList();
+        this.$modal.msgSuccess("退货成功");
+      }).catch(() => {});
     },
     /** 删除按钮操作 */
     handleDelete(row) {

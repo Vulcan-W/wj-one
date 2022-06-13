@@ -42,3 +42,11 @@ export function delRtvendor(rtId) {
     method: 'delete'
   })
 }
+
+//执行入库
+export function execute(rtId) {
+  return request({
+    url: '/mes/wm/rtvendor/' + rtId,
+    method: 'put'
+  })
+}
