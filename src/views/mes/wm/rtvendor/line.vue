@@ -75,7 +75,7 @@
                       <el-button slot="append" @click="handleSelectStock" icon="el-icon-search"></el-button>
                     </el-input>
                 </el-form-item>
-                <StockSelect ref="stockSelect" @onSelected="onStockSelected"></StockSelect>
+                <StockSelect ref="stockSelect" :batchCode="batchCdoe" :vendorId="vendorId" @onSelected="onStockSelected"></StockSelect>
             </el-col>
             <el-col :span="8">
                 <el-form-item label="产品物料名称" prop="itemName">
@@ -151,7 +151,9 @@ export default {
   components:{StockSelect},
   props:{
     optType: null,
-    rtId: null
+    rtId: null,
+    batchCode: null,
+    vendorId: null
   },
   data() {
     return {
@@ -325,10 +327,12 @@ export default {
     },
     handleSelectStock(){
       this.$refs.stockSelect.showFlag = true;
+      this.$refs.stockSelect.getList();
     },
     //物料选择弹出框
     onStockSelected(obj){
         if(obj != undefined && obj != null){
+          this.form.materialStockId = obj.materialStockId;
           this.form.itemId = obj.itemId;
           this.form.itemCode = obj.itemCode;
           this.form.itemName = obj.itemName;

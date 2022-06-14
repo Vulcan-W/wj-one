@@ -192,7 +192,7 @@ export default {
         itemName: null,
         specification: null,
         unitOfMeasure: null,
-        batchCode: null,
+        batchCode: this.batchCode,
         warehouseId: null,
         warehouseCode: null,
         warehouseName: null,
@@ -202,7 +202,7 @@ export default {
         areaId: null,
         areaCode: null,
         areaName: null,
-        vendorId: null,
+        vendorId: this.vendorId,
         vendorCode: null,
         vendorName: null,
         vendorNick: null,
@@ -212,6 +212,10 @@ export default {
       // 表单参数
       form: {},
     };
+  },
+  props:{
+    vendorId: null,
+    batchCode: null
   },
   created() {
     this.getList();

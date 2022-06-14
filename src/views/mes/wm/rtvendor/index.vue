@@ -110,7 +110,7 @@
           <dict-tag :options="dict.type.mes_order_status" :value="scope.row.status"/>
         </template>
       </el-table-column>      
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="操作" width="200" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -124,15 +124,17 @@
             size="mini"
             type="text"
             icon="el-icon-edit"
+            v-if="scope.row.status =='PREPARE'"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['wm:rtvendor:edit']"
+            v-hasPermi="['mes:wm:rtvendor:edit']"
           >修改</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
+            v-if="scope.row.status =='PREPARE'"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['wm:rtvendor:remove']"
+            v-hasPermi="['mes:wm:rtvendor:remove']"
           >删除</el-button>
         </template>
       </el-table-column>
@@ -171,17 +173,22 @@
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="12">
+          <el-col :span="8">
             <el-form-item label="采购订单编号" prop="poCode">
               <el-input v-model="form.poCode" placeholder="请输入采购订单编号" />
             </el-form-item>
           </el-col>
-          <el-col :span="12">
+          <el-col :span="8">
             <el-form-item label="供应商" prop="vendorName">
               <el-input v-model="form.vendorName" readonly="readonly" placeholder="请选择供应商" >
                 <el-button slot="append" @click="handleSelectVendor" icon="el-icon-search"></el-button>
               </el-input>
               <VendorSelect ref="vendorSelect" @onSelected="onVendorSelected" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="批次号" prop="batchCode">
+              <el-input v-model="form.batchCode" placeholder="请输入批次号" />
             </el-form-item>
           </el-col>
         </el-row>
@@ -219,7 +226,7 @@
       </el-form>
       <el-divider v-if="form.rtId !=null" content-position="center">物料信息</el-divider> 
       <el-card shadow="always" v-if="form.rtId !=null" class="box-card">
-        <Rtvendorline ref=line :rtId="form.rtId"  :optType="optType"></Rtvendorline>
+        <Rtvendorline ref=line :rtId="form.rtId" :batchCode="form.batchCdoe" :vendorId="form.vendorId" :optType="optType"></Rtvendorline>
       </el-card>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="cancel" v-if="optType =='view' || form.status !='PREPARE' ">返回</el-button>
@@ -286,6 +293,9 @@ export default {
         ],
         rtName: [
           { required: true, message: "退货单名称不能为空", trigger: "blur" }
+        ],
+        vendorName: [
+          { required: true, message: "供应商不能为空", trigger: "blur" }
         ],
       }
     };
