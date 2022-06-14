@@ -37,7 +37,7 @@
       <el-table-column label="库区" align="center" prop="locationName" />
       <el-table-column label="库位" align="center" prop="areaName" />
       <el-table-column label="备注" align="center" prop="remark" :show-overflow-tooltip="true"/>
-      <el-table-column label="操作" width="100px" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="操作" width="100px"  v-if="optType != 'view'" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
