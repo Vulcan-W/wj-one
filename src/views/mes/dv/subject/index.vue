@@ -81,7 +81,6 @@
 
     <el-table v-loading="loading" :data="dvsubjectList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="项目ID" align="center" prop="subjectId" />
       <el-table-column label="项目编码" align="center" prop="subjectCode" />
       <el-table-column label="项目类型" align="center" prop="subjectType">
         <template slot-scope="scope">
