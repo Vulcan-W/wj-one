@@ -17,6 +17,16 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
+      <el-form-item label="计划类型" prop="planType">
+        <el-select v-model="queryParams.planType" placeholder="请选择类型" clearable>
+          <el-option
+            v-for="dict in dict.type.dv_plan_type"
+            :key="dict.value"
+            :label="dict.label"
+            :value="dict.value"
+          />
+        </el-select>
+      </el-form-item>
       <el-form-item label="状态" prop="status">
         <el-select v-model="queryParams.status" placeholder="请选择状态" clearable>
           <el-option
@@ -91,6 +101,11 @@
         </template>
       </el-table-column>      
       <el-table-column label="计划名称" align="center" width="200px" prop="planName" />
+      <el-table-column label="计划类型" align="center" width="120px" prop="planType">
+        <template slot-scope="scope">
+          <dict-tag :options="dict.type.dv_plan_type" :value="scope.row.planType"/>
+        </template>
+      </el-table-column>
       <el-table-column label="开始日期" align="center" prop="startDate" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.startDate, '{y}-{m}-{d}') }}</span>
@@ -112,7 +127,7 @@
           <dict-tag :options="dict.type.mes_order_status" :value="scope.row.status"/>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="操作" align="center" width="130px" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -175,6 +190,18 @@
           </el-col>
         </el-row>
         <el-row>
+          <el-col :span="12">
+            <el-form-item label="计划类型"  prop="planType" >
+                <el-select v-model="form.planType" placeholder="请选择计划类型">
+                  <el-option
+                    v-for="dict in dict.type.dv_plan_type"
+                    :key="dict.value"
+                    :label="dict.label"
+                    :value="dict.value"
+                  ></el-option>
+                </el-select>
+            </el-form-item>
+          </el-col>
           <el-col :span="8">
             <el-form-item label="频率" prop="cycleCount">
               <el-input-number :min="1" :step="1" v-model="form.cycleCount" placeholder="请输入次数" />
@@ -192,21 +219,9 @@
                 </el-select>
               </el-form-item>
           </el-col>
-          <el-col :span="12">
-            <el-form-item label="状态" prop="status">
-              <el-select v-model="form.status" disabled>
-                <el-option
-                  v-for="dict in dict.type.mes_order_status"
-                  :key="dict.value"
-                  :label="dict.label"
-                  :value="dict.value"
-                ></el-option>
-              </el-select>
-            </el-form-item>
-          </el-col>
         </el-row>
         <el-row>
-          <el-col :span="12">
+          <el-col :span="8">
             <el-form-item label="开始日期" prop="startDate">
               <el-date-picker clearable
                 v-model="form.startDate"
@@ -216,7 +231,7 @@
               </el-date-picker>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
+          <el-col :span="8">
             <el-form-item label="结束日期" prop="endDate">
               <el-date-picker clearable
                 v-model="form.endDate"
@@ -224,6 +239,18 @@
                 value-format="yyyy-MM-dd"
                 placeholder="请选择结束日期">
               </el-date-picker>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="状态" prop="status">
+              <el-select v-model="form.status" disabled>
+                <el-option
+                  v-for="dict in dict.type.mes_order_status"
+                  :key="dict.value"
+                  :label="dict.label"
+                  :value="dict.value"
+                ></el-option>
+              </el-select>
             </el-form-item>
           </el-col>
         </el-row>
@@ -239,7 +266,7 @@
         <el-tab-pane label="设备清单"> 
           <Checkmachinery ref="machinerylist" :optType="optType" :planId="form.planId" ></Checkmachinery>        
         </el-tab-pane>
-        <el-tab-pane label="点检项目">
+        <el-tab-pane :label="form.planType=='CHECK'?'点检项目':'保养项目'">
           <Checksubject ref="subjectlist" :optType="optType" :planId="form.planId" ></Checksubject>
         </el-tab-pane>
       </el-tabs>
@@ -261,7 +288,7 @@ import Checksubject from "./subject.vue"
 import {genCode} from "@/api/system/autocode/rule"
 export default {
   name: "Checkplan",
-  dicts: ['mes_cycle_type','mes_order_status'],
+  dicts: ['mes_cycle_type','mes_order_status','dv_plan_type'],
   components:{Checkmachinery,Checksubject},
   data() {
     return {
@@ -307,6 +334,9 @@ export default {
         planName: [
           { required: true, message: "计划名称不能为空", trigger: "blur" }
         ],
+        planType:[
+          { required: true, message: "计划类型不能为空", trigger: "blur" }
+        ],
         cycleType: [
           { required: true, message: "请选择点检频率", trigger: "blur" }
         ],
@@ -340,6 +370,7 @@ export default {
         planId: null,
         planCode: null,
         planName: null,
+        planType: null,
         startDate: null,
         endDate: null,
         cycleType: null,
