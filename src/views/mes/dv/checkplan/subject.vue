@@ -26,6 +26,7 @@
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
+    <DvsubjectSelect ref="subjectSelect" subjectType="CHECK" @onSelected="onSubjectSelected"></DvsubjectSelect>
 
     <el-table v-loading="loading" :data="checksubjectList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
@@ -60,19 +61,21 @@
 
 <script>
 import { listChecksubject, getChecksubject, delChecksubject, addChecksubject, updateChecksubject } from "@/api/mes/dv/checksubject";
-
+import DvsubjectSelect from "@/components/dvsubjectSelect/multi.vue"
 export default {
   name: "Checksubject",
   props:{
       planId: null,
       optType: null
   },
+  components:{DvsubjectSelect},
   data() {
     return {
       // 遮罩层
       loading: true,
       // 选中数组
       ids: [],
+        selectedRows: [],
       // 非单个禁用
       single: true,
       // 非多个禁用
@@ -124,30 +127,17 @@ export default {
     },
     /** 新增按钮操作 */
     handleAdd() {
-      this.reset();
-      this.open = true;
-      this.title = "添加点检项目";
+        this.$refs.subjectSelect.showFlag = true;
     },
-
-    /** 提交按钮 */
-    submitForm() {
-      this.$refs["form"].validate(valid => {
-        if (valid) {
-          if (this.form.recordId != null) {
-            updateChecksubject(this.form).then(response => {
-              this.$modal.msgSuccess("修改成功");
-              this.open = false;
-              this.getList();
+    onSubjectSelected(rows){
+        if(rows != null && rows.length >0){
+            rows.forEach(row => {
+                row.planId= this.planId;
+                addChecksubject(row).then(response => {
+                    this.getList();
+                });
             });
-          } else {
-            addChecksubject(this.form).then(response => {
-              this.$modal.msgSuccess("新增成功");
-              this.open = false;
-              this.getList();
-            });
-          }
         }
-      });
     },
     /** 删除按钮操作 */
     handleDelete(row) {
