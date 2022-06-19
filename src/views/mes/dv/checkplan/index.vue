@@ -231,7 +231,9 @@
         <el-tab-pane label="设备清单"> 
           <Checkmachinery ref="machinerylist" :optType="optType" :planId="form.planId" ></Checkmachinery>        
         </el-tab-pane>
-        <el-tab-pane label="点检项目"></el-tab-pane>
+        <el-tab-pane label="点检项目">
+          <Checksubject ref="subjectlist" :optType="optType" :planId="form.planId" ></Checksubject>
+        </el-tab-pane>
       </el-tabs>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="cancel" v-if="optType =='view' || form.status !='PREPARE' ">返回</el-button>
@@ -246,11 +248,12 @@
 <script>
 import { listCheckplan, getCheckplan, delCheckplan, addCheckplan, updateCheckplan } from "@/api/mes/dv/checkplan";
 import Checkmachinery from "./machinery.vue"
+import Checksubject from "./subject.vue"
 import {genCode} from "@/api/system/autocode/rule"
 export default {
   name: "Checkplan",
   dicts: ['mes_cycle_type','mes_order_status'],
-  components:{Checkmachinery},
+  components:{Checkmachinery,Checksubject},
   data() {
     return {
       autoGenFlag: false,
