@@ -130,6 +130,14 @@
             v-if="scope.row.status =='PREPARE'"
             v-hasPermi="['mes:dv:checkplan:remove']"
           >删除</el-button>
+          <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-delete"
+            @click="handleUpdate(scope.row)"
+            v-if="scope.row.status =='FINISHED'"
+            v-hasPermi="['mes:dv:checkplan:edit']"
+          >停用</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -237,8 +245,9 @@
       </el-tabs>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="cancel" v-if="optType =='view' || form.status !='PREPARE' ">返回</el-button>
-        <el-button type="primary" @click="submitForm" v-if="form.status =='PREPARE' && optType !='view' ">确 定</el-button>
-        <el-button type="success" @click="handleFinish" v-if="form.status =='PREPARE' && optType !='view'  && form.workorderId !=null">完成</el-button>
+        <el-button type="primary" @click="submitForm" v-if="form.status =='PREPARE' && optType !='view' ">保存</el-button>
+        <el-button type="success" @click="handleFinish" v-if="form.status =='PREPARE' && optType !='view'  && form.planId !=null">启用</el-button>
+        <el-button type="success" @click="handleDeFinish" v-if="form.status =='FINISHED' && optType !='view'  && form.planId !=null">停用</el-button>
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
@@ -412,6 +421,26 @@ export default {
           }
         }
       });
+    },
+    handleFinish(){
+      if(this.form.planId != null && this.form.status =='PREPARE'){
+        this.form.status='FINISHED';
+        updateCheckplan(this.form).then(response => {
+                this.$modal.msgSuccess("已启用");
+                this.open = false;
+                this.getList();
+        });
+      }
+    },
+    handleDeFinish(){
+      if(this.form.planId != null && this.form.status =='FINISHED'){
+        this.form.status='PREPARE';
+        updateCheckplan(this.form).then(response => {
+                this.$modal.msgSuccess("已停用");
+                this.open = false;
+                this.getList();
+        });
+      }
     },
     /** 删除按钮操作 */
     handleDelete(row) {
