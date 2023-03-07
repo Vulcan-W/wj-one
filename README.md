@@ -4,7 +4,7 @@
 <h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">苦糖果MES</h1>
 <h4 align="center">专业、通用、开源、免费的MES系统</h4>
 <p align="center">
-<a href='https://gitee.com/kutangguo/ktg-mes/stargazers'><img src='https://gitee.com/kutangguo/ktg-mes/badge/star.svg?theme=dark' alt='star'></img></a>
+<a href='https://gitee.com/vulcanw/wj-mes/stargazers'><img src='https://gitee.com/vulcanw/wj-mes/badge/star.svg?theme=dark' alt='star'></img></a>
 	<a href="https://gitee.com/kutangguo/ktg-mes/blob/master/LICENSE"><img src="https://img.shields.io/github/license/mashape/apistatus.svg"></a>
 </p>
 
@@ -13,7 +13,7 @@
 ### 系统简介
 WJ-MES系统是一款B/S结构、开源、免费的生产执行管理系统。
 
-此系统基于ktg-mes和ruoyi-flowable整合开发
+此系统基于[ktg-mes](https://gitee.com/kutangguo/ktg-mes)和[ruoyi-flowable](https://gitee.com/tony2y/RuoYi-flowable)整合开发
 
 由于需要开发MES系统，在gitee上找到了心笑峰大神的ktg-MES，可以说是gitee上最好的MES之一，
 在试用之后发现缺少工作流模块，找了几个基于ruoyi-vue的工作流模块，尝试整合，最终与tony大神的
