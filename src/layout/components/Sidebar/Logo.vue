@@ -35,7 +35,7 @@ export default {
   },
   data() {
     return {
-      title: '苦糖果MES',
+      title: 'WJ-MES',
       logo: logoImg
     }
   }

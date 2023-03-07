@@ -2,7 +2,7 @@
 
 /**
  * 通用js方法封装处理
- * Copyright (c) 2019 ruoyi
+ * Copyright (c) 2019 wj
  */
 
 // 日期格式化
