@@ -1,0 +1,13 @@
+D:\MES\ruoyi-vue\wj-mes\wj-generator\src\main\java\com\wj\generator\controller\GenController.java
+D:\MES\ruoyi-vue\wj-mes\wj-generator\src\main\java\com\wj\generator\util\GenUtils.java
+D:\MES\ruoyi-vue\wj-mes\wj-generator\src\main\java\com\wj\generator\service\IGenTableColumnService.java
+D:\MES\ruoyi-vue\wj-mes\wj-generator\src\main\java\com\wj\generator\util\VelocityUtils.java
+D:\MES\ruoyi-vue\wj-mes\wj-generator\src\main\java\com\wj\generator\service\IGenTableService.java
+D:\MES\ruoyi-vue\wj-mes\wj-generator\src\main\java\com\wj\generator\domain\GenTable.java
+D:\MES\ruoyi-vue\wj-mes\wj-generator\src\main\java\com\wj\generator\config\GenConfig.java
+D:\MES\ruoyi-vue\wj-mes\wj-generator\src\main\java\com\wj\generator\domain\GenTableColumn.java
+D:\MES\ruoyi-vue\wj-mes\wj-generator\src\main\java\com\wj\generator\util\VelocityInitializer.java
+D:\MES\ruoyi-vue\wj-mes\wj-generator\src\main\java\com\wj\generator\service\GenTableColumnServiceImpl.java
+D:\MES\ruoyi-vue\wj-mes\wj-generator\src\main\java\com\wj\generator\mapper\GenTableColumnMapper.java
+D:\MES\ruoyi-vue\wj-mes\wj-generator\src\main\java\com\wj\generator\mapper\GenTableMapper.java
+D:\MES\ruoyi-vue\wj-mes\wj-generator\src\main\java\com\wj\generator\service\GenTableServiceImpl.java

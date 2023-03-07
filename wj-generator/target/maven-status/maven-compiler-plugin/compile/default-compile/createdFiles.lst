@@ -1,0 +1,13 @@
+com\wj\generator\domain\GenTableColumn.class
+com\wj\generator\service\GenTableColumnServiceImpl.class
+com\wj\generator\util\VelocityInitializer.class
+com\wj\generator\mapper\GenTableColumnMapper.class
+com\wj\generator\util\GenUtils.class
+com\wj\generator\config\GenConfig.class
+com\wj\generator\util\VelocityUtils.class
+com\wj\generator\service\GenTableServiceImpl.class
+com\wj\generator\mapper\GenTableMapper.class
+com\wj\generator\service\IGenTableColumnService.class
+com\wj\generator\service\IGenTableService.class
+com\wj\generator\controller\GenController.class
+com\wj\generator\domain\GenTable.class
