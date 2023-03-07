@@ -4,16 +4,16 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	
-    <groupId>com.ktg</groupId>
-    <artifactId>ktg</artifactId>
+    <groupId>com.wj</groupId>
+    <artifactId>wj</artifactId>
     <version>3.8.2</version>
 
-    <name>ktg</name>
+    <name>wj</name>
     <url>http://www.029tec.com</url>
     <description>MES生产执行管理系统</description>
     
     <properties>
-        <ktg.version>3.8.2</ktg.version>
+        <wj.version>3.8.2</wj.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
@@ -33,6 +33,8 @@
         <poi.version>4.1.2</poi.version>
         <velocity.version>2.3</velocity.version>
         <jwt.version>0.9.1</jwt.version>
+        <flowable.version>6.7.2</flowable.version>
+<!--        <swagger.bootstrap-ui.version>1.9.6</swagger.bootstrap-ui.version>-->
     </properties>
 	
     <!-- 依赖声明 -->
@@ -166,57 +168,77 @@
 
             <!-- 定时任务-->
             <dependency>
-                <groupId>com.ktg</groupId>
-                <artifactId>ktg-quartz</artifactId>
-                <version>${ktg.version}</version>
+                <groupId>com.wj</groupId>
+                <artifactId>wj-quartz</artifactId>
+                <version>${wj.version}</version>
             </dependency>
 
             <!-- 代码生成-->
             <dependency>
-                <groupId>com.ktg</groupId>
-                <artifactId>ktg-generator</artifactId>
-                <version>${ktg.version}</version>
+                <groupId>com.wj</groupId>
+                <artifactId>wj-generator</artifactId>
+                <version>${wj.version}</version>
             </dependency>
 
             <!-- 核心模块-->
             <dependency>
-                <groupId>com.ktg</groupId>
-                <artifactId>ktg-framework</artifactId>
-                <version>${ktg.version}</version>
+                <groupId>com.wj</groupId>
+                <artifactId>wj-framework</artifactId>
+                <version>${wj.version}</version>
             </dependency>
 
             <!-- 系统模块-->
             <dependency>
-                <groupId>com.ktg</groupId>
-                <artifactId>ktg-system</artifactId>
-                <version>${ktg.version}</version>
+                <groupId>com.wj</groupId>
+                <artifactId>wj-system</artifactId>
+                <version>${wj.version}</version>
             </dependency>
 
             <!-- 通用工具-->
             <dependency>
-                <groupId>com.ktg</groupId>
-                <artifactId>ktg-common</artifactId>
-                <version>${ktg.version}</version>
+                <groupId>com.wj</groupId>
+                <artifactId>wj-common</artifactId>
+                <version>${wj.version}</version>
             </dependency>
 
             <!-- MES业务模块 -->
             <dependency>
-                <groupId>com.ktg</groupId>
-                <artifactId>ktg-mes</artifactId>
-                <version>${ktg.version}</version>
+                <groupId>com.wj</groupId>
+                <artifactId>wj-mes</artifactId>
+                <version>${wj.version}</version>
+            </dependency>
+
+            <!-- flowable业务模块 -->
+            <dependency>
+                <groupId>org.flowable</groupId>
+                <artifactId>flowable-spring-boot-starter-basic</artifactId>
+                <version>${flowable.version}</version>
+                <exclusions><!-- 需要排除flowable的mybatis依赖，不然会跟mybatis-plus冲突 -->
+                    <exclusion>
+                        <groupId>org.mybatis</groupId>
+                        <artifactId>mybatis</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.flowable</groupId>
+                <artifactId>flowable-engine</artifactId>
+                <version>${flowable.version}</version>
+                <scope>compile</scope>
             </dependency>
 
         </dependencies>
     </dependencyManagement>
 
     <modules>
-        <module>ktg-admin</module>
-        <module>ktg-framework</module>
-        <module>ktg-system</module>
-        <module>ktg-quartz</module>
-        <module>ktg-generator</module>
-        <module>ktg-common</module>
-        <module>ktg-mes</module>
+        <module>wj-admin</module>
+        <module>wj-framework</module>
+        <module>wj-system</module>
+        <module>wj-quartz</module>
+        <module>wj-generator</module>
+        <module>wj-common</module>
+        <module>wj-mes</module>
+        <module>wj-flowable</module>
     </modules>
     <packaging>pom</packaging>
 

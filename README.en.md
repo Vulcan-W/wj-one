@@ -1,4 +1,4 @@
-# ktg-mes
+# wj-mes
 
 #### Description
 一款开源、免费的MES生产执行管理系统
