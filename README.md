@@ -1,8 +1,8 @@
 <p align="center">
-	<img alt="logo" width="96px" src="https://gitee.com/kutangguo/ktg-mes-ui/raw/master/src/assets/logo/logo.png">
+	<img alt="logo" width="96px" src="src/assets/logo/logo.png">
 </p>
-<h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">苦糖果MES</h1>
-<h4 align="center">专业、通用、开源、免费的MES系统</h4>
+<h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">WJ-MES</h1>
+<h4 align="center">B/S、开源、免费的生产执行管理系统</h4>
 <p align="center">
 <a href='https://gitee.com/vulcanw/wj-mes/stargazers'><img src='https://gitee.com/vulcanw/wj-mes/badge/star.svg?theme=dark' alt='star'></img></a>
 	<a href="https://gitee.com/kutangguo/ktg-mes/blob/master/LICENSE"><img src="https://img.shields.io/github/license/mashape/apistatus.svg"></a>
