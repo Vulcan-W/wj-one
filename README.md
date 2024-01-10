@@ -1,8 +1,8 @@
 <p align="center">
 	<img alt="logo" width="96px" src="src/assets/logo/logo.png">
 </p>
-<h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">WJ-MES</h1>
-<h4 align="center">B/S、开源、免费的生产执行管理系统</h4>
+<h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">WJ-ONE</h1>
+<h4 align="center">B/S、开源、免费的企业管理系统</h4>
 <p align="center">
 <a href='https://gitee.com/vulcanw/wj-mes/stargazers'><img src='https://gitee.com/vulcanw/wj-mes/badge/star.svg?theme=dark' alt='star'></img></a>
 	<a href="https://gitee.com/kutangguo/ktg-mes/blob/master/LICENSE"><img src="https://img.shields.io/github/license/mashape/apistatus.svg"></a>
@@ -11,8 +11,13 @@
 # wj-mes
 
 ### 系统简介
-WJ-MES系统是一款B/S结构、开源、免费的生产执行管理系统。
+WJ-ONE系统是一款B/S结构、开源、免费、无界的企业管理系统。
 
+“ONE”是指致力于整合MES、CRM、SRM、工作流等系统于一体，能整合多少整合多少。
+
+“WJ”即无界。
+
+### 开端：
 此系统基于[ktg-mes](https://gitee.com/kutangguo/ktg-mes)和[ruoyi-flowable](https://gitee.com/tony2y/RuoYi-flowable)整合开发
 
 由于需要开发MES系统，在gitee上找到了心笑峰大神的ktg-MES，可以说是gitee上最好的MES之一，
@@ -24,6 +29,10 @@ ruoyi-flowable整合成功。
 欢迎交流沟通：QQ：357793237
 
 支持作者请Star
+
+### 整合进度
+
+ktg-MES(心笑峰) + Ruoyi-flowable(tony) + RuoyiCRM(DevJD)
 
 ### 系统架构
 

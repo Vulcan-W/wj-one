@@ -2,7 +2,7 @@
   "name": "wj-mes-ui",
   "version": "3.8.2",
   "description": "WJ-MES",
-  "author": "YinJinLu",
+  "author": "Vulcan.W",
   "license": "MIT",
   "scripts": {
     "dev": "vue-cli-service serve",

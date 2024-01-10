@@ -72,6 +72,7 @@ D:\MES\ruoyi-vue\wj-mes\wj-common\src\main\java\com\wj\common\utils\http\HttpHel
 D:\MES\ruoyi-vue\wj-mes\wj-common\src\main\java\com\wj\common\core\domain\TreeEntity.java
 D:\MES\ruoyi-vue\wj-mes\wj-common\src\main\java\com\wj\common\core\domain\model\RegisterBody.java
 D:\MES\ruoyi-vue\wj-mes\wj-common\src\main\java\com\wj\common\annotation\DataScope.java
+D:\MES\ruoyi-vue\wj-mes\wj-common\src\main\java\com\wj\common\config\WJConfig.java
 D:\MES\ruoyi-vue\wj-mes\wj-common\src\main\java\com\wj\common\utils\http\HttpUtils.java
 D:\MES\ruoyi-vue\wj-mes\wj-common\src\main\java\com\wj\common\utils\PageUtils.java
 D:\MES\ruoyi-vue\wj-mes\wj-common\src\main\java\com\wj\common\enums\OperatorType.java
@@ -79,7 +80,6 @@ D:\MES\ruoyi-vue\wj-mes\wj-common\src\main\java\com\wj\common\utils\reflect\Refl
 D:\MES\ruoyi-vue\wj-mes\wj-common\src\main\java\com\wj\common\utils\Arith.java
 D:\MES\ruoyi-vue\wj-mes\wj-common\src\main\java\com\wj\common\exception\base\BaseException.java
 D:\MES\ruoyi-vue\wj-mes\wj-common\src\main\java\com\wj\common\utils\StringUtils.java
-D:\MES\ruoyi-vue\wj-mes\wj-common\src\main\java\com\wj\common\config\RuoYiConfig.java
 D:\MES\ruoyi-vue\wj-mes\wj-common\src\main\java\com\wj\common\exception\file\FileException.java
 D:\MES\ruoyi-vue\wj-mes\wj-common\src\main\java\com\wj\common\exception\BussinessException.java
 D:\MES\ruoyi-vue\wj-mes\wj-common\src\main\java\com\wj\common\utils\ip\IpUtils.java

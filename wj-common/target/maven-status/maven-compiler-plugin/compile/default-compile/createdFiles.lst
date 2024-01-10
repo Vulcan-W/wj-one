@@ -23,7 +23,6 @@ com\wj\common\utils\http\HttpUtils.class
 com\wj\common\utils\http\HttpUtils$TrustAnyTrustManager.class
 com\wj\common\core\controller\BaseController$1.class
 com\wj\common\annotation\DataSource.class
-com\wj\common\config\RuoYiConfig.class
 com\wj\common\exception\CustomException.class
 com\wj\common\xss\XssValidator.class
 com\wj\common\utils\bean\BeanUtils.class
@@ -103,6 +102,7 @@ com\wj\common\utils\uuid\Seq.class
 com\wj\common\core\domain\BaseEntity.class
 com\wj\common\core\domain\entity\SysAutoCodeResult.class
 com\wj\common\utils\file\MimeTypeUtils.class
+com\wj\common\config\WJConfig.class
 com\wj\common\exception\file\InvalidExtensionException$InvalidVideoExtensionException.class
 com\wj\common\utils\ServletUtils.class
 com\wj\common\constant\Constants.class

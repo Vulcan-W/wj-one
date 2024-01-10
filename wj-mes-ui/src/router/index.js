@@ -115,6 +115,19 @@ export const constantRoutes = [
     ]
   },
   {
+    path: '/mapper',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: 'mapper/pool/list',
+        component: (resolve) => require(['@/views/crm/pool/list'], resolve),
+        name: 'List',
+        meta: { title: '客户公海', icon: '' }
+      }
+    ]
+  },
+  {
     path: '/tool',
     component: Layout,
     hidden: true,

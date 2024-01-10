@@ -33,6 +33,7 @@
         <poi.version>4.1.2</poi.version>
         <velocity.version>2.3</velocity.version>
         <jwt.version>0.9.1</jwt.version>
+<!--        增加的流程功能-->
         <flowable.version>6.7.2</flowable.version>
 <!--        <swagger.bootstrap-ui.version>1.9.6</swagger.bootstrap-ui.version>-->
     </properties>
@@ -208,6 +209,13 @@
                 <version>${wj.version}</version>
             </dependency>
 
+            <!-- CRM业务模块 2024.01.01 wj-->
+            <dependency>
+                <groupId>com.wj</groupId>
+                <artifactId>wj-crm</artifactId>
+                <version>${wj.version}</version>
+            </dependency>
+
             <!-- flowable业务模块 -->
             <dependency>
                 <groupId>org.flowable</groupId>
@@ -238,6 +246,7 @@
         <module>wj-generator</module>
         <module>wj-common</module>
         <module>wj-mes</module>
+        <module>wj-crm</module>
         <module>wj-flowable</module>
     </modules>
     <packaging>pom</packaging>

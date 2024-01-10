@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wj.crm.mapper.CrmCustomsDataMapper">
+    
+    <resultMap type="CrmCustomsData" id="CrmCustomsDataResult">
+        <result property="id"    column="id"    />
+        <result property="productCode"    column="product_code"    />
+        <result property="productName"    column="product_name"    />
+        <result property="tradePartnerCode"    column="trade_partner_code"    />
+        <result property="tradePartnerName"    column="trade_partner_name"    />
+        <result property="tradeMethodCode"    column="trade_method_code"    />
+        <result property="tradeMethodName"    column="trade_method_name"    />
+        <result property="locationCode"    column="location_code"    />
+        <result property="locationName"    column="location_name"    />
+        <result property="firstQuantity"    column="first_quantity"    />
+        <result property="firstMeasurementUnit"    column="first_measurement_unit"    />
+        <result property="secondQuantity"    column="second_quantity"    />
+        <result property="secondMeasurementUnit"    column="second_measurement_unit"    />
+        <result property="tradeAmount"    column="trade_amount"    />
+    </resultMap>
+
+    <sql id="selectCrmCustomsDataVo">
+        select id, product_code, product_name, trade_partner_code, trade_partner_name, trade_method_code, trade_method_name, location_code, location_name, first_quantity, first_measurement_unit, second_quantity, second_measurement_unit, trade_amount from crm_trade_data
+    </sql>
+
+    <select id="selectCrmCustomsDataList" parameterType="CrmCustomsData" resultMap="CrmCustomsDataResult">
+        <include refid="selectCrmCustomsDataVo"/>
+        <where>  
+            <if test="productCode != null "> and product_code = #{productCode}</if>
+            <if test="productName != null  and productName != ''"> and product_name like concat('%', #{productName}, '%')</if>
+            <if test="tradePartnerCode != null "> and trade_partner_code = #{tradePartnerCode}</if>
+            <if test="tradePartnerName != null  and tradePartnerName != ''"> and trade_partner_name like concat('%', #{tradePartnerName}, '%')</if>
+            <if test="tradeMethodCode != null "> and trade_method_code = #{tradeMethodCode}</if>
+            <if test="tradeMethodName != null  and tradeMethodName != ''"> and trade_method_name like concat('%', #{tradeMethodName}, '%')</if>
+            <if test="locationCode != null "> and location_code = #{locationCode}</if>
+            <if test="locationName != null  and locationName != ''"> and location_name like concat('%', #{locationName}, '%')</if>
+            <if test="firstQuantity != null "> and first_quantity = #{firstQuantity}</if>
+            <if test="firstMeasurementUnit != null  and firstMeasurementUnit != ''"> and first_measurement_unit = #{firstMeasurementUnit}</if>
+            <if test="secondQuantity != null "> and second_quantity = #{secondQuantity}</if>
+            <if test="secondMeasurementUnit != null  and secondMeasurementUnit != ''"> and second_measurement_unit = #{secondMeasurementUnit}</if>
+            <if test="tradeAmount != null "> and trade_amount = #{tradeAmount}</if>
+        </where>
+    </select>
+    
+    <select id="selectCrmCustomsDataById" parameterType="Long" resultMap="CrmCustomsDataResult">
+        <include refid="selectCrmCustomsDataVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertCrmCustomsData" parameterType="CrmCustomsData" useGeneratedKeys="true" keyProperty="id">
+        insert into crm_trade_data
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="productCode != null">product_code,</if>
+            <if test="productName != null">product_name,</if>
+            <if test="tradePartnerCode != null">trade_partner_code,</if>
+            <if test="tradePartnerName != null">trade_partner_name,</if>
+            <if test="tradeMethodCode != null">trade_method_code,</if>
+            <if test="tradeMethodName != null">trade_method_name,</if>
+            <if test="locationCode != null">location_code,</if>
+            <if test="locationName != null">location_name,</if>
+            <if test="firstQuantity != null">first_quantity,</if>
+            <if test="firstMeasurementUnit != null">first_measurement_unit,</if>
+            <if test="secondQuantity != null">second_quantity,</if>
+            <if test="secondMeasurementUnit != null">second_measurement_unit,</if>
+            <if test="tradeAmount != null">trade_amount,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="productCode != null">#{productCode},</if>
+            <if test="productName != null">#{productName},</if>
+            <if test="tradePartnerCode != null">#{tradePartnerCode},</if>
+            <if test="tradePartnerName != null">#{tradePartnerName},</if>
+            <if test="tradeMethodCode != null">#{tradeMethodCode},</if>
+            <if test="tradeMethodName != null">#{tradeMethodName},</if>
+            <if test="locationCode != null">#{locationCode},</if>
+            <if test="locationName != null">#{locationName},</if>
+            <if test="firstQuantity != null">#{firstQuantity},</if>
+            <if test="firstMeasurementUnit != null">#{firstMeasurementUnit},</if>
+            <if test="secondQuantity != null">#{secondQuantity},</if>
+            <if test="secondMeasurementUnit != null">#{secondMeasurementUnit},</if>
+            <if test="tradeAmount != null">#{tradeAmount},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCrmCustomsData" parameterType="CrmCustomsData">
+        update crm_trade_data
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="productCode != null">product_code = #{productCode},</if>
+            <if test="productName != null">product_name = #{productName},</if>
+            <if test="tradePartnerCode != null">trade_partner_code = #{tradePartnerCode},</if>
+            <if test="tradePartnerName != null">trade_partner_name = #{tradePartnerName},</if>
+            <if test="tradeMethodCode != null">trade_method_code = #{tradeMethodCode},</if>
+            <if test="tradeMethodName != null">trade_method_name = #{tradeMethodName},</if>
+            <if test="locationCode != null">location_code = #{locationCode},</if>
+            <if test="locationName != null">location_name = #{locationName},</if>
+            <if test="firstQuantity != null">first_quantity = #{firstQuantity},</if>
+            <if test="firstMeasurementUnit != null">first_measurement_unit = #{firstMeasurementUnit},</if>
+            <if test="secondQuantity != null">second_quantity = #{secondQuantity},</if>
+            <if test="secondMeasurementUnit != null">second_measurement_unit = #{secondMeasurementUnit},</if>
+            <if test="tradeAmount != null">trade_amount = #{tradeAmount},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteCrmCustomsDataById" parameterType="Long">
+        delete from crm_trade_data where id = #{id}
+    </delete>
+
+    <delete id="deleteCrmCustomsDataByIds" parameterType="String">
+        delete from crm_trade_data where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

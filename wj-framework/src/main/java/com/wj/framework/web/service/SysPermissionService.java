@@ -49,7 +49,7 @@ public class SysPermissionService
      * @param user 用户信息
      * @return 菜单权限信息
      */
-    public Set<String> getMenuPermission(SysUser user)
+    public Set<String> getMenuPermission(SysUser user) /* 获取权限信息，如果是管理员则获得所有权限 */
     {
         Set<String> perms = new HashSet<String>();
         // 管理员拥有所有权限

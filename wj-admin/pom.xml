@@ -67,11 +67,22 @@
             <artifactId>wj-mes</artifactId>
         </dependency>
 
+        <!-- CRM业务模块-->
+        <dependency>
+            <groupId>com.wj</groupId>
+            <artifactId>wj-crm</artifactId>
+        </dependency>
+
         <!-- flowable业务模块-->
         <dependency>
             <groupId>com.wj</groupId>
             <artifactId>wj-flowable</artifactId>
             <version>3.8.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
         </dependency>
 
     </dependencies>
