@@ -8,10 +8,10 @@
 	<a href="https://gitee.com/kutangguo/ktg-mes/blob/master/LICENSE"><img src="https://img.shields.io/github/license/mashape/apistatus.svg"></a>
 </p>
 
-# WJ-ONE
+# WJ-ONE(无界企业管理系统)
 
 ### 系统简介
-WJ-ONE系统是一款B/S结构、开源、免费、无界的企业管理系统。
+WJ-ONE是一款B/S结构、开源、免费、无界的企业管理系统。
 
 “ONE”是指致力于整合MES、CRM、SRM、工作流等系统于一体，能整合多少整合多少。
 
@@ -39,6 +39,10 @@ ktg-MES(心笑峰) + Ruoyi-flowable(tony) + RuoyiCRM(DevJD)
 当前版本基于RuoYi前后端分离版本开发。详情请参照：https://gitee.com/y_project/RuoYi-Vue
 
 触控屏端请参考Uniapp相关文档
+
+### Buy me a coffee
+
+
 
 ### 功能简介
 
