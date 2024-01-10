@@ -8,7 +8,7 @@
 	<a href="https://gitee.com/kutangguo/ktg-mes/blob/master/LICENSE"><img src="https://img.shields.io/github/license/mashape/apistatus.svg"></a>
 </p>
 
-# wj-mes
+# WJ-ONE
 
 ### 系统简介
 WJ-ONE系统是一款B/S结构、开源、免费、无界的企业管理系统。
