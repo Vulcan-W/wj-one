@@ -40,10 +40,10 @@ ktg-MES(心笑峰) + Ruoyi-flowable(tony) + RuoyiCRM(DevJD)
 
 触控屏端请参考Uniapp相关文档
 
-### Buy me a coffee
+### Buy me a coffee, if u want...
+<img src=https://gitee.com/vulcanw/wj-mes/raw/master/wj-mes-ui/src/assets/images/coffee/%E5%BE%AE%E4%BF%A1%E6%94%B6%E6%AC%BE%E7%A0%81.png width=30% />
+<img src=https://gitee.com/vulcanw/wj-mes/raw/master/wj-mes-ui/src/assets/images/coffee/%E6%94%AF%E4%BB%98%E5%AE%9D%E6%94%B6%E6%AC%BE%E7%A0%81.png width=30% />
 
-![微信](https://gitee.com/vulcanw/wj-mes/raw/master/wj-mes-ui/src/assets/images/coffee/%E5%BE%AE%E4%BF%A1%E6%94%B6%E6%AC%BE%E7%A0%81.png)
-![支付宝](https://gitee.com/vulcanw/wj-mes/raw/master/wj-mes-ui/src/assets/images/coffee/%E6%94%AF%E4%BB%98%E5%AE%9D%E6%94%B6%E6%AC%BE%E7%A0%81.png)
 ### 功能简介
 
 PC端：
