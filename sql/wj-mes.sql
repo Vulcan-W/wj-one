@@ -11,7 +11,7 @@
  Target Server Version : 50726
  File Encoding         : 65001
 
- Date: 10/01/2024 16:23:57
+ Date: 11/01/2024 16:22:31
 */
 
 SET NAMES utf8mb4;
@@ -1803,7 +1803,7 @@ CREATE TABLE `crm_customer`  (
 INSERT INTO `crm_customer` VALUES (1, '', '线索转客户1', '张三', '13800138000', '', '', 'A', '意向客户', '新线索1', '', '', '0', '1', 'admin', '0', 0, 'admin', '2022-01-19 17:10:47', '', '2022-01-19 17:11:41', NULL, '', '2022-01-19 17:11:41', NULL, '', NULL, '2022-01-19 17:11:41', 'normal');
 INSERT INTO `crm_customer` VALUES (2, '', '', '李四', '13800138001', '', '', '', '', '新线索2', '', '', '0', '0', 'admin', '0', 0, 'admin', '2022-01-19 17:11:04', '', NULL, NULL, '', NULL, NULL, '', NULL, NULL, '');
 INSERT INTO `crm_customer` VALUES (3, '', '', '王五', '13800138002', '', '', '', '', '新线索3', '', '', '0', '0', 'admin', '0', 0, 'admin', '2022-01-19 17:11:21', '', NULL, NULL, '', NULL, NULL, '', NULL, NULL, '');
-INSERT INTO `crm_customer` VALUES (4, '', 'test', 'test', '13333333333', '', '', '', '', '', '', '', '1', '1', 'admin', '0', 0, 'admin', '2024-01-10 08:49:21', '', '2024-01-10 15:46:51', NULL, '', NULL, NULL, '', NULL, NULL, '');
+INSERT INTO `crm_customer` VALUES (4, '', 'test', 'test', '13333333333', '', '', '', '', '', '', '', '1', '1', 'admin', '0', 0, 'admin', '2024-01-10 08:49:21', '', '2024-01-11 11:29:53', NULL, '', NULL, NULL, '', NULL, NULL, '');
 
 -- ----------------------------
 -- Table structure for crm_order
@@ -1824,12 +1824,15 @@ CREATE TABLE `crm_order`  (
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `idx_order_no`(`order_no`) USING BTREE,
   INDEX `idx_customer_id`(`customer_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '订单表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '订单表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of crm_order
 -- ----------------------------
 INSERT INTO `crm_order` VALUES (1, 'xs-2024001', 4, 1000000.00, 'admin', 'admin', '2024-01-10 15:46:34', '', NULL, '加油！', '1');
+INSERT INTO `crm_order` VALUES (2, 'xs2024002', 4, 1000000.00, 'admin', 'admin', '2024-01-11 09:50:37', '', NULL, NULL, '1');
+INSERT INTO `crm_order` VALUES (3, 'xs2024003', 4, 1000000.00, 'admin', 'admin', '2024-01-11 11:30:24', '', NULL, NULL, '0');
+INSERT INTO `crm_order` VALUES (4, 'xs2024004', 4, 1000000.00, 'admin', 'admin', '2024-01-11 14:56:48', '', NULL, NULL, '0');
 
 -- ----------------------------
 -- Table structure for crm_trade_data
@@ -3992,7 +3995,7 @@ CREATE TABLE `sys_dict_data`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`dict_code`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 29 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '字典数据表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 130 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '字典数据表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_dict_data
@@ -4025,6 +4028,91 @@ INSERT INTO `sys_dict_data` VALUES (25, 8, '生成代码', '8', 'sys_oper_type',
 INSERT INTO `sys_dict_data` VALUES (26, 9, '清空数据', '9', 'sys_oper_type', '', 'danger', 'N', '0', 'admin', '2022-07-13 17:04:54', '', NULL, '清空操作');
 INSERT INTO `sys_dict_data` VALUES (27, 1, '成功', '0', 'sys_common_status', '', 'primary', 'N', '0', 'admin', '2022-07-13 17:04:54', '', NULL, '正常状态');
 INSERT INTO `sys_dict_data` VALUES (28, 2, '失败', '1', 'sys_common_status', '', 'danger', 'N', '0', 'admin', '2022-07-13 17:04:54', '', NULL, '停用状态');
+INSERT INTO `sys_dict_data` VALUES (100, 0, '北京市', '北京市', 'region_list', NULL, 'default', 'N', '0', 'admin', '2022-01-12 18:08:08', '', NULL, NULL);
+INSERT INTO `sys_dict_data` VALUES (101, 0, '上海市', '上海市', 'region_list', NULL, 'default', 'N', '0', 'admin', '2022-01-12 18:08:15', '', NULL, NULL);
+INSERT INTO `sys_dict_data` VALUES (102, 0, '广东省', '广东省', 'region_list', NULL, 'default', 'N', '0', 'admin', '2022-01-12 18:08:25', '', NULL, NULL);
+INSERT INTO `sys_dict_data` VALUES (103, 0, '百度', '百度', 'clues_source', NULL, 'default', 'N', '0', 'admin', '2022-01-12 18:09:02', '', NULL, NULL);
+INSERT INTO `sys_dict_data` VALUES (104, 1, '抖音', '抖音', 'clues_source', NULL, 'default', 'N', '0', 'admin', '2022-01-12 18:09:08', '', NULL, NULL);
+INSERT INTO `sys_dict_data` VALUES (105, 2, '头条', '头条', 'clues_source', NULL, 'default', 'N', '0', 'admin', '2022-01-12 18:09:31', '', NULL, NULL);
+INSERT INTO `sys_dict_data` VALUES (106, 3, '电话', '电话', 'clues_source', NULL, 'default', 'N', '0', 'admin', '2022-01-12 18:09:40', '', NULL, NULL);
+INSERT INTO `sys_dict_data` VALUES (107, 0, '有效', '有效', 'clues_status', NULL, 'default', 'N', '0', 'admin', '2022-01-12 18:09:59', '', NULL, NULL);
+INSERT INTO `sys_dict_data` VALUES (108, 1, '无效', '无效', 'clues_status', NULL, 'default', 'N', '0', 'admin', '2022-01-12 18:10:06', '', NULL, NULL);
+INSERT INTO `sys_dict_data` VALUES (109, 0, '计算机互联网', '计算机互联网', 'customer_industry', NULL, 'default', 'N', '0', 'admin', '2022-01-12 18:10:50', '', NULL, NULL);
+INSERT INTO `sys_dict_data` VALUES (110, 1, '加工生产', '加工生产', 'customer_industry', NULL, 'default', 'N', '0', 'admin', '2022-01-12 18:11:02', '', NULL, NULL);
+INSERT INTO `sys_dict_data` VALUES (111, 2, '房地产', '房地产', 'customer_industry', NULL, 'default', 'N', '0', 'admin', '2022-01-12 18:11:20', '', NULL, NULL);
+INSERT INTO `sys_dict_data` VALUES (112, 3, '金融', '金融', 'customer_industry', NULL, 'default', 'N', '0', 'admin', '2022-01-12 18:11:34', '', NULL, NULL);
+INSERT INTO `sys_dict_data` VALUES (113, 0, 'A', 'A', 'customer_rank', NULL, 'default', 'N', '0', 'admin', '2022-01-12 18:11:55', '', NULL, NULL);
+INSERT INTO `sys_dict_data` VALUES (114, 1, 'B', 'B', 'customer_rank', NULL, 'default', 'N', '0', 'admin', '2022-01-12 18:11:59', '', NULL, NULL);
+INSERT INTO `sys_dict_data` VALUES (115, 2, 'C', 'C', 'customer_rank', NULL, 'default', 'N', '0', 'admin', '2022-01-12 18:12:04', '', NULL, NULL);
+INSERT INTO `sys_dict_data` VALUES (116, 3, 'D', 'D', 'customer_rank', NULL, 'default', 'N', '0', 'admin', '2022-01-12 18:12:10', '', NULL, NULL);
+INSERT INTO `sys_dict_data` VALUES (117, 4, 'E', 'E', 'customer_rank', NULL, 'default', 'N', '0', 'admin', '2022-01-12 18:12:18', '', NULL, NULL);
+INSERT INTO `sys_dict_data` VALUES (118, 0, '测试客户', '测试客户', 'customer_status', NULL, 'default', 'N', '0', 'admin', '2022-01-12 18:12:56', '', NULL, NULL);
+INSERT INTO `sys_dict_data` VALUES (119, 1, '意向客户', '意向客户', 'customer_status', NULL, 'default', 'N', '0', 'admin', '2022-01-12 18:13:07', '', NULL, NULL);
+INSERT INTO `sys_dict_data` VALUES (120, 2, '签单客户', '签单客户', 'customer_status', NULL, 'default', 'N', '0', 'admin', '2022-01-12 18:13:17', '', NULL, NULL);
+INSERT INTO `sys_dict_data` VALUES (121, 3, '回款客户', '回款客户', 'customer_status', NULL, 'default', 'N', '0', 'admin', '2022-01-12 18:13:31', '', NULL, NULL);
+INSERT INTO `sys_dict_data` VALUES (122, 4, '上门客户', '上门客户', 'customer_status', NULL, 'default', 'N', '0', 'admin', '2022-01-12 18:13:42', '', NULL, NULL);
+INSERT INTO `sys_dict_data` VALUES (123, 0, '普通', 'normal', 'pool_type', NULL, 'default', 'N', '0', 'admin', '2022-01-13 13:33:07', '', NULL, NULL);
+INSERT INTO `sys_dict_data` VALUES (124, 1, '高级', 'high', 'pool_type', NULL, 'default', 'N', '0', 'admin', '2022-01-13 13:33:24', '', NULL, NULL);
+INSERT INTO `sys_dict_data` VALUES (125, 0, '未成交', '0', 'deal_status', NULL, 'default', 'N', '0', 'admin', '2022-01-15 18:11:42', 'admin', '2022-01-15 18:12:15', NULL);
+INSERT INTO `sys_dict_data` VALUES (126, 1, '已成交', '1', 'deal_status', NULL, 'default', 'N', '0', 'admin', '2022-01-15 18:11:58', 'admin', '2022-01-15 18:12:09', NULL);
+INSERT INTO `sys_dict_data` VALUES (127, 0, '待审核', '0', 'order_review_status', NULL, 'default', 'N', '0', 'admin', '2022-01-19 10:52:06', '', NULL, NULL);
+INSERT INTO `sys_dict_data` VALUES (128, 1, '审核通过', '1', 'order_review_status', NULL, 'default', 'N', '0', 'admin', '2022-01-19 10:52:15', '', NULL, NULL);
+INSERT INTO `sys_dict_data` VALUES (129, 2, '审核不通过', '2', 'order_review_status', NULL, 'default', 'N', '0', 'admin', '2022-01-19 10:52:23', '', NULL, NULL);
+
+-- ----------------------------
+-- Table structure for sys_dict_data_temp
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_dict_data_temp`;
+CREATE TABLE `sys_dict_data_temp`  (
+  `dict_code` bigint(20) NOT NULL DEFAULT 0 COMMENT '字典编码',
+  `dict_sort` int(4) NULL DEFAULT 0 COMMENT '字典排序',
+  `dict_label` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '字典标签',
+  `dict_value` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '字典键值',
+  `dict_type` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '字典类型',
+  `css_class` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '样式属性（其他样式扩展）',
+  `list_class` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '表格回显样式',
+  `is_default` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT 'N' COMMENT '是否默认（Y是 N否）',
+  `status` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '0' COMMENT '状态（0正常 1停用）',
+  `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '创建者',
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '更新者',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注'
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of sys_dict_data_temp
+-- ----------------------------
+INSERT INTO `sys_dict_data_temp` VALUES (100, 0, '北京市', '北京市', 'region_list', NULL, 'default', 'N', '0', 'admin', '2022-01-12 18:08:08', '', NULL, NULL);
+INSERT INTO `sys_dict_data_temp` VALUES (101, 0, '上海市', '上海市', 'region_list', NULL, 'default', 'N', '0', 'admin', '2022-01-12 18:08:15', '', NULL, NULL);
+INSERT INTO `sys_dict_data_temp` VALUES (102, 0, '广东省', '广东省', 'region_list', NULL, 'default', 'N', '0', 'admin', '2022-01-12 18:08:25', '', NULL, NULL);
+INSERT INTO `sys_dict_data_temp` VALUES (103, 0, '百度', '百度', 'clues_source', NULL, 'default', 'N', '0', 'admin', '2022-01-12 18:09:02', '', NULL, NULL);
+INSERT INTO `sys_dict_data_temp` VALUES (104, 1, '抖音', '抖音', 'clues_source', NULL, 'default', 'N', '0', 'admin', '2022-01-12 18:09:08', '', NULL, NULL);
+INSERT INTO `sys_dict_data_temp` VALUES (105, 2, '头条', '头条', 'clues_source', NULL, 'default', 'N', '0', 'admin', '2022-01-12 18:09:31', '', NULL, NULL);
+INSERT INTO `sys_dict_data_temp` VALUES (106, 3, '电话', '电话', 'clues_source', NULL, 'default', 'N', '0', 'admin', '2022-01-12 18:09:40', '', NULL, NULL);
+INSERT INTO `sys_dict_data_temp` VALUES (107, 0, '有效', '有效', 'clues_status', NULL, 'default', 'N', '0', 'admin', '2022-01-12 18:09:59', '', NULL, NULL);
+INSERT INTO `sys_dict_data_temp` VALUES (108, 1, '无效', '无效', 'clues_status', NULL, 'default', 'N', '0', 'admin', '2022-01-12 18:10:06', '', NULL, NULL);
+INSERT INTO `sys_dict_data_temp` VALUES (109, 0, '计算机互联网', '计算机互联网', 'customer_industry', NULL, 'default', 'N', '0', 'admin', '2022-01-12 18:10:50', '', NULL, NULL);
+INSERT INTO `sys_dict_data_temp` VALUES (110, 1, '加工生产', '加工生产', 'customer_industry', NULL, 'default', 'N', '0', 'admin', '2022-01-12 18:11:02', '', NULL, NULL);
+INSERT INTO `sys_dict_data_temp` VALUES (111, 2, '房地产', '房地产', 'customer_industry', NULL, 'default', 'N', '0', 'admin', '2022-01-12 18:11:20', '', NULL, NULL);
+INSERT INTO `sys_dict_data_temp` VALUES (112, 3, '金融', '金融', 'customer_industry', NULL, 'default', 'N', '0', 'admin', '2022-01-12 18:11:34', '', NULL, NULL);
+INSERT INTO `sys_dict_data_temp` VALUES (113, 0, 'A', 'A', 'customer_rank', NULL, 'default', 'N', '0', 'admin', '2022-01-12 18:11:55', '', NULL, NULL);
+INSERT INTO `sys_dict_data_temp` VALUES (114, 1, 'B', 'B', 'customer_rank', NULL, 'default', 'N', '0', 'admin', '2022-01-12 18:11:59', '', NULL, NULL);
+INSERT INTO `sys_dict_data_temp` VALUES (115, 2, 'C', 'C', 'customer_rank', NULL, 'default', 'N', '0', 'admin', '2022-01-12 18:12:04', '', NULL, NULL);
+INSERT INTO `sys_dict_data_temp` VALUES (116, 3, 'D', 'D', 'customer_rank', NULL, 'default', 'N', '0', 'admin', '2022-01-12 18:12:10', '', NULL, NULL);
+INSERT INTO `sys_dict_data_temp` VALUES (117, 4, 'E', 'E', 'customer_rank', NULL, 'default', 'N', '0', 'admin', '2022-01-12 18:12:18', '', NULL, NULL);
+INSERT INTO `sys_dict_data_temp` VALUES (118, 0, '测试客户', '测试客户', 'customer_status', NULL, 'default', 'N', '0', 'admin', '2022-01-12 18:12:56', '', NULL, NULL);
+INSERT INTO `sys_dict_data_temp` VALUES (119, 1, '意向客户', '意向客户', 'customer_status', NULL, 'default', 'N', '0', 'admin', '2022-01-12 18:13:07', '', NULL, NULL);
+INSERT INTO `sys_dict_data_temp` VALUES (120, 2, '签单客户', '签单客户', 'customer_status', NULL, 'default', 'N', '0', 'admin', '2022-01-12 18:13:17', '', NULL, NULL);
+INSERT INTO `sys_dict_data_temp` VALUES (121, 3, '回款客户', '回款客户', 'customer_status', NULL, 'default', 'N', '0', 'admin', '2022-01-12 18:13:31', '', NULL, NULL);
+INSERT INTO `sys_dict_data_temp` VALUES (122, 4, '上门客户', '上门客户', 'customer_status', NULL, 'default', 'N', '0', 'admin', '2022-01-12 18:13:42', '', NULL, NULL);
+INSERT INTO `sys_dict_data_temp` VALUES (123, 0, '普通', 'normal', 'pool_type', NULL, 'default', 'N', '0', 'admin', '2022-01-13 13:33:07', '', NULL, NULL);
+INSERT INTO `sys_dict_data_temp` VALUES (124, 1, '高级', 'high', 'pool_type', NULL, 'default', 'N', '0', 'admin', '2022-01-13 13:33:24', '', NULL, NULL);
+INSERT INTO `sys_dict_data_temp` VALUES (125, 0, '未成交', '0', 'deal_status', NULL, 'default', 'N', '0', 'admin', '2022-01-15 18:11:42', 'admin', '2022-01-15 18:12:15', NULL);
+INSERT INTO `sys_dict_data_temp` VALUES (126, 1, '已成交', '1', 'deal_status', NULL, 'default', 'N', '0', 'admin', '2022-01-15 18:11:58', 'admin', '2022-01-15 18:12:09', NULL);
+INSERT INTO `sys_dict_data_temp` VALUES (127, 0, '待审核', '0', 'order_review_status', NULL, 'default', 'N', '0', 'admin', '2022-01-19 10:52:06', '', NULL, NULL);
+INSERT INTO `sys_dict_data_temp` VALUES (128, 1, '审核通过', '1', 'order_review_status', NULL, 'default', 'N', '0', 'admin', '2022-01-19 10:52:15', '', NULL, NULL);
+INSERT INTO `sys_dict_data_temp` VALUES (129, 2, '审核不通过', '2', 'order_review_status', NULL, 'default', 'N', '0', 'admin', '2022-01-19 10:52:23', '', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for sys_dict_type
@@ -4042,7 +4130,7 @@ CREATE TABLE `sys_dict_type`  (
   `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`dict_id`) USING BTREE,
   UNIQUE INDEX `dict_type`(`dict_type`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '字典类型表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 109 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '字典类型表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_dict_type
@@ -4057,6 +4145,44 @@ INSERT INTO `sys_dict_type` VALUES (7, '通知类型', 'sys_notice_type', '0', '
 INSERT INTO `sys_dict_type` VALUES (8, '通知状态', 'sys_notice_status', '0', 'admin', '2022-07-13 17:04:54', '', NULL, '通知状态列表');
 INSERT INTO `sys_dict_type` VALUES (9, '操作类型', 'sys_oper_type', '0', 'admin', '2022-07-13 17:04:54', '', NULL, '操作类型列表');
 INSERT INTO `sys_dict_type` VALUES (10, '系统状态', 'sys_common_status', '0', 'admin', '2022-07-13 17:04:54', '', NULL, '登录状态列表');
+INSERT INTO `sys_dict_type` VALUES (100, '线索来源', 'clues_source', '0', 'admin', '2022-01-12 18:05:44', '', NULL, NULL);
+INSERT INTO `sys_dict_type` VALUES (101, '线索状态', 'clues_status', '0', 'admin', '2022-01-12 18:05:59', '', NULL, NULL);
+INSERT INTO `sys_dict_type` VALUES (102, '行业类别', 'customer_industry', '0', 'admin', '2022-01-12 18:06:30', '', NULL, NULL);
+INSERT INTO `sys_dict_type` VALUES (103, '客户级别', 'customer_rank', '0', 'admin', '2022-01-12 18:06:42', '', NULL, NULL);
+INSERT INTO `sys_dict_type` VALUES (104, '客户状态', 'customer_status', '0', 'admin', '2022-01-12 18:06:54', '', NULL, NULL);
+INSERT INTO `sys_dict_type` VALUES (105, '所在地区', 'region_list', '0', 'admin', '2022-01-12 18:07:47', '', NULL, NULL);
+INSERT INTO `sys_dict_type` VALUES (106, '公海类型', 'pool_type', '0', 'admin', '2022-01-13 13:28:04', '', NULL, NULL);
+INSERT INTO `sys_dict_type` VALUES (107, '成交状态', 'deal_status', '0', 'admin', '2022-01-15 18:10:43', '', NULL, NULL);
+INSERT INTO `sys_dict_type` VALUES (108, '订单审核状态', 'order_review_status', '0', 'admin', '2022-01-19 10:51:35', 'admin', '2022-01-19 10:53:41', NULL);
+
+-- ----------------------------
+-- Table structure for sys_dict_type_temp
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_dict_type_temp`;
+CREATE TABLE `sys_dict_type_temp`  (
+  `dict_id` bigint(20) NOT NULL DEFAULT 0 COMMENT '字典主键',
+  `dict_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '字典名称',
+  `dict_type` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '字典类型',
+  `status` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '0' COMMENT '状态（0正常 1停用）',
+  `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '创建者',
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '更新者',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注'
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of sys_dict_type_temp
+-- ----------------------------
+INSERT INTO `sys_dict_type_temp` VALUES (100, '线索来源', 'clues_source', '0', 'admin', '2022-01-12 18:05:44', '', NULL, NULL);
+INSERT INTO `sys_dict_type_temp` VALUES (101, '线索状态', 'clues_status', '0', 'admin', '2022-01-12 18:05:59', '', NULL, NULL);
+INSERT INTO `sys_dict_type_temp` VALUES (102, '行业类别', 'customer_industry', '0', 'admin', '2022-01-12 18:06:30', '', NULL, NULL);
+INSERT INTO `sys_dict_type_temp` VALUES (103, '客户级别', 'customer_rank', '0', 'admin', '2022-01-12 18:06:42', '', NULL, NULL);
+INSERT INTO `sys_dict_type_temp` VALUES (104, '客户状态', 'customer_status', '0', 'admin', '2022-01-12 18:06:54', '', NULL, NULL);
+INSERT INTO `sys_dict_type_temp` VALUES (105, '所在地区', 'region_list', '0', 'admin', '2022-01-12 18:07:47', '', NULL, NULL);
+INSERT INTO `sys_dict_type_temp` VALUES (106, '公海类型', 'pool_type', '0', 'admin', '2022-01-13 13:28:04', '', NULL, NULL);
+INSERT INTO `sys_dict_type_temp` VALUES (107, '成交状态', 'deal_status', '0', 'admin', '2022-01-15 18:10:43', '', NULL, NULL);
+INSERT INTO `sys_dict_type_temp` VALUES (108, '订单审核状态', 'order_review_status', '0', 'admin', '2022-01-19 10:51:35', 'admin', '2022-01-19 10:53:41', NULL);
 
 -- ----------------------------
 -- Table structure for sys_form
@@ -4143,7 +4269,7 @@ CREATE TABLE `sys_logininfor`  (
   `msg` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '提示消息',
   `login_time` datetime(0) NULL DEFAULT NULL COMMENT '访问时间',
   PRIMARY KEY (`info_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 143 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统访问记录' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 159 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统访问记录' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_logininfor
@@ -4191,6 +4317,22 @@ INSERT INTO `sys_logininfor` VALUES (139, 'admin', '127.0.0.1', '内网IP', 'Chr
 INSERT INTO `sys_logininfor` VALUES (140, 'admin', '127.0.0.1', '内网IP', 'Chrome 10', 'Windows 10', '0', '登录成功', '2024-01-10 10:25:48');
 INSERT INTO `sys_logininfor` VALUES (141, 'admin', '127.0.0.1', '内网IP', 'Chrome 10', 'Windows 10', '0', '登录成功', '2024-01-10 14:06:43');
 INSERT INTO `sys_logininfor` VALUES (142, 'admin', '127.0.0.1', '内网IP', 'Chrome 12', 'Windows 10', '0', '登录成功', '2024-01-10 15:31:56');
+INSERT INTO `sys_logininfor` VALUES (143, 'admin', '127.0.0.1', '内网IP', 'Chrome 10', 'Windows 10', '0', '登录成功', '2024-01-11 08:04:31');
+INSERT INTO `sys_logininfor` VALUES (144, 'admin', '127.0.0.1', '内网IP', 'Chrome 12', 'Windows 10', '0', '登录成功', '2024-01-11 08:56:24');
+INSERT INTO `sys_logininfor` VALUES (145, 'admin', '127.0.0.1', '内网IP', 'Chrome 10', 'Windows 10', '0', '登录成功', '2024-01-11 10:12:07');
+INSERT INTO `sys_logininfor` VALUES (146, 'admin', '127.0.0.1', '内网IP', 'Chrome 12', 'Windows 10', '0', '登录成功', '2024-01-11 10:58:06');
+INSERT INTO `sys_logininfor` VALUES (147, 'test1', '127.0.0.1', '内网IP', 'Chrome 12', 'Windows 10', '0', '登录成功', '2024-01-11 11:41:35');
+INSERT INTO `sys_logininfor` VALUES (148, 'admin', '127.0.0.1', '内网IP', 'Chrome 12', 'Windows 10', '0', '登录成功', '2024-01-11 14:09:33');
+INSERT INTO `sys_logininfor` VALUES (149, 'admin', '127.0.0.1', '内网IP', 'Chrome 12', 'Windows 10', '0', '登录成功', '2024-01-11 14:10:20');
+INSERT INTO `sys_logininfor` VALUES (150, 'admin', '127.0.0.1', '内网IP', 'Chrome 12', 'Windows 10', '0', '退出成功', '2024-01-11 14:10:40');
+INSERT INTO `sys_logininfor` VALUES (151, 'test1', '127.0.0.1', '内网IP', 'Chrome 12', 'Windows 10', '0', '登录成功', '2024-01-11 14:10:46');
+INSERT INTO `sys_logininfor` VALUES (152, 'admin', '127.0.0.1', '内网IP', 'Chrome 10', 'Windows 10', '0', '登录成功', '2024-01-11 14:11:18');
+INSERT INTO `sys_logininfor` VALUES (153, 'test1', '127.0.0.1', '内网IP', 'Chrome 12', 'Windows 10', '0', '退出成功', '2024-01-11 14:57:03');
+INSERT INTO `sys_logininfor` VALUES (154, 'test', '127.0.0.1', '内网IP', 'Chrome 12', 'Windows 10', '1', '用户不存在/密码错误', '2024-01-11 14:57:12');
+INSERT INTO `sys_logininfor` VALUES (155, 'test', '127.0.0.1', '内网IP', 'Chrome 12', 'Windows 10', '1', '验证码错误', '2024-01-11 14:57:15');
+INSERT INTO `sys_logininfor` VALUES (156, 'test', '127.0.0.1', '内网IP', 'Chrome 12', 'Windows 10', '1', '用户不存在/密码错误', '2024-01-11 14:57:19');
+INSERT INTO `sys_logininfor` VALUES (157, 'test', '127.0.0.1', '内网IP', 'Chrome 12', 'Windows 10', '0', '登录成功', '2024-01-11 14:57:47');
+INSERT INTO `sys_logininfor` VALUES (158, 'admin', '127.0.0.1', '内网IP', 'Chrome 10', 'Windows 10', '0', '登录成功', '2024-01-11 16:19:54');
 
 -- ----------------------------
 -- Table structure for sys_menu
@@ -4217,7 +4359,7 @@ CREATE TABLE `sys_menu`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '备注',
   PRIMARY KEY (`menu_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3056 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '菜单权限表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3071 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '菜单权限表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_menu
@@ -4556,6 +4698,57 @@ INSERT INTO `sys_menu` VALUES (3052, '海关数据修改', 3049, 3, '#', '', NUL
 INSERT INTO `sys_menu` VALUES (3053, '海关数据删除', 3049, 4, '#', '', NULL, 1, 0, 'F', '0', '0', 'crm:customs:customsData:remove', '#', 'admin', '2024-01-10 11:08:23', 'admin', '2024-01-10 14:12:10', '');
 INSERT INTO `sys_menu` VALUES (3054, '海关数据导出', 3049, 5, '#', '', NULL, 1, 0, 'F', '0', '0', 'crm:customs:customsData:export', '#', 'admin', '2024-01-10 11:08:23', 'admin', '2024-01-10 14:12:18', '');
 INSERT INTO `sys_menu` VALUES (3055, '海关数据', 3047, 104, 'customs', NULL, NULL, 1, 0, 'M', '0', '0', '', 'nested', 'admin', '2024-01-10 11:24:49', 'admin', '2024-01-10 14:26:44', '');
+INSERT INTO `sys_menu` VALUES (3056, '审核确认', 3045, 100, '', NULL, NULL, 1, 0, 'F', '0', '0', 'crm:order:approve', '#', 'admin', '2024-01-11 11:29:22', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (3057, '审核确认', 3046, 7, '', NULL, NULL, 1, 0, 'F', '0', '0', 'crm:order:approve', '#', 'admin', '2024-01-11 11:29:40', 'admin', '2024-01-11 11:47:23', '');
+INSERT INTO `sys_menu` VALUES (3058, '查询订单列表', 3046, 1, '', NULL, NULL, 1, 0, 'F', '0', '0', 'crm:order:person:list', '#', 'admin', '2024-01-11 11:44:48', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (3059, '导出订单列表', 3046, 2, '', NULL, NULL, 1, 0, 'F', '0', '0', 'crm:order:export', '#', 'admin', '2024-01-11 11:45:34', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (3060, '获取详细信息', 3046, 3, '', NULL, NULL, 1, 0, 'F', '0', '0', 'crm:order:query', '#', 'admin', '2024-01-11 11:46:10', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (3061, '新增订单', 3046, 4, '', NULL, NULL, 1, 0, 'F', '0', '0', 'crm:order:add', '#', 'admin', '2024-01-11 11:46:29', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (3062, '修改订单', 3046, 5, '', NULL, NULL, 1, 0, 'F', '0', '0', 'crm:order:edit', '#', 'admin', '2024-01-11 11:46:50', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (3063, '删除订单', 3046, 6, '', NULL, NULL, 1, 0, 'F', '0', '0', 'crm:order:remove', '#', 'admin', '2024-01-11 11:47:12', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (3065, '查询订单列表', 3045, 1, '', NULL, NULL, 1, 0, 'F', '0', '0', 'crm:order:person:list', '#', 'admin', '2024-01-11 11:44:48', 'admin', '2024-01-11 14:12:12', '');
+INSERT INTO `sys_menu` VALUES (3066, '导出订单列表', 3045, 2, '', NULL, NULL, 1, 0, 'F', '0', '0', 'crm:order:export', '#', 'admin', '2024-01-11 11:45:34', 'admin', '2024-01-11 14:12:25', '');
+INSERT INTO `sys_menu` VALUES (3067, '获取详细信息', 3045, 3, '', NULL, NULL, 1, 0, 'F', '0', '0', 'crm:order:query', '#', 'admin', '2024-01-11 11:46:10', 'admin', '2024-01-11 14:12:31', '');
+INSERT INTO `sys_menu` VALUES (3068, '新增订单', 3045, 4, '', NULL, NULL, 1, 0, 'F', '0', '0', 'crm:order:add', '#', 'admin', '2024-01-11 11:46:29', 'admin', '2024-01-11 14:12:38', '');
+INSERT INTO `sys_menu` VALUES (3069, '修改订单', 3045, 5, '', NULL, NULL, 1, 0, 'F', '0', '0', 'crm:order:edit', '#', 'admin', '2024-01-11 11:46:50', 'admin', '2024-01-11 14:12:47', '');
+INSERT INTO `sys_menu` VALUES (3070, '删除订单', 3045, 6, '', NULL, NULL, 1, 0, 'F', '0', '0', 'crm:order:remove', '#', 'admin', '2024-01-11 11:47:12', 'admin', '2024-01-11 14:12:53', '');
+
+-- ----------------------------
+-- Table structure for sys_menu_temp
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_menu_temp`;
+CREATE TABLE `sys_menu_temp`  (
+  `menu_id` bigint(20) NOT NULL DEFAULT 0 COMMENT '菜单ID',
+  `menu_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '菜单名称',
+  `parent_id` bigint(20) NULL DEFAULT 0 COMMENT '父菜单ID',
+  `order_num` int(4) NULL DEFAULT 0 COMMENT '显示顺序',
+  `path` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '路由地址',
+  `component` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '组件路径',
+  `query` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '路由参数',
+  `is_frame` int(1) NULL DEFAULT 1 COMMENT '是否为外链（0是 1否）',
+  `is_cache` int(1) NULL DEFAULT 0 COMMENT '是否缓存（0缓存 1不缓存）',
+  `menu_type` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '菜单类型（M目录 C菜单 F按钮）',
+  `visible` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '0' COMMENT '菜单状态（0显示 1隐藏）',
+  `status` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '0' COMMENT '菜单状态（0正常 1停用）',
+  `perms` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '权限标识',
+  `icon` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '#' COMMENT '菜单图标',
+  `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '创建者',
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '更新者',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '备注'
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of sys_menu_temp
+-- ----------------------------
+INSERT INTO `sys_menu_temp` VALUES (3064, '审核确认', 3044, 7, '', NULL, NULL, 1, 0, 'F', '0', '0', 'crm:order:approve', '#', 'admin', '2024-01-11 11:29:40', 'admin', '2024-01-11 11:47:23', '');
+INSERT INTO `sys_menu_temp` VALUES (3065, '查询订单列表', 3044, 1, '', NULL, NULL, 1, 0, 'F', '0', '0', 'crm:order:person:list', '#', 'admin', '2024-01-11 11:44:48', '', NULL, '');
+INSERT INTO `sys_menu_temp` VALUES (3066, '导出订单列表', 3044, 2, '', NULL, NULL, 1, 0, 'F', '0', '0', 'crm:order:export', '#', 'admin', '2024-01-11 11:45:34', '', NULL, '');
+INSERT INTO `sys_menu_temp` VALUES (3067, '获取详细信息', 3044, 3, '', NULL, NULL, 1, 0, 'F', '0', '0', 'crm:order:query', '#', 'admin', '2024-01-11 11:46:10', '', NULL, '');
+INSERT INTO `sys_menu_temp` VALUES (3068, '新增订单', 3044, 4, '', NULL, NULL, 1, 0, 'F', '0', '0', 'crm:order:add', '#', 'admin', '2024-01-11 11:46:29', '', NULL, '');
+INSERT INTO `sys_menu_temp` VALUES (3069, '修改订单', 3044, 5, '', NULL, NULL, 1, 0, 'F', '0', '0', 'crm:order:edit', '#', 'admin', '2024-01-11 11:46:50', '', NULL, '');
+INSERT INTO `sys_menu_temp` VALUES (3070, '删除订单', 3044, 6, '', NULL, NULL, 1, 0, 'F', '0', '0', 'crm:order:remove', '#', 'admin', '2024-01-11 11:47:12', '', NULL, '');
 
 -- ----------------------------
 -- Table structure for sys_notice
@@ -4603,7 +4796,7 @@ CREATE TABLE `sys_oper_log`  (
   `error_msg` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '错误消息',
   `oper_time` datetime(0) NULL DEFAULT NULL COMMENT '操作时间',
   PRIMARY KEY (`oper_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 265 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '操作日志记录' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 297 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '操作日志记录' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_oper_log
@@ -4773,6 +4966,38 @@ INSERT INTO `sys_oper_log` VALUES (261, '菜单管理', 2, 'com.wj.web.controlle
 INSERT INTO `sys_oper_log` VALUES (262, '菜单管理', 2, 'com.wj.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', NULL, '/system/menu', '127.0.0.1', '内网IP', '{\"visible\":\"0\",\"icon\":\"peoples\",\"orderNum\":102,\"menuName\":\"公海管理\",\"params\":{},\"parentId\":3047,\"isCache\":\"0\",\"path\":\"pool\",\"children\":[],\"createTime\":1704781692000,\"updateBy\":\"admin\",\"isFrame\":\"1\",\"menuId\":3035,\"menuType\":\"M\",\"perms\":\"\",\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-01-10 14:27:36');
 INSERT INTO `sys_oper_log` VALUES (263, '订单', 1, 'com.wj.crm.controller.CrmOrderController.add()', 'POST', 1, 'admin', NULL, '/crm/order', '127.0.0.1', '内网IP', '{\"owner\":\"admin\",\"amount\":1000000,\"orderNo\":\"xs-2024001\",\"remark\":\"加油！\",\"params\":{},\"createBy\":\"admin\",\"createTime\":1704872794364,\"customerId\":4,\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-01-10 15:46:34');
 INSERT INTO `sys_oper_log` VALUES (264, '订单', 2, 'com.wj.crm.controller.CrmOrderController.approve()', 'PUT', 1, 'admin', NULL, '/crm/order/approve/1', '127.0.0.1', '内网IP', '1', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-01-10 15:46:50');
+INSERT INTO `sys_oper_log` VALUES (265, '订单', 1, 'com.wj.crm.controller.CrmOrderController.add()', 'POST', 1, 'admin', NULL, '/crm/order', '127.0.0.1', '内网IP', '{\"owner\":\"admin\",\"amount\":1000000,\"orderNo\":\"xs2024002\",\"params\":{},\"createBy\":\"admin\",\"createTime\":1704937836907,\"customerId\":4,\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-01-11 09:50:36');
+INSERT INTO `sys_oper_log` VALUES (266, '菜单管理', 1, 'com.wj.web.controller.system.SysMenuController.add()', 'POST', 1, 'admin', NULL, '/system/menu', '127.0.0.1', '内网IP', '{\"visible\":\"0\",\"orderNum\":100,\"menuName\":\"审核确认\",\"params\":{},\"parentId\":3045,\"isCache\":\"0\",\"createBy\":\"admin\",\"children\":[],\"isFrame\":\"1\",\"menuType\":\"F\",\"perms\":\"crm:order:approve\",\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-01-11 11:29:22');
+INSERT INTO `sys_oper_log` VALUES (267, '菜单管理', 1, 'com.wj.web.controller.system.SysMenuController.add()', 'POST', 1, 'admin', NULL, '/system/menu', '127.0.0.1', '内网IP', '{\"visible\":\"0\",\"orderNum\":100,\"menuName\":\"审核确认\",\"params\":{},\"parentId\":3046,\"isCache\":\"0\",\"createBy\":\"admin\",\"children\":[],\"isFrame\":\"1\",\"menuType\":\"F\",\"perms\":\"crm:order:approve\",\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-01-11 11:29:40');
+INSERT INTO `sys_oper_log` VALUES (268, '订单', 2, 'com.wj.crm.controller.CrmOrderController.approve()', 'PUT', 1, 'admin', NULL, '/crm/order/approve/2', '127.0.0.1', '内网IP', '2', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-01-11 11:29:53');
+INSERT INTO `sys_oper_log` VALUES (269, '订单', 1, 'com.wj.crm.controller.CrmOrderController.add()', 'POST', 1, 'admin', NULL, '/crm/order', '127.0.0.1', '内网IP', '{\"owner\":\"admin\",\"amount\":1000000,\"orderNo\":\"xs2024003\",\"params\":{},\"createBy\":\"admin\",\"createTime\":1704943824203,\"customerId\":4,\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-01-11 11:30:24');
+INSERT INTO `sys_oper_log` VALUES (270, '角色管理', 1, 'com.wj.web.controller.system.SysRoleController.add()', 'POST', 1, 'admin', NULL, '/system/role', '127.0.0.1', '内网IP', '{\"flag\":false,\"roleId\":3,\"admin\":false,\"params\":{},\"roleSort\":\"0\",\"deptCheckStrictly\":true,\"createBy\":\"admin\",\"menuCheckStrictly\":true,\"roleKey\":\"Approver\",\"roleName\":\"CRM订单审核\",\"deptIds\":[],\"menuIds\":[3047,3037,3038,3039,3040,3041,3042,3043,3035,3036,3044,3045,3056,3046,3057,3055,3049,3050,3051,3052,3053,3054],\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-01-11 11:37:28');
+INSERT INTO `sys_oper_log` VALUES (271, '用户管理', 1, 'com.wj.web.controller.system.SysUserController.add()', 'POST', 1, 'admin', NULL, '/system/user', '127.0.0.1', '内网IP', '{\"admin\":false,\"password\":\"$2a$10$qkyhmOosl1lwZvvVU65Foe1jeFIwcGp/3.e08GP6XUcG.wjS5Pajq\",\"postIds\":[2],\"nickName\":\"test\",\"deptId\":104,\"params\":{},\"userName\":\"test\",\"userId\":3,\"createBy\":\"admin\",\"roleIds\":[3,2],\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-01-11 11:38:34');
+INSERT INTO `sys_oper_log` VALUES (272, '用户管理', 1, 'com.wj.web.controller.system.SysUserController.add()', 'POST', 1, 'admin', NULL, '/system/user', '127.0.0.1', '内网IP', '{\"admin\":false,\"password\":\"$2a$10$iju1LcpEQuiJQJXCjGrwxOlV/CrKf.9dq8MTtQ0933D55.l8yo8/.\",\"postIds\":[4],\"nickName\":\"test1\",\"deptId\":104,\"params\":{},\"userName\":\"test1\",\"userId\":4,\"createBy\":\"admin\",\"roleIds\":[2],\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-01-11 11:39:23');
+INSERT INTO `sys_oper_log` VALUES (273, '角色管理', 2, 'com.wj.web.controller.system.SysRoleController.edit()', 'PUT', 1, 'admin', NULL, '/system/role', '127.0.0.1', '内网IP', '{\"flag\":false,\"roleId\":2,\"admin\":false,\"remark\":\"普通角色\",\"dataScope\":\"2\",\"delFlag\":\"0\",\"params\":{},\"roleSort\":\"2\",\"deptCheckStrictly\":true,\"createTime\":1657703094000,\"updateBy\":\"admin\",\"menuCheckStrictly\":false,\"roleKey\":\"common\",\"roleName\":\"普通角色\",\"menuIds\":[3047,3037,3038,3039,3040,3041,3042,3043,3035,3036,3044,3045,3046,3055,3049,3050,3051,3052,3053,3054],\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-01-11 11:40:09');
+INSERT INTO `sys_oper_log` VALUES (274, '菜单管理', 1, 'com.wj.web.controller.system.SysMenuController.add()', 'POST', 1, 'admin', NULL, '/system/menu', '127.0.0.1', '内网IP', '{\"visible\":\"0\",\"orderNum\":1,\"menuName\":\"查询订单列表\",\"params\":{},\"parentId\":3046,\"isCache\":\"0\",\"createBy\":\"admin\",\"children\":[],\"isFrame\":\"1\",\"menuType\":\"F\",\"perms\":\"crm:order:person:list\",\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-01-11 11:44:48');
+INSERT INTO `sys_oper_log` VALUES (275, '菜单管理', 1, 'com.wj.web.controller.system.SysMenuController.add()', 'POST', 1, 'admin', NULL, '/system/menu', '127.0.0.1', '内网IP', '{\"visible\":\"0\",\"orderNum\":2,\"menuName\":\"导出订单列表\",\"params\":{},\"parentId\":3046,\"isCache\":\"0\",\"createBy\":\"admin\",\"children\":[],\"isFrame\":\"1\",\"menuType\":\"F\",\"perms\":\"crm:order:export\",\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-01-11 11:45:34');
+INSERT INTO `sys_oper_log` VALUES (276, '菜单管理', 1, 'com.wj.web.controller.system.SysMenuController.add()', 'POST', 1, 'admin', NULL, '/system/menu', '127.0.0.1', '内网IP', '{\"visible\":\"0\",\"orderNum\":3,\"menuName\":\"获取详细信息\",\"params\":{},\"parentId\":3046,\"isCache\":\"0\",\"createBy\":\"admin\",\"children\":[],\"isFrame\":\"1\",\"menuType\":\"F\",\"perms\":\"crm:order:query\",\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-01-11 11:46:10');
+INSERT INTO `sys_oper_log` VALUES (277, '菜单管理', 1, 'com.wj.web.controller.system.SysMenuController.add()', 'POST', 1, 'admin', NULL, '/system/menu', '127.0.0.1', '内网IP', '{\"visible\":\"0\",\"orderNum\":4,\"menuName\":\"新增订单\",\"params\":{},\"parentId\":3046,\"isCache\":\"0\",\"createBy\":\"admin\",\"children\":[],\"isFrame\":\"1\",\"menuType\":\"F\",\"perms\":\"crm:order:add\",\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-01-11 11:46:29');
+INSERT INTO `sys_oper_log` VALUES (278, '菜单管理', 1, 'com.wj.web.controller.system.SysMenuController.add()', 'POST', 1, 'admin', NULL, '/system/menu', '127.0.0.1', '内网IP', '{\"visible\":\"0\",\"orderNum\":5,\"menuName\":\"修改订单\",\"params\":{},\"parentId\":3046,\"isCache\":\"0\",\"createBy\":\"admin\",\"children\":[],\"isFrame\":\"1\",\"menuType\":\"F\",\"perms\":\"crm:order:edit\",\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-01-11 11:46:50');
+INSERT INTO `sys_oper_log` VALUES (279, '菜单管理', 1, 'com.wj.web.controller.system.SysMenuController.add()', 'POST', 1, 'admin', NULL, '/system/menu', '127.0.0.1', '内网IP', '{\"visible\":\"0\",\"orderNum\":6,\"menuName\":\"删除订单\",\"params\":{},\"parentId\":3046,\"isCache\":\"0\",\"createBy\":\"admin\",\"children\":[],\"isFrame\":\"1\",\"menuType\":\"F\",\"perms\":\"crm:order:remove\",\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-01-11 11:47:12');
+INSERT INTO `sys_oper_log` VALUES (280, '菜单管理', 2, 'com.wj.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', NULL, '/system/menu', '127.0.0.1', '内网IP', '{\"visible\":\"0\",\"icon\":\"#\",\"orderNum\":7,\"menuName\":\"审核确认\",\"params\":{},\"parentId\":3046,\"isCache\":\"0\",\"path\":\"\",\"children\":[],\"createTime\":1704943780000,\"updateBy\":\"admin\",\"isFrame\":\"1\",\"menuId\":3057,\"menuType\":\"F\",\"perms\":\"crm:order:approve\",\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-01-11 11:47:23');
+INSERT INTO `sys_oper_log` VALUES (281, '角色管理', 2, 'com.wj.web.controller.system.SysRoleController.edit()', 'PUT', 1, 'admin', NULL, '/system/role', '127.0.0.1', '内网IP', '{\"flag\":false,\"roleId\":3,\"admin\":false,\"dataScope\":\"1\",\"delFlag\":\"0\",\"params\":{},\"roleSort\":\"0\",\"deptCheckStrictly\":true,\"createTime\":1704944248000,\"updateBy\":\"admin\",\"menuCheckStrictly\":false,\"roleKey\":\"Approver\",\"roleName\":\"CRM订单审核\",\"menuIds\":[3047,3044,3037,3038,3039,3040,3041,3042,3043,3035,3036,3045,3056,3046,3058,3059,3060,3061,3062,3063,3057,3055,3049,3050,3051,3052,3053,3054],\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-01-11 11:56:30');
+INSERT INTO `sys_oper_log` VALUES (282, '角色管理', 2, 'com.wj.web.controller.system.SysRoleController.edit()', 'PUT', 1, 'admin', NULL, '/system/role', '127.0.0.1', '内网IP', '{\"flag\":false,\"roleId\":2,\"admin\":false,\"remark\":\"普通角色\",\"dataScope\":\"2\",\"delFlag\":\"0\",\"params\":{},\"roleSort\":\"2\",\"deptCheckStrictly\":true,\"createTime\":1657703094000,\"updateBy\":\"admin\",\"menuCheckStrictly\":false,\"roleKey\":\"common\",\"roleName\":\"普通角色\",\"menuIds\":[3047,3037,3038,3039,3040,3041,3042,3043,3035,3036,3044,3045,3046,3058,3061,3062,3063,3055,3049,3050,3051,3052,3053,3054],\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-01-11 11:56:58');
+INSERT INTO `sys_oper_log` VALUES (283, '菜单管理', 2, 'com.wj.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', NULL, '/system/menu', '127.0.0.1', '内网IP', '{\"visible\":\"0\",\"icon\":\"#\",\"orderNum\":1,\"menuName\":\"查询订单列表\",\"params\":{},\"parentId\":3045,\"isCache\":\"0\",\"path\":\"\",\"children\":[],\"createTime\":1704944688000,\"updateBy\":\"admin\",\"isFrame\":\"1\",\"menuId\":3065,\"menuType\":\"F\",\"perms\":\"crm:order:person:list\",\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-01-11 14:12:12');
+INSERT INTO `sys_oper_log` VALUES (284, '菜单管理', 2, 'com.wj.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', NULL, '/system/menu', '127.0.0.1', '内网IP', '{\"visible\":\"0\",\"icon\":\"#\",\"orderNum\":2,\"menuName\":\"导出订单列表\",\"params\":{},\"parentId\":3045,\"isCache\":\"0\",\"path\":\"\",\"children\":[],\"createTime\":1704944734000,\"updateBy\":\"admin\",\"isFrame\":\"1\",\"menuId\":3066,\"menuType\":\"F\",\"perms\":\"crm:order:export\",\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-01-11 14:12:25');
+INSERT INTO `sys_oper_log` VALUES (285, '菜单管理', 2, 'com.wj.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', NULL, '/system/menu', '127.0.0.1', '内网IP', '{\"visible\":\"0\",\"icon\":\"#\",\"orderNum\":3,\"menuName\":\"获取详细信息\",\"params\":{},\"parentId\":3045,\"isCache\":\"0\",\"path\":\"\",\"children\":[],\"createTime\":1704944770000,\"updateBy\":\"admin\",\"isFrame\":\"1\",\"menuId\":3067,\"menuType\":\"F\",\"perms\":\"crm:order:query\",\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-01-11 14:12:32');
+INSERT INTO `sys_oper_log` VALUES (286, '菜单管理', 2, 'com.wj.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', NULL, '/system/menu', '127.0.0.1', '内网IP', '{\"visible\":\"0\",\"icon\":\"#\",\"orderNum\":4,\"menuName\":\"新增订单\",\"params\":{},\"parentId\":3045,\"isCache\":\"0\",\"path\":\"\",\"children\":[],\"createTime\":1704944789000,\"updateBy\":\"admin\",\"isFrame\":\"1\",\"menuId\":3068,\"menuType\":\"F\",\"perms\":\"crm:order:add\",\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-01-11 14:12:38');
+INSERT INTO `sys_oper_log` VALUES (287, '菜单管理', 2, 'com.wj.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', NULL, '/system/menu', '127.0.0.1', '内网IP', '{\"visible\":\"0\",\"icon\":\"#\",\"orderNum\":5,\"menuName\":\"修改订单\",\"params\":{},\"parentId\":3045,\"isCache\":\"0\",\"path\":\"\",\"children\":[],\"createTime\":1704944810000,\"updateBy\":\"admin\",\"isFrame\":\"1\",\"menuId\":3069,\"menuType\":\"F\",\"perms\":\"crm:order:edit\",\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-01-11 14:12:47');
+INSERT INTO `sys_oper_log` VALUES (288, '菜单管理', 2, 'com.wj.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', NULL, '/system/menu', '127.0.0.1', '内网IP', '{\"visible\":\"0\",\"icon\":\"#\",\"orderNum\":6,\"menuName\":\"删除订单\",\"params\":{},\"parentId\":3045,\"isCache\":\"0\",\"path\":\"\",\"children\":[],\"createTime\":1704944832000,\"updateBy\":\"admin\",\"isFrame\":\"1\",\"menuId\":3070,\"menuType\":\"F\",\"perms\":\"crm:order:remove\",\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-01-11 14:12:53');
+INSERT INTO `sys_oper_log` VALUES (289, '菜单管理', 2, 'com.wj.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', NULL, '/system/menu', '127.0.0.1', '内网IP', '{\"visible\":\"0\",\"icon\":\"#\",\"orderNum\":7,\"menuName\":\"审核确认\",\"params\":{},\"parentId\":3045,\"isCache\":\"0\",\"path\":\"\",\"children\":[],\"createTime\":1704943780000,\"isFrame\":\"1\",\"menuId\":3064,\"menuType\":\"F\",\"perms\":\"crm:order:approve\",\"status\":\"0\"}', '{\"msg\":\"修改菜单\'审核确认\'失败，菜单名称已存在\",\"code\":500}', 0, NULL, '2024-01-11 14:13:01');
+INSERT INTO `sys_oper_log` VALUES (290, '菜单管理', 3, 'com.wj.web.controller.system.SysMenuController.remove()', 'DELETE', 1, 'admin', NULL, '/system/menu/3064', '127.0.0.1', '内网IP', '{menuId=3064}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-01-11 14:13:12');
+INSERT INTO `sys_oper_log` VALUES (291, '角色管理', 2, 'com.wj.web.controller.system.SysRoleController.edit()', 'PUT', 1, 'admin', NULL, '/system/role', '127.0.0.1', '内网IP', '{\"flag\":false,\"roleId\":3,\"admin\":false,\"dataScope\":\"1\",\"delFlag\":\"0\",\"params\":{},\"roleSort\":\"0\",\"deptCheckStrictly\":true,\"createTime\":1704944248000,\"updateBy\":\"admin\",\"menuCheckStrictly\":false,\"roleKey\":\"Approver\",\"roleName\":\"CRM订单审核\",\"menuIds\":[3047,3037,3038,3039,3040,3041,3042,3043,3035,3036,3044,3045,3065,3066,3067,3068,3069,3070,3056,3046,3058,3059,3060,3061,3062,3063,3057,3055,3049,3050,3051,3052,3053,3054],\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-01-11 14:13:39');
+INSERT INTO `sys_oper_log` VALUES (292, '角色管理', 2, 'com.wj.web.controller.system.SysRoleController.edit()', 'PUT', 1, 'admin', NULL, '/system/role', '127.0.0.1', '内网IP', '{\"flag\":false,\"roleId\":2,\"admin\":false,\"remark\":\"普通角色\",\"dataScope\":\"2\",\"delFlag\":\"0\",\"params\":{},\"roleSort\":\"2\",\"deptCheckStrictly\":true,\"createTime\":1657703094000,\"updateBy\":\"admin\",\"menuCheckStrictly\":false,\"roleKey\":\"common\",\"roleName\":\"普通角色\",\"menuIds\":[3047,3037,3038,3039,3040,3041,3042,3043,3035,3036,3044,3045,3065,3067,3068,3069,3070,3046,3058,3061,3062,3063,3055,3049,3050,3051,3052,3053,3054],\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-01-11 14:14:05');
+INSERT INTO `sys_oper_log` VALUES (293, '角色管理', 2, 'com.wj.web.controller.system.SysRoleController.edit()', 'PUT', 1, 'admin', NULL, '/system/role', '127.0.0.1', '内网IP', '{\"flag\":false,\"roleId\":2,\"admin\":false,\"remark\":\"普通角色\",\"dataScope\":\"2\",\"delFlag\":\"0\",\"params\":{},\"roleSort\":\"2\",\"deptCheckStrictly\":true,\"createTime\":1657703094000,\"updateBy\":\"admin\",\"menuCheckStrictly\":false,\"roleKey\":\"common\",\"roleName\":\"普通角色\",\"menuIds\":[3047,3037,3038,3039,3040,3041,3042,3043,3035,3036,3044,3045,3065,3067,3068,3069,3070,3046,3058,3061,3062,3055,3049,3050,3051,3052,3053,3054],\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-01-11 14:50:51');
+INSERT INTO `sys_oper_log` VALUES (294, '角色管理', 2, 'com.wj.web.controller.system.SysRoleController.edit()', 'PUT', 1, 'admin', NULL, '/system/role', '127.0.0.1', '内网IP', '{\"flag\":false,\"roleId\":2,\"admin\":false,\"remark\":\"普通角色\",\"dataScope\":\"2\",\"delFlag\":\"0\",\"params\":{},\"roleSort\":\"2\",\"deptCheckStrictly\":true,\"createTime\":1657703094000,\"updateBy\":\"admin\",\"menuCheckStrictly\":false,\"roleKey\":\"common\",\"roleName\":\"普通角色\",\"menuIds\":[3047,3037,3038,3039,3040,3041,3042,3043,3035,3036,3044,3045,3065,3067,3068,3069,3070,3046,3058,3061,3062,3055,3049,3050,3051,3052,3053,3054],\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-01-11 14:52:28');
+INSERT INTO `sys_oper_log` VALUES (295, '订单', 1, 'com.wj.crm.controller.CrmOrderController.add()', 'POST', 1, 'admin', NULL, '/crm/order', '127.0.0.1', '内网IP', '{\"owner\":\"admin\",\"amount\":1000000,\"orderNo\":\"xs2024004\",\"params\":{},\"createBy\":\"admin\",\"createTime\":1704956207993,\"customerId\":4,\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-01-11 14:56:48');
+INSERT INTO `sys_oper_log` VALUES (296, '角色管理', 2, 'com.wj.web.controller.system.SysRoleController.edit()', 'PUT', 1, 'admin', NULL, '/system/role', '127.0.0.1', '内网IP', '{\"flag\":false,\"roleId\":2,\"admin\":false,\"remark\":\"普通角色\",\"dataScope\":\"2\",\"delFlag\":\"0\",\"params\":{},\"roleSort\":\"2\",\"deptCheckStrictly\":true,\"createTime\":1657703094000,\"updateBy\":\"admin\",\"menuCheckStrictly\":false,\"roleKey\":\"common\",\"roleName\":\"普通角色\",\"menuIds\":[3047,3037,3038,3039,3040,3041,3042,3043,3035,3036,3044,3045,3065,3067,3068,3069,3070,3046,3058,3061,3062,3055,3049,3050,3051,3052,3053,3054],\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-01-11 14:58:35');
 
 -- ----------------------------
 -- Table structure for sys_post
@@ -4820,13 +5045,14 @@ CREATE TABLE `sys_role`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`role_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色信息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_role
 -- ----------------------------
 INSERT INTO `sys_role` VALUES (1, '超级管理员', 'admin', 1, '1', 1, 1, '0', '0', 'admin', '2022-07-13 17:04:54', '', NULL, '超级管理员');
-INSERT INTO `sys_role` VALUES (2, '普通角色', 'common', 2, '2', 1, 1, '0', '0', 'admin', '2022-07-13 17:04:54', 'admin', '2022-07-15 12:05:17', '普通角色');
+INSERT INTO `sys_role` VALUES (2, '普通角色', 'common', 2, '2', 0, 1, '0', '0', 'admin', '2022-07-13 17:04:54', 'admin', '2024-01-11 14:58:35', '普通角色');
+INSERT INTO `sys_role` VALUES (3, 'CRM订单审核', 'Approver', 0, '1', 0, 1, '0', '0', 'admin', '2024-01-11 11:37:28', 'admin', '2024-01-11 14:13:39', NULL);
 
 -- ----------------------------
 -- Table structure for sys_role_dept
@@ -4858,95 +5084,68 @@ CREATE TABLE `sys_role_menu`  (
 -- ----------------------------
 -- Records of sys_role_menu
 -- ----------------------------
-INSERT INTO `sys_role_menu` VALUES (2, 1);
-INSERT INTO `sys_role_menu` VALUES (2, 2);
-INSERT INTO `sys_role_menu` VALUES (2, 3);
-INSERT INTO `sys_role_menu` VALUES (2, 100);
-INSERT INTO `sys_role_menu` VALUES (2, 101);
-INSERT INTO `sys_role_menu` VALUES (2, 102);
-INSERT INTO `sys_role_menu` VALUES (2, 103);
-INSERT INTO `sys_role_menu` VALUES (2, 104);
-INSERT INTO `sys_role_menu` VALUES (2, 105);
-INSERT INTO `sys_role_menu` VALUES (2, 106);
-INSERT INTO `sys_role_menu` VALUES (2, 107);
-INSERT INTO `sys_role_menu` VALUES (2, 108);
-INSERT INTO `sys_role_menu` VALUES (2, 109);
-INSERT INTO `sys_role_menu` VALUES (2, 110);
-INSERT INTO `sys_role_menu` VALUES (2, 111);
-INSERT INTO `sys_role_menu` VALUES (2, 112);
-INSERT INTO `sys_role_menu` VALUES (2, 113);
-INSERT INTO `sys_role_menu` VALUES (2, 114);
-INSERT INTO `sys_role_menu` VALUES (2, 115);
-INSERT INTO `sys_role_menu` VALUES (2, 116);
-INSERT INTO `sys_role_menu` VALUES (2, 500);
-INSERT INTO `sys_role_menu` VALUES (2, 501);
-INSERT INTO `sys_role_menu` VALUES (2, 1001);
-INSERT INTO `sys_role_menu` VALUES (2, 1002);
-INSERT INTO `sys_role_menu` VALUES (2, 1003);
-INSERT INTO `sys_role_menu` VALUES (2, 1004);
-INSERT INTO `sys_role_menu` VALUES (2, 1005);
-INSERT INTO `sys_role_menu` VALUES (2, 1006);
-INSERT INTO `sys_role_menu` VALUES (2, 1007);
-INSERT INTO `sys_role_menu` VALUES (2, 1008);
-INSERT INTO `sys_role_menu` VALUES (2, 1009);
-INSERT INTO `sys_role_menu` VALUES (2, 1010);
-INSERT INTO `sys_role_menu` VALUES (2, 1011);
-INSERT INTO `sys_role_menu` VALUES (2, 1012);
-INSERT INTO `sys_role_menu` VALUES (2, 1013);
-INSERT INTO `sys_role_menu` VALUES (2, 1014);
-INSERT INTO `sys_role_menu` VALUES (2, 1015);
-INSERT INTO `sys_role_menu` VALUES (2, 1016);
-INSERT INTO `sys_role_menu` VALUES (2, 1017);
-INSERT INTO `sys_role_menu` VALUES (2, 1018);
-INSERT INTO `sys_role_menu` VALUES (2, 1019);
-INSERT INTO `sys_role_menu` VALUES (2, 1020);
-INSERT INTO `sys_role_menu` VALUES (2, 1021);
-INSERT INTO `sys_role_menu` VALUES (2, 1022);
-INSERT INTO `sys_role_menu` VALUES (2, 1023);
-INSERT INTO `sys_role_menu` VALUES (2, 1024);
-INSERT INTO `sys_role_menu` VALUES (2, 1025);
-INSERT INTO `sys_role_menu` VALUES (2, 1026);
-INSERT INTO `sys_role_menu` VALUES (2, 1027);
-INSERT INTO `sys_role_menu` VALUES (2, 1028);
-INSERT INTO `sys_role_menu` VALUES (2, 1029);
-INSERT INTO `sys_role_menu` VALUES (2, 1030);
-INSERT INTO `sys_role_menu` VALUES (2, 1031);
-INSERT INTO `sys_role_menu` VALUES (2, 1032);
-INSERT INTO `sys_role_menu` VALUES (2, 1033);
-INSERT INTO `sys_role_menu` VALUES (2, 1034);
-INSERT INTO `sys_role_menu` VALUES (2, 1035);
-INSERT INTO `sys_role_menu` VALUES (2, 1036);
-INSERT INTO `sys_role_menu` VALUES (2, 1037);
-INSERT INTO `sys_role_menu` VALUES (2, 1038);
-INSERT INTO `sys_role_menu` VALUES (2, 1039);
-INSERT INTO `sys_role_menu` VALUES (2, 1040);
-INSERT INTO `sys_role_menu` VALUES (2, 1041);
-INSERT INTO `sys_role_menu` VALUES (2, 1042);
-INSERT INTO `sys_role_menu` VALUES (2, 1043);
-INSERT INTO `sys_role_menu` VALUES (2, 1044);
-INSERT INTO `sys_role_menu` VALUES (2, 1045);
-INSERT INTO `sys_role_menu` VALUES (2, 1046);
-INSERT INTO `sys_role_menu` VALUES (2, 1047);
-INSERT INTO `sys_role_menu` VALUES (2, 1048);
-INSERT INTO `sys_role_menu` VALUES (2, 1049);
-INSERT INTO `sys_role_menu` VALUES (2, 1050);
-INSERT INTO `sys_role_menu` VALUES (2, 1051);
-INSERT INTO `sys_role_menu` VALUES (2, 1052);
-INSERT INTO `sys_role_menu` VALUES (2, 1053);
-INSERT INTO `sys_role_menu` VALUES (2, 1054);
-INSERT INTO `sys_role_menu` VALUES (2, 1055);
-INSERT INTO `sys_role_menu` VALUES (2, 1056);
-INSERT INTO `sys_role_menu` VALUES (2, 1057);
-INSERT INTO `sys_role_menu` VALUES (2, 1058);
-INSERT INTO `sys_role_menu` VALUES (2, 1059);
-INSERT INTO `sys_role_menu` VALUES (2, 1060);
-INSERT INTO `sys_role_menu` VALUES (2, 3023);
-INSERT INTO `sys_role_menu` VALUES (2, 3024);
-INSERT INTO `sys_role_menu` VALUES (2, 3025);
-INSERT INTO `sys_role_menu` VALUES (2, 3026);
-INSERT INTO `sys_role_menu` VALUES (2, 3031);
-INSERT INTO `sys_role_menu` VALUES (2, 3032);
-INSERT INTO `sys_role_menu` VALUES (2, 3033);
+INSERT INTO `sys_role_menu` VALUES (2, 3035);
+INSERT INTO `sys_role_menu` VALUES (2, 3036);
+INSERT INTO `sys_role_menu` VALUES (2, 3037);
+INSERT INTO `sys_role_menu` VALUES (2, 3038);
+INSERT INTO `sys_role_menu` VALUES (2, 3039);
+INSERT INTO `sys_role_menu` VALUES (2, 3040);
+INSERT INTO `sys_role_menu` VALUES (2, 3041);
+INSERT INTO `sys_role_menu` VALUES (2, 3042);
+INSERT INTO `sys_role_menu` VALUES (2, 3043);
+INSERT INTO `sys_role_menu` VALUES (2, 3044);
+INSERT INTO `sys_role_menu` VALUES (2, 3045);
+INSERT INTO `sys_role_menu` VALUES (2, 3046);
+INSERT INTO `sys_role_menu` VALUES (2, 3047);
+INSERT INTO `sys_role_menu` VALUES (2, 3049);
+INSERT INTO `sys_role_menu` VALUES (2, 3050);
+INSERT INTO `sys_role_menu` VALUES (2, 3051);
+INSERT INTO `sys_role_menu` VALUES (2, 3052);
+INSERT INTO `sys_role_menu` VALUES (2, 3053);
+INSERT INTO `sys_role_menu` VALUES (2, 3054);
+INSERT INTO `sys_role_menu` VALUES (2, 3055);
+INSERT INTO `sys_role_menu` VALUES (2, 3058);
+INSERT INTO `sys_role_menu` VALUES (2, 3061);
+INSERT INTO `sys_role_menu` VALUES (2, 3062);
+INSERT INTO `sys_role_menu` VALUES (2, 3065);
+INSERT INTO `sys_role_menu` VALUES (2, 3067);
+INSERT INTO `sys_role_menu` VALUES (2, 3068);
+INSERT INTO `sys_role_menu` VALUES (2, 3069);
+INSERT INTO `sys_role_menu` VALUES (2, 3070);
+INSERT INTO `sys_role_menu` VALUES (3, 3035);
+INSERT INTO `sys_role_menu` VALUES (3, 3036);
+INSERT INTO `sys_role_menu` VALUES (3, 3037);
+INSERT INTO `sys_role_menu` VALUES (3, 3038);
+INSERT INTO `sys_role_menu` VALUES (3, 3039);
+INSERT INTO `sys_role_menu` VALUES (3, 3040);
+INSERT INTO `sys_role_menu` VALUES (3, 3041);
+INSERT INTO `sys_role_menu` VALUES (3, 3042);
+INSERT INTO `sys_role_menu` VALUES (3, 3043);
+INSERT INTO `sys_role_menu` VALUES (3, 3044);
+INSERT INTO `sys_role_menu` VALUES (3, 3045);
+INSERT INTO `sys_role_menu` VALUES (3, 3046);
+INSERT INTO `sys_role_menu` VALUES (3, 3047);
+INSERT INTO `sys_role_menu` VALUES (3, 3049);
+INSERT INTO `sys_role_menu` VALUES (3, 3050);
+INSERT INTO `sys_role_menu` VALUES (3, 3051);
+INSERT INTO `sys_role_menu` VALUES (3, 3052);
+INSERT INTO `sys_role_menu` VALUES (3, 3053);
+INSERT INTO `sys_role_menu` VALUES (3, 3054);
+INSERT INTO `sys_role_menu` VALUES (3, 3055);
+INSERT INTO `sys_role_menu` VALUES (3, 3056);
+INSERT INTO `sys_role_menu` VALUES (3, 3057);
+INSERT INTO `sys_role_menu` VALUES (3, 3058);
+INSERT INTO `sys_role_menu` VALUES (3, 3059);
+INSERT INTO `sys_role_menu` VALUES (3, 3060);
+INSERT INTO `sys_role_menu` VALUES (3, 3061);
+INSERT INTO `sys_role_menu` VALUES (3, 3062);
+INSERT INTO `sys_role_menu` VALUES (3, 3063);
+INSERT INTO `sys_role_menu` VALUES (3, 3065);
+INSERT INTO `sys_role_menu` VALUES (3, 3066);
+INSERT INTO `sys_role_menu` VALUES (3, 3067);
+INSERT INTO `sys_role_menu` VALUES (3, 3068);
+INSERT INTO `sys_role_menu` VALUES (3, 3069);
+INSERT INTO `sys_role_menu` VALUES (3, 3070);
 
 -- ----------------------------
 -- Table structure for sys_user
@@ -4973,13 +5172,15 @@ CREATE TABLE `sys_user`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`user_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户信息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES (1, 103, 'admin', '若依', '00', 'ry@163.com', '15888888888', '1', '', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', '2024-01-10 15:31:56', 'admin', '2022-07-13 17:04:54', '', '2024-01-10 15:31:56', '管理员');
+INSERT INTO `sys_user` VALUES (1, 103, 'admin', '若依', '00', 'ry@163.com', '15888888888', '1', '', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', '2024-01-11 16:19:55', 'admin', '2022-07-13 17:04:54', '', '2024-01-11 16:19:54', '管理员');
 INSERT INTO `sys_user` VALUES (2, 105, 'ry', '若依', '00', 'ry@qq.com', '15666666666', '1', '', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', '2022-07-15 14:31:33', 'admin', '2022-07-13 17:04:54', '', '2022-07-15 14:31:33', '测试员');
+INSERT INTO `sys_user` VALUES (3, 104, 'test', 'test', '00', '', '', '0', '', '$2a$10$qkyhmOosl1lwZvvVU65Foe1jeFIwcGp/3.e08GP6XUcG.wjS5Pajq', '0', '0', '127.0.0.1', '2024-01-11 14:57:48', 'admin', '2024-01-11 11:38:34', '', '2024-01-11 14:57:47', NULL);
+INSERT INTO `sys_user` VALUES (4, 104, 'test1', 'test1', '00', '', '', '0', '', '$2a$10$iju1LcpEQuiJQJXCjGrwxOlV/CrKf.9dq8MTtQ0933D55.l8yo8/.', '0', '0', '127.0.0.1', '2024-01-11 14:10:46', 'admin', '2024-01-11 11:39:23', '', '2024-01-11 14:10:46', NULL);
 
 -- ----------------------------
 -- Table structure for sys_user_post
@@ -4996,6 +5197,8 @@ CREATE TABLE `sys_user_post`  (
 -- ----------------------------
 INSERT INTO `sys_user_post` VALUES (1, 1);
 INSERT INTO `sys_user_post` VALUES (2, 2);
+INSERT INTO `sys_user_post` VALUES (3, 2);
+INSERT INTO `sys_user_post` VALUES (4, 4);
 
 -- ----------------------------
 -- Table structure for sys_user_role
@@ -5012,6 +5215,9 @@ CREATE TABLE `sys_user_role`  (
 -- ----------------------------
 INSERT INTO `sys_user_role` VALUES (1, 1);
 INSERT INTO `sys_user_role` VALUES (2, 2);
+INSERT INTO `sys_user_role` VALUES (3, 2);
+INSERT INTO `sys_user_role` VALUES (3, 3);
+INSERT INTO `sys_user_role` VALUES (4, 2);
 
 -- ----------------------------
 -- Table structure for t_survey_answer

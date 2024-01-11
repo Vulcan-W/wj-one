@@ -9,7 +9,7 @@ export default {
   name: 'WJGit',
   data() {
     return {
-      url: 'https://gitee.com/y_project/WJ-Vue'
+      url: 'https://gitee.com/vulcanw/wj-mes'
     }
   },
   methods: {

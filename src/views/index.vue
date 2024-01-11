@@ -55,7 +55,7 @@
             size="mini"
             icon="el-icon-cloudy"
             plain
-            @click="goTarget('https://gitee.com/y_project/WJ-Vue')"
+            @click="goTarget('https://gitee.com/vulcanw/wj-mes')"
             >访问码云</el-button
           >
           <el-button

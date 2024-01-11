@@ -29,19 +29,19 @@
 
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
-        <el-button type="primary" plain icon="el-icon-plus" size="mini" @click="handleAdd" v-hasPermi="['mapper:customer:add']">新增</el-button>
+        <el-button type="primary" plain icon="el-icon-plus" size="mini" @click="handleAdd" v-hasPermi="['crm:customer:add']">新增</el-button>
       </el-col>
       <el-col :span="1.5">
-        <el-button type="warning" plain icon="el-icon-refresh-right" size="mini" :disabled="!selected" @click="handleToPool" v-hasPermi="['mapper:customer:toPool']">移入公海</el-button>
+        <el-button type="warning" plain icon="el-icon-refresh-right" size="mini" :disabled="!selected" @click="handleToPool" v-hasPermi="['crm:customer:toPool']">移入公海</el-button>
       </el-col>
       <el-col :span="1.5">
-        <el-button type="warning" plain icon="el-icon-s-promotion" size="mini" :disabled="!selected" @click="handleTransfer" v-hasPermi="['mapper:customer:transfer']">转移客户</el-button>
+        <el-button type="warning" plain icon="el-icon-s-promotion" size="mini" :disabled="!selected" @click="handleTransfer" v-hasPermi="['crm:customer:transfer']">转移客户</el-button>
       </el-col>
       <el-col :span="1.5">
-        <el-button type="danger" plain icon="el-icon-delete" size="mini" @click="handleDelete" v-hasPermi="['mapper:customer:remove']">删除</el-button>
+        <el-button type="danger" plain icon="el-icon-delete" size="mini" @click="handleDelete" v-hasPermi="['crm:customer:remove']">删除</el-button>
       </el-col>
       <el-col :span="1.5">
-        <el-button type="info" plain icon="el-icon-download" size="mini" @click="handleExport" v-hasPermi="['mapper:customer:export']">导出</el-button>
+        <el-button type="info" plain icon="el-icon-download" size="mini" @click="handleExport" v-hasPermi="['crm:customer:export']">导出</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
@@ -68,10 +68,10 @@
       </el-table-column>
       <el-table-column fixed="right" label="操作" align="left" class="small-padding" width="250px">
         <template slot-scope="scope">
-          <el-button size="mini" type="text" icon="el-icon-edit-outline" @click="handleComment(scope.row)" v-hasPermi="['mapper:customer:comment']">写跟进</el-button>
-          <el-button size="mini" type="text" icon="el-icon-s-promotion" @click="handleTransfer(scope.row)" v-hasPermi="['mapper:customer:transfer']">转移</el-button>
-          <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)" v-hasPermi="['mapper:customer:edit']">修改</el-button>
-          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)" v-hasPermi="['mapper:customer:remove']">删除</el-button>
+          <el-button size="mini" type="text" icon="el-icon-edit-outline" @click="handleComment(scope.row)" v-hasPermi="['crm:customer:comment']">写跟进</el-button>
+          <el-button size="mini" type="text" icon="el-icon-s-promotion" @click="handleTransfer(scope.row)" v-hasPermi="['crm:customer:transfer']">转移</el-button>
+          <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)" v-hasPermi="['crm:customer:edit']">修改</el-button>
+          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)" v-hasPermi="['crm:customer:remove']">删除</el-button>
         </template>
       </el-table-column>
     </el-table>

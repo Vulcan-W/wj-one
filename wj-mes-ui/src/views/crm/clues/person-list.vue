@@ -22,10 +22,10 @@
 
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
-        <el-button type="primary" plain icon="el-icon-plus" size="mini" @click="handleAdd" v-hasPermi="['mapper:pool:add']">添加线索</el-button>
+        <el-button type="primary" plain icon="el-icon-plus" size="mini" @click="handleAdd" v-hasPermi="['crm:pool:add']">添加线索</el-button>
       </el-col>
       <el-col :span="1.5">
-        <el-button type="warning" plain icon="el-icon-s-promotion" size="mini" :disabled="!selected" @click="handleTransfer" v-hasPermi="['mapper:clues:transfer']">转移线索</el-button>
+        <el-button type="warning" plain icon="el-icon-s-promotion" size="mini" :disabled="!selected" @click="handleTransfer" v-hasPermi="['crm:clues:transfer']">转移线索</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
@@ -57,10 +57,10 @@
       </el-table-column>
       <el-table-column fixed="right" label="操作" align="left" class="small-padding" width="261px">
         <template slot-scope="scope">
-          <el-button size="mini" type="text" icon="el-icon-s-promotion" @click="handleTransfer(scope.row)" v-hasPermi="['mapper:clues:transfer']">转移</el-button>
-          <el-button size="mini" type="text" icon="el-icon-refresh-left" @click="handleToCustomer(scope.row)" v-hasPermi="['mapper:clues:tocustomer']">转成客户</el-button>
-          <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)" v-hasPermi="['mapper:clues:edit']">修改</el-button>
-          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)" v-hasPermi="['mapper:clues:remove']">删除</el-button>
+          <el-button size="mini" type="text" icon="el-icon-s-promotion" @click="handleTransfer(scope.row)" v-hasPermi="['crm:clues:transfer']">转移</el-button>
+          <el-button size="mini" type="text" icon="el-icon-refresh-left" @click="handleToCustomer(scope.row)" v-hasPermi="['crm:clues:tocustomer']">转成客户</el-button>
+          <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)" v-hasPermi="['crm:clues:edit']">修改</el-button>
+          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)" v-hasPermi="['crm:clues:remove']">删除</el-button>
         </template>
       </el-table-column>
     </el-table>

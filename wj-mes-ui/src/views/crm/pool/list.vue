@@ -45,7 +45,7 @@
       <el-table-column label="前负责人" align="center" prop="preManager" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <el-button size="mini" type="text" icon="el-icon-finished" @click="handleReceive(scope.row)" v-hasPermi="['mapper:pool:receive']">领取</el-button>
+          <el-button size="mini" type="text" icon="el-icon-finished" @click="handleReceive(scope.row)" v-hasPermi="['crm:pool:receive']">领取</el-button>
         </template>
       </el-table-column>
     </el-table>

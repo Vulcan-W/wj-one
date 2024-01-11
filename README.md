@@ -40,9 +40,6 @@ ktg-MES(心笑峰) + Ruoyi-flowable(tony) + RuoyiCRM(DevJD)
 
 触控屏端请参考Uniapp相关文档
 
-### Buy me a coffee
-
-
 
 ### 功能简介
 

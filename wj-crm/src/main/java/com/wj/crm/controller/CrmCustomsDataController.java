@@ -49,7 +49,7 @@ public class CrmCustomsDataController extends BaseController
     /**
      * 导出海关数据列表
      */
-    @PreAuthorize("@ss.hasPermi('customs:customsData:export')")
+    @PreAuthorize("@ss.hasPermi('crm:customs:customsData:export')")
     @Log(title = "海关数据", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, CrmCustomsData crmCustomsData)
@@ -62,7 +62,7 @@ public class CrmCustomsDataController extends BaseController
     /**
      * 获取海关数据详细信息
      */
-    @PreAuthorize("@ss.hasPermi('customs:customsData:query')")
+    @PreAuthorize("@ss.hasPermi('crm:customs:customsData:query')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
@@ -72,7 +72,7 @@ public class CrmCustomsDataController extends BaseController
     /**
      * 新增海关数据
      */
-    @PreAuthorize("@ss.hasPermi('customs:customsData:add')")
+    @PreAuthorize("@ss.hasPermi('crm:customs:customsData:add')")
     @Log(title = "海关数据", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody CrmCustomsData crmCustomsData)
@@ -83,7 +83,7 @@ public class CrmCustomsDataController extends BaseController
     /**
      * 修改海关数据
      */
-    @PreAuthorize("@ss.hasPermi('customs:customsData:edit')")
+    @PreAuthorize("@ss.hasPermi('crm:customs:customsData:edit')")
     @Log(title = "海关数据", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody CrmCustomsData crmCustomsData)
@@ -94,7 +94,7 @@ public class CrmCustomsDataController extends BaseController
     /**
      * 删除海关数据
      */
-    @PreAuthorize("@ss.hasPermi('customs:customsData:remove')")
+    @PreAuthorize("@ss.hasPermi('crm:customs:customsData:remove')")
     @Log(title = "海关数据", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)
