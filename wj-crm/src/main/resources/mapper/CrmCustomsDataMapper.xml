@@ -28,7 +28,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectCrmCustomsDataList" parameterType="CrmCustomsData" resultMap="CrmCustomsDataResult">
         <include refid="selectCrmCustomsDataVo"/>
         <where>  
-            <if test="productCode != null "> and product_code = #{productCode}</if>
+            <!--<if test="productCode != null "> and product_code = #{productCode}</if>-->
+            <if test="productCode != null "> and product_code like concat('%', #{productCode}, '%')</if>
             <if test="productName != null  and productName != ''"> and product_name like concat('%', #{productName}, '%')</if>
             <if test="tradePartnerCode != null "> and trade_partner_code = #{tradePartnerCode}</if>
             <if test="tradePartnerName != null  and tradePartnerName != ''"> and trade_partner_name like concat('%', #{tradePartnerName}, '%')</if>
