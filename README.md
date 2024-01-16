@@ -26,7 +26,7 @@ ruoyi-flowable整合成功。
 
 虽然做得不多，但总能给大家减少一些工作量，提供一个思路。
 
-欢迎交流沟通：群：721658695
+欢迎交流沟通分享，群号：721658695
 
 支持作者请Star
 
@@ -39,6 +39,9 @@ ktg-MES(心笑峰) + Ruoyi-flowable(tony) + RuoyiCRM(DevJD)
 当前版本基于RuoYi前后端分离版本开发。详情请参照：https://gitee.com/y_project/RuoYi-Vue
 
 触控屏端请参考Uniapp相关文档
+
+### 征集需求，提出建议
+请各位多提Issuse，或者加群，提出自己的需求和建议，我会选择大众化的需求，优先实现。
 
 ### Buy me a coffee, if u want...
 <img src=https://gitee.com/vulcanw/wj-mes/raw/master/wj-mes-ui/src/assets/images/coffee/%E5%BE%AE%E4%BF%A1%E6%94%B6%E6%AC%BE%E7%A0%81.png width=30% />
