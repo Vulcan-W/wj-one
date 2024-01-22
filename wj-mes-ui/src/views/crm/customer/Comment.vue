@@ -1,8 +1,8 @@
 <template>
 
   <el-dialog :close-on-click-modal="false" :title="title" :visible.sync="openComment" :loading="loading" @close="handleClose" @open="handleOpen" width="680px" append-to-body>
-    <el-timeline :reverse="true">
-      <el-timeline-item v-for="(comment, index) in commentList" :key="index" :timestamp="comment.createTime">
+    <el-timeline :reverse="true" >
+      <el-timeline-item v-for="(comment, index) in commentList" :key="index" :timestamp="comment.createTime" color="#33C481" icon="el-icon-check">
         <strong>{{comment.createBy}}：</strong>{{comment.content}}
       </el-timeline-item>
     </el-timeline>

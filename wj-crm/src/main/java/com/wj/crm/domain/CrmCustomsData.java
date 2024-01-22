@@ -4,6 +4,9 @@ import com.wj.common.annotation.Excel;
 import com.wj.common.core.domain.BaseEntity;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import org.exolab.castor.types.DateTime;
+
+import java.time.Year;
 
 /**
  * 海关数据对象 crm_trade_data
@@ -71,6 +74,27 @@ public class CrmCustomsData extends BaseEntity
     /** 金额/人民币 */
     @Excel(name = "金额/人民币")
     private Long tradeAmount;
+
+//    @Excel(name = "创建人")
+//    private String createBy;
+//
+//    @Excel(name = "创建时间")
+//    private DateTime createTime;
+//
+//    @Excel(name = "创建人")
+//    private String updateBy;
+//
+//    @Excel(name = "创建时间")
+//    private DateTime updateTime;
+//
+//    @Excel(name = "标记")
+//    private Integer remark;
+
+    @Excel(name = "进出口")
+    private String impExp;
+
+    @Excel(name = "年份")
+    private Integer tradeYear;
 
     public void setId(Long id) 
     {
@@ -194,10 +218,13 @@ public class CrmCustomsData extends BaseEntity
         this.tradeAmount = tradeAmount;
     }
 
-    public Long getTradeAmount() 
-    {
-        return tradeAmount;
-    }
+    public Long getTradeAmount() {return tradeAmount;}
+
+    public String getImpExp() {return impExp;}
+    public void setImpExp(String impExp){this.impExp = impExp;}
+
+    public Integer getTradeYear() {return tradeYear;}
+    public void setTradeYear(Integer tradeYear) {this.tradeYear = tradeYear;}
 
     @Override
     public String toString() {
@@ -216,6 +243,15 @@ public class CrmCustomsData extends BaseEntity
             .append("secondQuantity", getSecondQuantity())
             .append("secondMeasurementUnit", getSecondMeasurementUnit())
             .append("tradeAmount", getTradeAmount())
+
+            .append("createBy", getCreateBy())
+            .append("createTime", getCreateTime())
+            .append("updateBy", getUpdateBy())
+            .append("updateTime", getUpdateTime())
+            .append("remark", getRemark())
+            .append("impExp", getImpExp())
+            .append("tradeYear", getTradeYear())
             .toString();
     }
+
 }

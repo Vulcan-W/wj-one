@@ -111,6 +111,22 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
+      <el-form-item label="进出口" prop="impExp" label-width="96px">
+        <el-input
+            v-model="queryParams.impExp"
+            placeholder="请选择进出口"
+            clearable
+            @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="年份" prop="tradeYear" label-width="96px">
+        <el-input
+            v-model="queryParams.tradeYear"
+            placeholder="请输入年份"
+            clearable
+            @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
 <!--      <el-form-item label="金额/元" prop="tradeAmount">-->
 <!--        <el-input-->
 <!--          v-model="queryParams.tradeAmount"-->
@@ -173,7 +189,7 @@
     </el-row>
 
     <!-- 表格 -->
-    <el-table v-loading="loading" :data="customsDataList" show-summary @selection-change="handleSelectionChange">
+    <el-table v-loading="loading" :data="customsDataList" show-summary :summary-method="getSummaries" @selection-change="handleSelectionChange">
       <el-table-column sortable type="selection" width="55" align="center" />
       <el-table-column sortable label="ID" align="center" prop="id" />
       <el-table-column sortable label="商品编码" align="center" prop="productCode" />
@@ -188,6 +204,8 @@
       <el-table-column sortable label="第一计量单位" align="center" prop="firstMeasurementUnit" />
       <el-table-column sortable label="第二数量" align="center" prop="secondQuantity" />
       <el-table-column sortable label="第二计量单位" align="center" prop="secondMeasurementUnit" />
+      <el-table-column sortable label="进出口" align="center" prop="impExp" />
+      <el-table-column sortable label="年份" align="center" prop="tradeYear" />
       <el-table-column sortable label="金额/元" align="center" prop="tradeAmount" />
       <el-table-column sortable label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
@@ -256,6 +274,12 @@
         <el-form-item label="第二计量单位" prop="secondMeasurementUnit">
           <el-input v-model="form.secondMeasurementUnit" placeholder="请输入第二计量单位" />
         </el-form-item>
+        <el-form-item label="进出口" prop="impExp">
+          <el-input v-model="form.tradeAmount" placeholder="请输入进出口" />
+        </el-form-item>
+        <el-form-item label="年份" prop="tradeYear">
+          <el-input v-model="form.tradeAmount" placeholder="请输入年份" />
+        </el-form-item>
         <el-form-item label="金额/元" prop="tradeAmount">
           <el-input v-model="form.tradeAmount" placeholder="请输入金额/元" />
         </el-form-item>
@@ -312,7 +336,14 @@ export default {
         firstMeasurementUnit: null,
         secondQuantity: null,
         secondMeasurementUnit: null,
-        tradeAmount: null
+        tradeAmount: null,
+        impExp: null,
+        tradeYear: null,
+        createBy: null,
+        createTime: null,
+        updateBy: null,
+        updateTime: null,
+        remark: null
       },
       // 表单参数
       form: {},
@@ -426,6 +457,34 @@ export default {
       this.download('crm/customs/customsData/export', {
         ...this.queryParams
       }, `customsData_${new Date().getTime()}.xlsx`)
+    },
+
+    // 对列进行合计，主要是为了指定列合计，如果不指定，数值列都合计，直接在table标签中加 summary就行了。---Vulcan.W
+    getSummaries(param) {
+      const { columns, data } = param;
+      const sums = [];
+      const tradeAmountIndex = columns.findIndex(column => column.property === 'tradeAmount');
+      sums[tradeAmountIndex - 1] = '总计：';
+      columns.forEach((column, index) => {
+        const values = data.map(item => Number(item[column.property]));
+        //只对amount这一列进行合计
+        if (column.property === 'tradeAmount') {
+          if (!values.every(value => isNaN(value))) {
+            sums[index] = values.reduce((prev, curr) => {
+              const value = Number(curr);
+              if (!isNaN(value)) {
+                return prev + curr;
+              } else {
+                return prev;
+              }
+            }, 0);
+            sums[index] += ' 元';
+          } else {
+            sums[index] = '---';
+          }
+        }
+      })
+    return sums;
     }
   }
 };

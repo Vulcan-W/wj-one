@@ -86,9 +86,7 @@
 <script>
 import { listOrder, getOrder, delOrder, addOrder, updateOrder, approveOrder } from "@/api/crm/order";
 import { listPersonCustomers } from "@/api/crm/customer";
-import {
-  listOwner
-} from '@/api/crm/owner'
+import { listOwner } from '@/api/crm/owner'
 
 export default {
   name: 'Order',
