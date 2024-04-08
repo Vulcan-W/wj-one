@@ -35,7 +35,7 @@ export default {
   },
   data() {
     return {
-      title: 'WJ-ONE',
+      title: '南阳二机CRM系统',
       logo: logoImg
     }
   }

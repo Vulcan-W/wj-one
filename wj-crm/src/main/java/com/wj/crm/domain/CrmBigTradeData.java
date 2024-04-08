@@ -1,6 +1,9 @@
 package com.wj.crm.domain;
 
 import com.wj.common.annotation.Excel;
+import com.wj.common.core.domain.BaseEntity;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
  * 某通数据对象 crm_bigtradedata
@@ -39,12 +42,12 @@ public class CrmBigTradeData extends BaseEntity
     @Excel(name = "进口商所在国家")
     private String importerCountry;
 
-    /** 出口商所在国家 */
-    @Excel(name = "出口商所在国家")
-    private String exporter;
-
     /** 出口商 */
     @Excel(name = "出口商")
+    private String exporter;
+
+    /** 出口商所在国家 */
+    @Excel(name = "出口商所在国家")
     private String exporterCountry;
 
     /** 重量单位 */
@@ -85,8 +88,7 @@ public class CrmBigTradeData extends BaseEntity
 
     /** 本国币种金额 */
     @Excel(name = "本国币种金额")
-    private Long amount
-Local;
+    private Long amountLocal;
 
     /** 合同金额 */
     @Excel(name = "合同金额")
@@ -150,7 +152,7 @@ Local;
 
     /** 数据库 */
     @Excel(name = "数据库")
-    private String database;
+    private String databaseName;
 
     /** 出口商本地语言 */
     @Excel(name = "出口商本地语言")
@@ -330,20 +332,14 @@ Local;
     {
         return priceUnitQuantity;
     }
-    public void setAmount
-Local(Long amount
-Local) 
+    public void setAmountLocal(Long amountLocal)
     {
-        this.amount
-Local = amount
-Local;
+        this.amountLocal = amountLocal;
     }
 
-    public Long getAmount
-Local() 
+    public Long getAmountLocal()
     {
-        return amount
-Local;
+        return amountLocal;
     }
     public void setAmountContract(Long amountContract) 
     {
@@ -480,14 +476,14 @@ Local;
     {
         return importerLocalLang;
     }
-    public void setDatabase(String database) 
+    public void setDatabaseName(String databaseName)
     {
-        this.database = database;
+        this.databaseName = databaseName;
     }
 
-    public String getDatabase() 
+    public String getDatabaseName()
     {
-        return database;
+        return databaseName;
     }
     public void setExporterLocalLang(String exporterLocalLang) 
     {
@@ -528,7 +524,7 @@ Local;
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
+        return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
             .append("customsCode", getCustomsCode())
             .append("customsCodeDes", getCustomsCodeDes())
@@ -547,9 +543,7 @@ Local;
             .append("amount", getAmount())
             .append("priceUnitWeight", getPriceUnitWeight())
             .append("priceUnitQuantity", getPriceUnitQuantity())
-            .append("amount
-Local", getAmount
-Local())
+            .append("amountLocal", getAmountLocal())
             .append("amountContract", getAmountContract())
             .append("currency", getCurrency())
             .append("dealMethod", getDealMethod())
@@ -565,7 +559,7 @@ Local())
             .append("productNameDetailLocal", getProductNameDetailLocal())
             .append("productModelLocal", getProductModelLocal())
             .append("importerLocalLang", getImporterLocalLang())
-            .append("database", getDatabase())
+            .append("databaseName", getDatabaseName())
             .append("exporterLocalLang", getExporterLocalLang())
             .append("customsClearanceNo", getCustomsClearanceNo())
             .append("quantityDeclared", getQuantityDeclared())

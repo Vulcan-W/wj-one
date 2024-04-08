@@ -28,7 +28,7 @@ import com.wj.common.core.page.TableDataInfo;
  * @date 2024-01-25
  */
 @RestController
-@RequestMapping("/customs/bigTradeData")
+@RequestMapping("crm/customs/bigTradeData")
 public class CrmBigTradeDataController extends BaseController
 {
     @Autowired
@@ -37,7 +37,7 @@ public class CrmBigTradeDataController extends BaseController
     /**
      * 查询某通数据列表
      */
-    @PreAuthorize("@ss.hasPermi('customs:bigTradeData:list')")
+    @PreAuthorize("@ss.hasPermi('crm:customs:bigTradeData:list')")
     @GetMapping("/list")
     public TableDataInfo list(CrmBigTradeData crmBigTradeData)
     {
@@ -49,7 +49,7 @@ public class CrmBigTradeDataController extends BaseController
     /**
      * 导出某通数据列表
      */
-    @PreAuthorize("@ss.hasPermi('customs:bigTradeData:export')")
+    @PreAuthorize("@ss.hasPermi('crm:customs:bigTradeData:export')")
     @Log(title = "某通数据", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, CrmBigTradeData crmBigTradeData)
@@ -62,7 +62,7 @@ public class CrmBigTradeDataController extends BaseController
     /**
      * 获取某通数据详细信息
      */
-    @PreAuthorize("@ss.hasPermi('customs:bigTradeData:query')")
+    @PreAuthorize("@ss.hasPermi('crm:customs:bigTradeData:query')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
@@ -72,7 +72,7 @@ public class CrmBigTradeDataController extends BaseController
     /**
      * 新增某通数据
      */
-    @PreAuthorize("@ss.hasPermi('customs:bigTradeData:add')")
+    @PreAuthorize("@ss.hasPermi('crm:customs:bigTradeData:add')")
     @Log(title = "某通数据", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody CrmBigTradeData crmBigTradeData)
@@ -83,7 +83,7 @@ public class CrmBigTradeDataController extends BaseController
     /**
      * 修改某通数据
      */
-    @PreAuthorize("@ss.hasPermi('customs:bigTradeData:edit')")
+    @PreAuthorize("@ss.hasPermi('crm:customs:bigTradeData:edit')")
     @Log(title = "某通数据", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody CrmBigTradeData crmBigTradeData)
@@ -94,7 +94,7 @@ public class CrmBigTradeDataController extends BaseController
     /**
      * 删除某通数据
      */
-    @PreAuthorize("@ss.hasPermi('customs:bigTradeData:remove')")
+    @PreAuthorize("@ss.hasPermi('crm:customs:bigTradeData:remove')")
     @Log(title = "某通数据", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)

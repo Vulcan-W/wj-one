@@ -1,4 +1,10 @@
 <style>
+.app-container {
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  background-color: #f0f2f5;
+}
 .hgbi {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -6,10 +12,10 @@
 .el-card {
   margin: 10px;
 }
-
 </style>
+
 <template>
-  <div class="hggwbi">
+  <div class="app-container">
     <div class="hgbi">
       <el-card shadow="hover" >
       <iframe id="hgsj" v-resize="changeMobsfIframe" frameborder="2" height="600px" src="http://localhost:50401/chart/show/c35da655518d0b069f88/" style="border:2px blue;" width="100%" >
@@ -36,7 +42,7 @@
       </el-card>
       <el-card shadow="hover">
         <el-empty description="连续3年增长，数据不足，敬请期待"></el-empty>
-        <iframe id="hgsj4" v-resize="changeMobsfIframe" height="100px" src="" style="border:2px blue;" width="100%" >
+        <iframe id="hgsj5" v-resize="changeMobsfIframe" height="100px" src="" style="border:2px blue;" width="100%" >
         </iframe>
       </el-card>
     </div>

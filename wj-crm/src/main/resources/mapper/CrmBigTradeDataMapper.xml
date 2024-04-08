@@ -23,9 +23,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="amount"    column="amount"    />
         <result property="priceUnitWeight"    column="price_unit_weight"    />
         <result property="priceUnitQuantity"    column="price_unit_quantity"    />
-        <result property="amount
-Local"    column="amount
-_local"    />
+        <result property="amountLocal"    column="amount_local"    />
         <result property="amountContract"    column="amount_contract"    />
         <result property="currency"    column="currency"    />
         <result property="dealMethod"    column="deal_method"    />
@@ -41,7 +39,7 @@ _local"    />
         <result property="productNameDetailLocal"    column="product_name_detail_local"    />
         <result property="productModelLocal"    column="product_model_local"    />
         <result property="importerLocalLang"    column="importer_local_lang"    />
-        <result property="database"    column="database"    />
+        <result property="databaseName"    column="database_name"    />
         <result property="exporterLocalLang"    column="exporter_local_lang"    />
         <result property="customsClearanceNo"    column="customs_clearance_no"    />
         <result property="quantityDeclared"    column="quantity_declared"    />
@@ -49,8 +47,7 @@ _local"    />
     </resultMap>
 
     <sql id="selectCrmBigTradeDataVo">
-        select id, customs_code, customs_code_des, trade_date, data_month, importer, importer_country, exporter, exporter_country, weight_unit, quantity_unit, quantity, weight_gross, weight, tonne, amount, price_unit_weight, price_unit_quantity, amount
-_local, amount_contract, currency, deal_method, product_name_detail, product_model, port_local, port_abroad, transport_method, trade_method, country_transit, bill_lading_no, product_des_local, product_name_detail_local, product_model_local, importer_local_lang, database, exporter_local_lang, customs_clearance_no, quantity_declared, import_export from crm_bigtradedata
+        select id, customs_code, customs_code_des, trade_date, data_month, importer, importer_country, exporter, exporter_country, weight_unit, quantity_unit, quantity, weight_gross, weight, tonne, amount, price_unit_weight, price_unit_quantity, amount_local, amount_contract, currency, deal_method, product_name_detail, product_model, port_local, port_abroad, transport_method, trade_method, country_transit, bill_lading_no, product_des_local, product_name_detail_local, product_model_local, importer_local_lang, database_name, exporter_local_lang, customs_clearance_no, quantity_declared, import_export from crm_bigtradedata
     </sql>
 
     <select id="selectCrmBigTradeDataList" parameterType="CrmBigTradeData" resultMap="CrmBigTradeDataResult">
@@ -62,7 +59,7 @@ _local, amount_contract, currency, deal_method, product_name_detail, product_mod
             <if test="dataMonth != null "> and data_month = #{dataMonth}</if>
             <if test="importer != null  and importer != ''"> and importer = #{importer}</if>
             <if test="importerCountry != null  and importerCountry != ''"> and importer_country = #{importerCountry}</if>
-            <if test="exporter != null  and exporter != ''"> and exporter = #{exporter}</if>
+            <if test="exporter != null  and exporter != ''"> and exporter like concat('%',#{exporter},'%')</if>
             <if test="exporterCountry != null  and exporterCountry != ''"> and exporter_country = #{exporterCountry}</if>
             <if test="weightUnit != null  and weightUnit != ''"> and weight_unit = #{weightUnit}</if>
             <if test="quantityUnit != null  and quantityUnit != ''"> and quantity_unit = #{quantityUnit}</if>
@@ -73,10 +70,7 @@ _local, amount_contract, currency, deal_method, product_name_detail, product_mod
             <if test="amount != null "> and amount = #{amount}</if>
             <if test="priceUnitWeight != null "> and price_unit_weight = #{priceUnitWeight}</if>
             <if test="priceUnitQuantity != null "> and price_unit_quantity = #{priceUnitQuantity}</if>
-            <if test="amount
-Local != null "> and amount
-_local = #{amount
-Local}</if>
+            <if test="amountLocal != null "> and amount_local = #{amountLocal}</if>
             <if test="amountContract != null "> and amount_contract = #{amountContract}</if>
             <if test="currency != null  and currency != ''"> and currency = #{currency}</if>
             <if test="dealMethod != null  and dealMethod != ''"> and deal_method = #{dealMethod}</if>
@@ -92,10 +86,10 @@ Local}</if>
             <if test="productNameDetailLocal != null  and productNameDetailLocal != ''"> and product_name_detail_local = #{productNameDetailLocal}</if>
             <if test="productModelLocal != null  and productModelLocal != ''"> and product_model_local = #{productModelLocal}</if>
             <if test="importerLocalLang != null  and importerLocalLang != ''"> and importer_local_lang = #{importerLocalLang}</if>
-            <if test="database != null  and database != ''"> and database = #{database}</if>
+            <if test="databaseName != null  and databaseName != ''"> and database_name = #{databaseName}</if>
             <if test="exporterLocalLang != null  and exporterLocalLang != ''"> and exporter_local_lang = #{exporterLocalLang}</if>
             <if test="customsClearanceNo != null  and customsClearanceNo != ''"> and customs_clearance_no = #{customsClearanceNo}</if>
-            <if test="quantityDeclared != null "> and quantity_declared = #{quantityDeclared}</if>
+            <if test="quantityDeclared != null and quantity_declared != ''"> and quantity_declared = #{quantityDeclared}</if>
             <if test="importExport != null  and importExport != ''"> and import_export = #{importExport}</if>
         </where>
     </select>
@@ -125,9 +119,7 @@ Local}</if>
             <if test="amount != null">amount,</if>
             <if test="priceUnitWeight != null">price_unit_weight,</if>
             <if test="priceUnitQuantity != null">price_unit_quantity,</if>
-            <if test="amount
-Local != null">amount
-_local,</if>
+            <if test="amountLocal != null">amount_local,</if>
             <if test="amountContract != null">amount_contract,</if>
             <if test="currency != null">currency,</if>
             <if test="dealMethod != null">deal_method,</if>
@@ -143,7 +135,7 @@ _local,</if>
             <if test="productNameDetailLocal != null">product_name_detail_local,</if>
             <if test="productModelLocal != null">product_model_local,</if>
             <if test="importerLocalLang != null">importer_local_lang,</if>
-            <if test="database != null">database,</if>
+            <if test="databaseName != null">database_name,</if>
             <if test="exporterLocalLang != null">exporter_local_lang,</if>
             <if test="customsClearanceNo != null">customs_clearance_no,</if>
             <if test="quantityDeclared != null">quantity_declared,</if>
@@ -167,9 +159,7 @@ _local,</if>
             <if test="amount != null">#{amount},</if>
             <if test="priceUnitWeight != null">#{priceUnitWeight},</if>
             <if test="priceUnitQuantity != null">#{priceUnitQuantity},</if>
-            <if test="amount
-Local != null">#{amount
-Local},</if>
+            <if test="amountLocal != null">#{amountLocal},</if>
             <if test="amountContract != null">#{amountContract},</if>
             <if test="currency != null">#{currency},</if>
             <if test="dealMethod != null">#{dealMethod},</if>
@@ -185,7 +175,7 @@ Local},</if>
             <if test="productNameDetailLocal != null">#{productNameDetailLocal},</if>
             <if test="productModelLocal != null">#{productModelLocal},</if>
             <if test="importerLocalLang != null">#{importerLocalLang},</if>
-            <if test="database != null">#{database},</if>
+            <if test="databaseName != null">#{databaseName},</if>
             <if test="exporterLocalLang != null">#{exporterLocalLang},</if>
             <if test="customsClearanceNo != null">#{customsClearanceNo},</if>
             <if test="quantityDeclared != null">#{quantityDeclared},</if>
@@ -213,10 +203,7 @@ Local},</if>
             <if test="amount != null">amount = #{amount},</if>
             <if test="priceUnitWeight != null">price_unit_weight = #{priceUnitWeight},</if>
             <if test="priceUnitQuantity != null">price_unit_quantity = #{priceUnitQuantity},</if>
-            <if test="amount
-Local != null">amount
-_local = #{amount
-Local},</if>
+            <if test="amountLocal != null">amount_local = #{amountLocal},</if>
             <if test="amountContract != null">amount_contract = #{amountContract},</if>
             <if test="currency != null">currency = #{currency},</if>
             <if test="dealMethod != null">deal_method = #{dealMethod},</if>
@@ -232,7 +219,7 @@ Local},</if>
             <if test="productNameDetailLocal != null">product_name_detail_local = #{productNameDetailLocal},</if>
             <if test="productModelLocal != null">product_model_local = #{productModelLocal},</if>
             <if test="importerLocalLang != null">importer_local_lang = #{importerLocalLang},</if>
-            <if test="database != null">database = #{database},</if>
+            <if test="databaseName != null">database_name = #{databaseName},</if>
             <if test="exporterLocalLang != null">exporter_local_lang = #{exporterLocalLang},</if>
             <if test="customsClearanceNo != null">customs_clearance_no = #{customsClearanceNo},</if>
             <if test="quantityDeclared != null">quantity_declared = #{quantityDeclared},</if>

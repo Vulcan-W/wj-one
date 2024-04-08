@@ -17,6 +17,22 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
+      <el-form-item label="出口商" prop="exporter">
+        <el-input
+          v-model="queryParams.exporter"
+          placeholder="请输入出口商"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="出口商所在国家" prop="exporterCountry">
+        <el-input
+          v-model="queryParams.exporterCountry"
+          placeholder="请输入出口商所在国家"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
       <el-form-item label="毛重" prop="weightGross">
         <el-input
           v-model="queryParams.weightGross"
@@ -65,11 +81,9 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="本国币种金额" prop="amount
-Local">
+      <el-form-item label="本国币种金额" prop="amountLocal">
         <el-input
-          v-model="queryParams.amount
-Local"
+          v-model="queryParams.amountLocal"
           placeholder="请输入本国币种金额"
           clearable
           @keyup.enter.native="handleQuery"
@@ -145,15 +159,15 @@ Local"
 
     <el-table v-loading="loading" :data="bigTradeDataList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="${comment}" align="center" prop="id" />
+      <el-table-column label="序号" align="center" prop="id" />
       <el-table-column label="海关编码" align="center" prop="customsCode" />
       <el-table-column label="编码产品描述" align="center" prop="customsCodeDes" />
       <el-table-column label="交易日期" align="center" prop="tradeDate" />
       <el-table-column label="月份" align="center" prop="dataMonth" />
       <el-table-column label="进口商" align="center" prop="importer" />
       <el-table-column label="进口商所在国家" align="center" prop="importerCountry" />
-      <el-table-column label="出口商所在国家" align="center" prop="exporter" />
-      <el-table-column label="出口商" align="center" prop="exporterCountry" />
+      <el-table-column label="出口商" align="center" prop="exporter" />
+      <el-table-column label="出口商所在国家" align="center" prop="exporterCountry" />
       <el-table-column label="重量单位" align="center" prop="weightUnit" />
       <el-table-column label="数量单位" align="center" prop="quantityUnit" />
       <el-table-column label="数量" align="center" prop="quantity" />
@@ -163,8 +177,7 @@ Local"
       <el-table-column label="金额美元" align="center" prop="amount" />
       <el-table-column label="美元重量计单价" align="center" prop="priceUnitWeight" />
       <el-table-column label="美元数量计单价" align="center" prop="priceUnitQuantity" />
-      <el-table-column label="本国币种金额" align="center" prop="amount
-Local" />
+      <el-table-column label="本国币种金额" align="center" prop="amountLocal" />
       <el-table-column label="合同金额" align="center" prop="amountContract" />
       <el-table-column label="币种" align="center" prop="currency" />
       <el-table-column label="成交方式" align="center" prop="dealMethod" />
@@ -267,10 +280,8 @@ Local" />
         <el-form-item label="美元数量计单价" prop="priceUnitQuantity">
           <el-input v-model="form.priceUnitQuantity" placeholder="请输入美元数量计单价" />
         </el-form-item>
-        <el-form-item label="本国币种金额" prop="amount
-Local">
-          <el-input v-model="form.amount
-Local" placeholder="请输入本国币种金额" />
+        <el-form-item label="本国币种金额" prop="amountLocal">
+          <el-input v-model="form.amountLocal" placeholder="请输入本国币种金额" />
         </el-form-item>
         <el-form-item label="合同金额" prop="amountContract">
           <el-input v-model="form.amountContract" placeholder="请输入合同金额" />
@@ -342,7 +353,7 @@ Local" placeholder="请输入本国币种金额" />
 </template>
 
 <script>
-import { listBigTradeData, getBigTradeData, delBigTradeData, addBigTradeData, updateBigTradeData } from "@/api/customs/bigTradeData";
+import { listBigTradeData, getBigTradeData, delBigTradeData, addBigTradeData, updateBigTradeData } from "@/api/crm/bigTradeData";
 
 export default {
   name: "BigTradeData",
@@ -387,8 +398,7 @@ export default {
         amount: null,
         priceUnitWeight: null,
         priceUnitQuantity: null,
-        amount
-Local: null,
+        amountLocal: null,
         amountContract: null,
         currency: null,
         dealMethod: null,
@@ -456,8 +466,7 @@ Local: null,
         amount: null,
         priceUnitWeight: null,
         priceUnitQuantity: null,
-        amount
-Local: null,
+        amountLocal: null,
         amountContract: null,
         currency: null,
         dealMethod: null,

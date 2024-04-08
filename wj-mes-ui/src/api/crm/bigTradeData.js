@@ -3,7 +3,7 @@ import request from '@/utils/request'
 // 查询某通数据列表
 export function listBigTradeData(query) {
   return request({
-    url: '/customs/bigTradeData/list',
+    url: 'crm/customs/bigTradeData/list',
     method: 'get',
     params: query
   })
@@ -12,7 +12,7 @@ export function listBigTradeData(query) {
 // 查询某通数据详细
 export function getBigTradeData(id) {
   return request({
-    url: '/customs/bigTradeData/' + id,
+    url: 'crm/customs/bigTradeData/' + id,
     method: 'get'
   })
 }
@@ -20,7 +20,7 @@ export function getBigTradeData(id) {
 // 新增某通数据
 export function addBigTradeData(data) {
   return request({
-    url: '/customs/bigTradeData',
+    url: 'crm/customs/bigTradeData',
     method: 'post',
     data: data
   })
@@ -29,7 +29,7 @@ export function addBigTradeData(data) {
 // 修改某通数据
 export function updateBigTradeData(data) {
   return request({
-    url: '/customs/bigTradeData',
+    url: 'crm/customs/bigTradeData',
     method: 'put',
     data: data
   })
@@ -38,7 +38,7 @@ export function updateBigTradeData(data) {
 // 删除某通数据
 export function delBigTradeData(id) {
   return request({
-    url: '/customs/bigTradeData/' + id,
+    url: 'crm/customs/bigTradeData/' + id,
     method: 'delete'
   })
 }
